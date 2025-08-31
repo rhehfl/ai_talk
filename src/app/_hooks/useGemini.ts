@@ -1,4 +1,4 @@
-import { fetchGemini } from '@/app/lib';
+import { fetchGemini } from '@/app/_lib';
 import { useEffect, useState } from 'react';
 
 export function useGemini(prompt: string, role: 'devA' | 'devB') {
