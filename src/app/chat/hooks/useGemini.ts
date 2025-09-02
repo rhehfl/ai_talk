@@ -1,4 +1,4 @@
-import { fetchGemini } from '@/app/lib';
+import { fetchGemini } from '@/app/chat/lib';
 import { useEffect, useState } from 'react';
 
 export function useGemini(prompt: string, role: 'devA' | 'devB') {
@@ -25,9 +25,3 @@ export function useGemini(prompt: string, role: 'devA' | 'devB') {
 
   return { prompt, loading, error, textList };
 }
-
-// 콘솔 테스트 코드 (개발용)
-// 사용 예시:
-// import { useGemini } from "@/lib/useGemini";
-// const { askGemini } = useGemini();
-// askGemini("AI란?").then(console.log);
