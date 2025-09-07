@@ -2,6 +2,7 @@
   "name": "back",
   "packageManager": "yarn@4.9.4",
   "dependencies": {
+    "common": "workspace:*",
     "express": "^5.1.0",
     "ws": "^8.18.3"
   },

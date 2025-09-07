@@ -1534,6 +1534,7 @@ __metadata:
     "@types/express": "npm:^5.0.3"
     "@types/node": "npm:^24.3.1"
     "@types/ws": "npm:^8.18.1"
+    common: "workspace:*"
     express: "npm:^5.1.0"
     ts-node: "npm:^10.9.2"
     ts-node-dev: "npm:^2.0.0"
@@ -1759,6 +1760,12 @@ __metadata:
   checksum: 10c0/7fbe7cfb811054c808349de19fb380252e5e34e61d7d168ec3353e9e9aacb1802674bddc657682e4e9730c2786592a4de6f8283e7e0d3870b829bb0b7b2f6118
   languageName: node
   linkType: hard
+
+"common@workspace:*, common@workspace:packages/common":
+  version: 0.0.0-use.local
+  resolution: "common@workspace:packages/common"
+  languageName: unknown
+  linkType: soft
 
 "concat-map@npm:0.0.1":
   version: 0.0.1
@@ -2692,6 +2699,7 @@ __metadata:
     "@types/node": "npm:^20"
     "@types/react": "npm:^19"
     "@types/react-dom": "npm:^19"
+    common: "workspace:*"
     eslint: "npm:^9"
     eslint-config-next: "npm:15.5.2"
     next: "npm:15.5.2"

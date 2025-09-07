@@ -1,13 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-
-interface Message {
-  id: string;
-  author: string;
-  content: string;
-  timestamp: number;
-}
+import { Message } from "common";
 
 export default function ChatPage() {
   const [messages, setMessages] = useState<Message[]>([
