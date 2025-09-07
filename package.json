@@ -13,6 +13,7 @@
     "typescript": "^5.9.2"
   },
   "scripts": {
+    "dev": "yarn dev:back && yarn dev:front",
     "dev:back": "yarn workspace back dev",
     "dev:front": "yarn workspace front dev"
   }
