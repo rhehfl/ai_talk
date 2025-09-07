@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { Message } from "common";
-
+const WEBSOCKET_URL = "ws://localhost:8080";
 export default function ChatPage() {
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -18,25 +18,73 @@ export default function ChatPage() {
       timestamp: Date.now() - 30000,
     },
   ]);
+  const [isConnected, setIsConnected] = useState<boolean>(false);
+  const [socket, setSocket] = useState<WebSocket | null>(null);
   const [inputMessage, setInputMessage] = useState<string>("");
   const messagesEndRef = useRef<HTMLDivElement>(null); // 스크롤을 맨 아래로 내리기 위한 ref
+  useEffect(() => {
+    // 웹소켓 클라이언트 인스턴스 생성
+    const ws = new WebSocket(WEBSOCKET_URL);
 
+    // 연결이 성공적으로 열렸을 때 실행됩니다.
+    ws.onopen = () => {
+      console.log("✅ 웹소켓 서버와 연결되었습니다.");
+      setSocket(ws);
+      setIsConnected(true);
+    };
+
+    // 서버로부터 메시지를 수신했을 때 실행됩니다.
+    ws.onmessage = (event) => {
+      try {
+        const newMessage: Message = JSON.parse(event.data);
+        setMessages((prevMessages) => [...prevMessages, newMessage]);
+      } catch (error) {
+        // 서버에서 오는 환영 메시지 등 JSON이 아닌 일반 텍스트를 처리합니다.
+        console.log("수신된 텍스트 메시지:", event.data);
+        const systemMessage: Message = {
+          id: Date.now().toString(),
+          author: "System",
+          content: event.data,
+          timestamp: Date.now(),
+        };
+        setMessages((prevMessages) => [...prevMessages, systemMessage]);
+      }
+    };
+
+    // 연결이 닫혔을 때 실행됩니다.
+    ws.onclose = () => {
+      console.log("🔌 서버와의 연결이 끊어졌습니다.");
+      setIsConnected(false);
+    };
+
+    // 에러가 발생했을 때 실행됩니다.
+    ws.onerror = (error) => {
+      console.error("웹소켓 에러 발생:", error);
+      setIsConnected(false);
+    };
+
+    // 컴포넌트가 언마운트될 때 웹소켓 연결을 정리합니다 (매우 중요!).
+    return () => {
+      ws.close();
+    };
+  }, []);
   // 메시지가 추가될 때마다 스크롤을 맨 아래로 내립니다.
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
   const handleSendMessage = (e: React.FormEvent) => {
-    e.preventDefault(); // 폼 기본 동작(페이지 새로고침) 방지
-    if (inputMessage.trim()) {
+    e.preventDefault();
+    if (inputMessage.trim() && socket && socket.readyState === WebSocket.OPEN) {
       const newMessage: Message = {
-        id: Date.now().toString(), // 고유 ID
-        author: "나", // 실제로는 사용자 이름을 받아와야 합니다.
+        id: Date.now().toString(),
+        author: "나", // 실제로는 인증된 사용자 정보로 대체해야 합니다.
         content: inputMessage,
         timestamp: Date.now(),
       };
-      setMessages((prevMessages) => [...prevMessages, newMessage]);
-      setInputMessage(""); // 입력창 초기화
+      // 메시지를 JSON 문자열 형태로 서버에 전송합니다.
+      socket.send(JSON.stringify(newMessage));
+      setInputMessage("");
     }
   };
 
