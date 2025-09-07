@@ -1,4 +1,15 @@
 {
   "name": "dev-ai-talk",
-  "packageManager": "yarn@4.9.4"
+  "private": true,
+  "packageManager": "yarn@4.9.4",
+  "workspaces": {
+    "packages": [
+      "package/*"
+    ]
+  },
+  "devDependencies": {
+    "eslint": "^9.35.0",
+    "prettier": "^3.6.2",
+    "typescript": "^5.9.2"
+  }
 }
