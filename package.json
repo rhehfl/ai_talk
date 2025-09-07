@@ -4,12 +4,16 @@
   "packageManager": "yarn@4.9.4",
   "workspaces": {
     "packages": [
-      "package/*"
+      "packages/*"
     ]
   },
   "devDependencies": {
     "eslint": "^9.35.0",
     "prettier": "^3.6.2",
     "typescript": "^5.9.2"
+  },
+  "scripts": {
+    "dev:back": "yarn workspace back dev",
+    "dev:front": "yarn workspace front dev"
   }
 }
