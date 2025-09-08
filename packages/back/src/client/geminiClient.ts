@@ -9,6 +9,10 @@ async function callGemini(history: Message[]) {
     role: m.author === "AI" ? "model" : "user",
     parts: [{ text: m.content }],
   }));
+  console.log(
+    "Gemini API 요청:",
+    contents.map((c) => c.parts[0].text).join("\n---\n"),
+  );
 
   const response = await googleGenAI.models.generateContent({
     model: "gemini-2.5-flash",
