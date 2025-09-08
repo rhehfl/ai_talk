@@ -1,16 +1,22 @@
 import { WebSocketServer, WebSocket } from "ws";
 import http from "http";
-import { handleMessage } from "./handlers/messageHandler";
+import { broadcastMessage } from "./handlers";
+import { Message } from "common";
+import { callGemini } from "./client";
 
 export default (server: http.Server) => {
   const wss = new WebSocketServer({ server });
 
-  wss.on("connection", (ws: WebSocket) => {
+  wss.on("connection", (ws) => {
     console.log("🚀 새로운 클라이언트가 연결되었습니다.");
 
-    ws.on("message", (data: string) => {
-      // 메시지 처리를 messageHandler에게 위임
-      handleMessage(wss, data);
+    ws.on("message", (data) => {
+      const message: Message = JSON.parse(data.toString());
+
+      broadcastMessage(wss, message);
+      callGemini(message.content).then((result) => {
+        console.log(result.text);
+      });
     });
 
     ws.on("close", () => {
