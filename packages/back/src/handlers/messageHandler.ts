@@ -1,6 +1,6 @@
 import { WebSocketServer } from "ws";
 import { Message } from "common";
-import { generateGeminiResponse } from "../service/aiService";
+import { generateGeminiResponse } from "../service/aiService"; // 👈 AI 서비스 임포트
 
 /**
  * 모든 클라이언트에게 메시지를 브로드캐스팅합니다.

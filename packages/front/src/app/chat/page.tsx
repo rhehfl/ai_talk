@@ -22,7 +22,21 @@ export default function ChatPage() {
   ]);
   const [inputMessage, setInputMessage] = useState<string>("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const {} = useSocket();
+  const { socket } = useSocket();
+  const handleSendMessage = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (inputMessage.trim() === "" || !socket) return;
+
+    const newMessage: Message = {
+      id: Date.now().toString(),
+      author: "나",
+      content: inputMessage,
+      timestamp: Date.now(),
+    };
+
+    socket.send(JSON.stringify(newMessage));
+    setInputMessage("");
+  };
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -84,7 +98,7 @@ export default function ChatPage() {
               </div>
             </div>
             <div className="flex flex-row items-center h-16 rounded-xl bg-white w-full px-4">
-              <form className="flex w-full">
+              <form className="flex w-full" onSubmit={handleSendMessage}>
                 <div className="flex-grow ml-4">
                   <div className="relative w-full">
                     <input
