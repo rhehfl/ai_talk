@@ -6,23 +6,9 @@ import { SideBar } from "@/app/chat/_components";
 import { useSocket } from "@/app/chat/_hooks";
 
 export default function ChatPage() {
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: "1",
-      author: "ChatGPT",
-      content: "채팅방에 오신 것을 환영합니다! 메시지를 보내보세요.",
-      timestamp: Date.now() - 60000,
-    },
-    {
-      id: "2",
-      author: "User",
-      content: "안녕하세요!",
-      timestamp: Date.now() - 30000,
-    },
-  ]);
   const [inputMessage, setInputMessage] = useState<string>("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const { socket } = useSocket();
+  const { socket, messages, setMessages } = useSocket();
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
     if (inputMessage.trim() === "" || !socket) return;
@@ -35,6 +21,7 @@ export default function ChatPage() {
     };
 
     socket.send(JSON.stringify(newMessage));
+    setMessages((prevMessages) => [...prevMessages, newMessage]);
     setInputMessage("");
   };
 

@@ -1,4 +1,4 @@
-import { WebSocketServer, WebSocket } from "ws";
+import { WebSocketServer } from "ws";
 import http from "http";
 import { broadcastMessage } from "./handlers";
 import { Message } from "common";
@@ -10,12 +10,14 @@ export default (server: http.Server) => {
   wss.on("connection", (ws) => {
     console.log("🚀 새로운 클라이언트가 연결되었습니다.");
 
-    ws.on("message", (data) => {
+    ws.on("message", async (data) => {
       const message: Message = JSON.parse(data.toString());
-
-      broadcastMessage(wss, message);
-      callGemini(message.content).then((result) => {
-        console.log(result.text);
+      const res = await callGemini(message.content);
+      broadcastMessage(wss, {
+        author: "AI",
+        content: res.text || "",
+        timestamp: 1234567890,
+        id: Date.now().toString(),
       });
     });
 
