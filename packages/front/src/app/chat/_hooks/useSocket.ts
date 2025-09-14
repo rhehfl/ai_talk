@@ -1,6 +1,5 @@
 import { WEBSOCKET_URL } from "@/app/chat/_constants";
 import { useEffect, useState } from "react";
-// import { Message } from "common"; // 👈 공용 타입을 사용하는 것이 좋습니다.
 
 export const useSocket = (url = WEBSOCKET_URL) => {
   const [isConnected, setIsConnected] = useState<boolean>(false);
@@ -11,9 +10,9 @@ export const useSocket = (url = WEBSOCKET_URL) => {
 
   useEffect(() => {
     const ws = new WebSocket(url);
-
     ws.onopen = () => {
       setSocket(ws);
+      console.log(ws);
       setIsConnected(true);
     };
 
