@@ -6,7 +6,7 @@ const googleGenAI = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY! });
 
 async function callGemini(history: Message[]) {
   const contents = history.map((m) => ({
-    role: m.author === "AI" ? "model" : "user",
+    role: m.author,
     parts: [{ text: m.content }],
   }));
 

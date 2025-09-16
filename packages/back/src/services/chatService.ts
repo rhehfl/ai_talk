@@ -23,8 +23,14 @@ export class ChatService {
     return this.chatRepository.getHistory(sessionId) || [];
   }
 
-  public async processMessage(sessionId: string, userMessage: Message) {
-    this.chatRepository.addMessage(sessionId, userMessage);
+  public async processMessage(ws: WebSocket, userMessage: string) {
+    const sessionId = this.chatRepository.getSessionId(ws);
+    if (!sessionId) return null;
+
+    this.chatRepository.addMessage(sessionId, {
+      author: "user",
+      content: userMessage,
+    });
     const history = this.getHistory(sessionId) || [];
     const geminiResponse = await callGemini(history);
     const aiContent = geminiResponse.text;
@@ -34,12 +40,8 @@ export class ChatService {
     }
 
     const aiMessage: Message = {
-      id: Date.now().toString(),
       author: "Gemini",
       content: aiContent,
-      timestamp: Date.now(),
-      type: "MESSAGE",
-      sessionId,
     };
 
     this.chatRepository.addMessage(sessionId, aiMessage);

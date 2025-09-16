@@ -2,7 +2,7 @@
 
 import { WebSocketServer, WebSocket } from "ws";
 import { ChatService } from "../services/chatService";
-import { Message } from "common";
+import { Message, S2cBroadcastMessage, S2cSessionCreated } from "common";
 
 export class ChatController {
   constructor(private chatService: ChatService) {}
@@ -12,36 +12,31 @@ export class ChatController {
       this.chatService.initializeSession(sessionId);
 
     if (isNew) {
-      ws.send(
-        JSON.stringify({ type: "SESSION_CREATED", sessionId: finalSessionId }),
-      );
+      const sessionMsg: S2cSessionCreated = {
+        type: "S2C_SESSION_CREATED",
+        payload: { sessionId: finalSessionId },
+      };
+      ws.send(JSON.stringify(sessionMsg));
     }
-
     const history = this.chatService.getHistory(finalSessionId);
     ws.send(JSON.stringify({ type: "HISTORY", content: history }));
   }
-  public async handleMessage(wss: WebSocketServer, userMessage: Message) {
-    const sessionId = userMessage.sessionId;
-    if (!sessionId) return;
-    const aiMessage = await this.chatService.processMessage(
-      sessionId,
-      userMessage,
-    );
 
-    if (aiMessage) {
-      this.broadcast(wss, aiMessage);
-    }
+  public async handleMessage(
+    wss: WebSocketServer,
+    ws: WebSocket,
+    content: string,
+  ) {
+    const msg = await this.chatService.processMessage(ws, content);
+
+    if (!msg) return;
+    const broadcastMsg: S2cBroadcastMessage = {
+      type: "S2C_BROADCAST_MESSAGE",
+      payload: msg,
+    };
+    ws.send(JSON.stringify(broadcastMsg));
   }
-
   public disconnect(ws: WebSocket) {
     this.chatService.endSession(ws);
-  }
-
-  private broadcast(wss: WebSocketServer, message: Message) {
-    wss.clients.forEach((client) => {
-      if (client.readyState === WebSocket.OPEN) {
-        client.send(JSON.stringify(message));
-      }
-    });
   }
 }
