@@ -27,15 +27,17 @@ export class ChatController {
     ws: WebSocket,
     content: string,
   ) {
-    const msg = await this.chatService.processMessage(ws, content);
+    const aiMessage = await this.chatService.processMessage(ws, content);
 
-    if (!msg) return;
+    if (!aiMessage) return;
+
     const broadcastMsg: S2cBroadcastMessage = {
       type: "S2C_BROADCAST_MESSAGE",
-      payload: msg,
+      payload: aiMessage,
     };
     ws.send(JSON.stringify(broadcastMsg));
   }
+
   public disconnect(ws: WebSocket) {
     this.chatService.endSession(ws);
   }

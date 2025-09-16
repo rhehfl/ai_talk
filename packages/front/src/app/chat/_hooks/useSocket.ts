@@ -1,48 +1,46 @@
-import { WEBSOCKET_URL } from "@/app/chat/_constants";
-import { getSessionId, setSessionId } from "@/app/chat/_lib";
-import { Message } from "common";
+"use client";
+
 import { useEffect, useState } from "react";
+import { getSessionId, setSessionId } from "@/app/chat/_lib";
+import {
+  C2sInit,
+  C2sSendMessage,
+  isS2cBroadcastMessage,
+  isS2cHistory,
+  isS2cSessionCreated,
+  Message,
+  ServerToClientMessage,
+} from "common";
+import { WEBSOCKET_URL } from "../_constants";
 
-export const useSocket = (url = WEBSOCKET_URL) => {
-  const [isConnected, setIsConnected] = useState<boolean>(false);
+export const useSocket = () => {
   const [socket, setSocket] = useState<WebSocket | null>(null);
-  const [error, setError] = useState<Event | null>(null);
-
   const [messages, setMessages] = useState<Message[]>([]);
+  const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
-    const ws = new WebSocket(url);
-    ws.onopen = () => {
-      const sessionId = getSessionId();
-      ws.send(
-        JSON.stringify({
-          type: "INIT",
-          sessionId: sessionId,
-        }),
-      );
+    const ws = new WebSocket(WEBSOCKET_URL);
 
-      setSocket(ws);
+    ws.onopen = () => {
       setIsConnected(true);
+      setSocket(ws);
+      const sessionId = getSessionId();
+      const initMessage: C2sInit = {
+        type: "C2S_INIT",
+        payload: { sessionId },
+      };
+      ws.send(JSON.stringify(initMessage));
     };
 
     ws.onmessage = (event) => {
-      const received: Message = JSON.parse(event.data);
-      console.log(received);
-      switch (received.type) {
-        // 서버가 새로 발급해준 세션 ID를 저장
-        case "SESSION_CREATED":
-          setSessionId(received.sessionId);
-          break;
+      const received: ServerToClientMessage = JSON.parse(event.data);
 
-        // 서버가 보내준 전체 대화 기록으로 교체
-        case "HISTORY":
-          setMessages(received.content);
-          break;
-
-        // 그 외에는 일반 채팅 메시지로 간주하고 목록에 추가
-        default:
-          setMessages((prevMessages) => [...prevMessages, received]);
-          break;
+      if (isS2cSessionCreated(received)) {
+        setSessionId(received.payload.sessionId);
+      } else if (isS2cHistory(received)) {
+        setMessages(received.payload.history);
+      } else if (isS2cBroadcastMessage(received)) {
+        setMessages((prev) => [...prev, received.payload]);
       }
     };
 
@@ -51,14 +49,24 @@ export const useSocket = (url = WEBSOCKET_URL) => {
     };
 
     ws.onerror = (error) => {
+      console.error("WebSocket Error:", error);
       setIsConnected(false);
-      setError(error);
     };
 
     return () => {
       ws.close();
     };
-  }, [url]);
+  }, []);
 
-  return { isConnected, socket, error, messages, setMessages };
+  const sendMessage = (content: string) => {
+    if (socket && socket.readyState === WebSocket.OPEN) {
+      const message: C2sSendMessage = {
+        type: "C2S_SEND_MESSAGE",
+        payload: { content },
+      };
+      socket.send(JSON.stringify(message));
+    }
+  };
+
+  return { messages, isConnected, sendMessage };
 };
