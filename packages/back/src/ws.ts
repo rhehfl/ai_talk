@@ -21,7 +21,6 @@ export default (server: http.Server) => {
       if (message.type === "INIT") {
         chatController.initialize(ws, message.sessionId);
       } else {
-        console.log("asdasdasd");
         chatController.handleMessage(wss, message);
       }
     });

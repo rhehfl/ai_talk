@@ -1,4 +1,6 @@
 import { WEBSOCKET_URL } from "@/app/chat/_constants";
+import { getSessionId, setSessionId } from "@/app/chat/_lib";
+import { Message } from "common";
 import { useEffect, useState } from "react";
 
 export const useSocket = (url = WEBSOCKET_URL) => {
@@ -6,22 +8,41 @@ export const useSocket = (url = WEBSOCKET_URL) => {
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const [error, setError] = useState<Event | null>(null);
 
-  const [messages, setMessages] = useState<any[]>([]);
+  const [messages, setMessages] = useState<Message[]>([]);
 
   useEffect(() => {
     const ws = new WebSocket(url);
     ws.onopen = () => {
+      const sessionId = getSessionId();
+      ws.send(
+        JSON.stringify({
+          type: "INIT",
+          sessionId: sessionId,
+        }),
+      );
+
       setSocket(ws);
-      console.log(ws);
       setIsConnected(true);
     };
 
     ws.onmessage = (event) => {
-      try {
-        const newMessage = JSON.parse(event.data);
-        setMessages((prevMessages) => [...prevMessages, newMessage]);
-      } catch (e) {
-        console.error("메시지 파싱 에러:", e, "원본 데이터:", event.data);
+      const received: Message = JSON.parse(event.data);
+      console.log(received);
+      switch (received.type) {
+        // 서버가 새로 발급해준 세션 ID를 저장
+        case "SESSION_CREATED":
+          setSessionId(received.sessionId);
+          break;
+
+        // 서버가 보내준 전체 대화 기록으로 교체
+        case "HISTORY":
+          setMessages(received.content);
+          break;
+
+        // 그 외에는 일반 채팅 메시지로 간주하고 목록에 추가
+        default:
+          setMessages((prevMessages) => [...prevMessages, received]);
+          break;
       }
     };
 

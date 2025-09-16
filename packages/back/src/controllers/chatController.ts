@@ -18,7 +18,7 @@ export class ChatController {
     }
 
     const history = this.chatService.getHistory(finalSessionId);
-    ws.send(JSON.stringify({ type: "HISTORY", data: history }));
+    ws.send(JSON.stringify({ type: "HISTORY", content: history }));
   }
   public async handleMessage(wss: WebSocketServer, userMessage: Message) {
     const sessionId = userMessage.sessionId;
