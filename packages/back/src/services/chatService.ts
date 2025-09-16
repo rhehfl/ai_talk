@@ -1,6 +1,8 @@
 import { ChatRepository } from "../repositories/chatRepository";
 import { Message } from "common";
 import { v4 as uuidv4 } from "uuid";
+import { WebSocket } from "ws";
+import { callGemini } from "../client";
 
 export class ChatService {
   constructor(private chatRepository: ChatRepository) {}
@@ -9,11 +11,6 @@ export class ChatService {
     finalSessionId: string;
     isNew: boolean;
   } {
-    if (sessionId === null) {
-      sessionId = uuidv4();
-      this.chatRepository.setHistory(sessionId, []);
-    }
-
     if (sessionId && this.chatRepository.getHistory(sessionId)) {
       return { finalSessionId: sessionId, isNew: false };
     }
@@ -26,18 +23,30 @@ export class ChatService {
     return this.chatRepository.getHistory(sessionId) || [];
   }
 
-  public async processMessage(
-    sessionId: string,
-    userMessage: Message,
-  ): Promise<Message> {
+  public async processMessage(sessionId: string, userMessage: Message) {
     this.chatRepository.addMessage(sessionId, userMessage);
+    const history = this.getHistory(sessionId) || [];
+    const geminiResponse = await callGemini(history);
+    const aiContent = geminiResponse.text;
 
-    // AI 호출 로직
-    if (userMessage.content.includes("@gemini")) {
-      const history = this.getHistory(sessionId);
-      const prompt = history.map((h) => `${h.author}: ${h.content}`).join("\n");
+    if (!aiContent) {
+      return;
     }
 
-    return userMessage;
+    const aiMessage: Message = {
+      id: Date.now().toString(),
+      author: "Gemini",
+      content: aiContent,
+      timestamp: Date.now(),
+      type: "MESSAGE",
+      sessionId,
+    };
+
+    this.chatRepository.addMessage(sessionId, aiMessage);
+
+    return aiMessage;
+  }
+  public endSession(ws: WebSocket) {
+    this.chatRepository.removeClient(ws);
   }
 }
