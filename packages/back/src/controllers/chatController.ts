@@ -29,7 +29,6 @@ export class ChatController {
     ws: WebSocket,
     content: string,
   ) {
-    console.log("Received message:", content);
     const aiMessage = await this.chatService.processMessage(ws, content);
     if (!aiMessage) return;
 

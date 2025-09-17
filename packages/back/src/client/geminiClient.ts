@@ -9,13 +9,11 @@ async function callGemini(history: Message[]) {
     role: m.author === "user" ? "user" : "model",
     parts: [{ text: m.content }],
   }));
-  console.log("Calling Gemini with contents:", contents);
 
   const response = await googleGenAI.models.generateContent({
     model: "gemini-2.5-flash",
     contents,
   });
-  console.log("Gemini Response:", response);
   return response;
 }
 

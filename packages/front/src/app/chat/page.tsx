@@ -9,7 +9,6 @@ export default function ChatPage() {
   const handleSendMessage = (msg: string) => {
     sendMessage(msg);
   };
-  console.log(messages);
   return (
     <div className="flex h-screen bg-gray-100 antialiased text-gray-800">
       <div className="flex flex-row h-full w-full overflow-x-hidden">
