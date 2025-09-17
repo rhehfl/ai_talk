@@ -8,22 +8,28 @@ export class ChatService {
   constructor(private chatRepository: ChatRepository) {}
 
   public initializeSession(
-    sessionId: string | null,
     ws: WebSocket,
-  ): {
-    finalSessionId: string;
-    isNew: boolean;
-  } {
-    if (sessionId && this.chatRepository.getHistory(sessionId)) {
-      return { finalSessionId: sessionId, isNew: false };
+    sessionId: string | null,
+  ): { finalSessionId: string; isNew: boolean } {
+    let finalSessionId = sessionId;
+    let isNew = false;
+
+    if (!finalSessionId) {
+      isNew = true;
+      finalSessionId = uuidv4();
+      this.chatRepository.setHistory(finalSessionId, []);
+    } else if (!this.chatRepository.getHistory(finalSessionId)) {
+      console.log(
+        "No history found for sessionId:",
+        this.chatRepository.getHistory(finalSessionId),
+      );
+      isNew = false;
+      this.chatRepository.setHistory(finalSessionId, []);
     }
-    const newSessionId = uuidv4();
-    this.chatRepository.setHistory(newSessionId, []);
-    this.chatRepository.setSessionId(ws, newSessionId);
 
-    return { finalSessionId: newSessionId, isNew: true };
+    this.chatRepository.mapClientToSession(ws, finalSessionId);
+    return { finalSessionId, isNew };
   }
-
   public getHistory(sessionId: string): Message[] {
     return this.chatRepository.getHistory(sessionId) || [];
   }
@@ -40,7 +46,6 @@ export class ChatService {
     const history = this.getHistory(sessionId) || [];
     const geminiResponse = await callGemini(history);
     const aiContent = geminiResponse.text;
-
     if (!aiContent) {
       return;
     }

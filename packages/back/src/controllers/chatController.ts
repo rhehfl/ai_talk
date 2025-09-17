@@ -9,8 +9,8 @@ export class ChatController {
 
   public initialize(ws: WebSocket, sessionId: string | null) {
     const { finalSessionId, isNew } = this.chatService.initializeSession(
-      sessionId,
       ws,
+      sessionId,
     );
 
     if (isNew) {

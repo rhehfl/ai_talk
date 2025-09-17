@@ -38,6 +38,7 @@ export const useSocket = () => {
       if (isS2cSessionCreated(received)) {
         setSessionId(received.payload.sessionId);
       } else if (isS2cHistory(received)) {
+        console.log(received);
         setMessages(received.payload.history);
       } else if (isS2cBroadcastMessage(received)) {
         setMessages((prev) => [...prev, received.payload]);
