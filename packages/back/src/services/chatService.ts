@@ -30,6 +30,7 @@ export class ChatService {
 
   public async processMessage(ws: WebSocket, userMessage: string) {
     const sessionId = this.chatRepository.getSessionId(ws);
+    console.log("Session ID:", sessionId);
     if (!sessionId) return null;
 
     this.chatRepository.addMessage(sessionId, {
