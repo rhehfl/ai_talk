@@ -65,8 +65,9 @@ export const useSocket = () => {
         payload: { content },
       };
       socket.send(JSON.stringify(message));
+      setMessages((prev) => [...prev, { content, author: "user" }]);
     }
   };
 
-  return { messages, isConnected, sendMessage };
+  return { messages, isConnected, sendMessage, setMessages };
 };

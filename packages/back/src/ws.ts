@@ -19,6 +19,7 @@ export default (server: http.Server) => {
       try {
         const message = JSON.parse(data);
 
+        console.log(message);
         if (isC2sInit(message)) {
           chatController.initialize(ws, message.payload.sessionId);
         } else if (isC2sSendMessage(message)) {

@@ -12,6 +12,8 @@ export class ChatRepository {
     this.getHistory(sessionId)?.push(message);
 
   public getSessionId = (ws: WebSocket) => this.clients.get(ws);
+  public setSessionId = (ws: WebSocket, sessionId: string) =>
+    this.clients.set(ws, sessionId);
   public mapClientToSession = (ws: WebSocket, sessionId: string) =>
     this.clients.set(ws, sessionId);
   public removeClient = (ws: WebSocket) => this.clients.delete(ws);

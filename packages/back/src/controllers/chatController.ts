@@ -8,8 +8,10 @@ export class ChatController {
   constructor(private chatService: ChatService) {}
 
   public initialize(ws: WebSocket, sessionId: string | null) {
-    const { finalSessionId, isNew } =
-      this.chatService.initializeSession(sessionId);
+    const { finalSessionId, isNew } = this.chatService.initializeSession(
+      sessionId,
+      ws,
+    );
 
     if (isNew) {
       const sessionMsg: S2cSessionCreated = {
@@ -27,8 +29,8 @@ export class ChatController {
     ws: WebSocket,
     content: string,
   ) {
+    console.log("Received message:", content);
     const aiMessage = await this.chatService.processMessage(ws, content);
-
     if (!aiMessage) return;
 
     const broadcastMsg: S2cBroadcastMessage = {

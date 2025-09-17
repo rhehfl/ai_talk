@@ -5,20 +5,11 @@ import { ChatRoom, ChatSendForm, SideBar } from "@/app/chat/_components";
 import { useSocket } from "@/app/chat/_hooks";
 
 export default function ChatPage() {
-  const { socket, messages, setMessages } = useSocket();
+  const { sendMessage, messages, setMessages } = useSocket();
   const handleSendMessage = (msg: string) => {
-    if (!socket) return;
-    const newMessage: Message = {
-      id: Date.now().toString(),
-      author: "나",
-      content: msg,
-      timestamp: Date.now(),
-    };
-
-    socket.send(JSON.stringify(newMessage));
-    setMessages((prevMessages) => [...prevMessages, newMessage]);
+    sendMessage(msg);
   };
-
+  console.log(messages);
   return (
     <div className="flex h-screen bg-gray-100 antialiased text-gray-800">
       <div className="flex flex-row h-full w-full overflow-x-hidden">

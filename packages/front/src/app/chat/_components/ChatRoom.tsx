@@ -17,14 +17,14 @@ export default function ChatRoom({ messages }: ChatRoomProps) {
   return (
     <div className="flex flex-col h-full overflow-x-hidden overflow-y-auto mb-4">
       <div className="flex flex-col h-full">
-        {messages.map((msg) => (
+        {messages.map((msg, index) => (
           <div
-            key={msg.id}
+            key={index}
             className={`flex items-end mb-2 ${
-              msg.author === "나" ? "justify-end" : ""
+              msg.author === "user" ? "justify-end" : ""
             }`}
           >
-            {msg.author !== "나" && (
+            {msg.author !== "user" && (
               <div className="flex flex-col items-center space-y-2 order-1 mr-2">
                 <img
                   src={`https://api.dicebear.com/7.x/pixel-art/svg?seed=${msg.author}`}
@@ -39,11 +39,11 @@ export default function ChatRoom({ messages }: ChatRoomProps) {
             <div
               className="relative max-w-xs px-4 py-2 rounded-lg"
               style={{
-                backgroundColor: msg.author === "나" ? "#E0E7FF" : "#F3F4F6",
-                order: msg.author === "나" ? 2 : 1,
+                backgroundColor: msg.author === "user" ? "#E0E7FF" : "#F3F4F6",
+                order: msg.author === "user" ? 2 : 1,
               }}
             >
-              {msg.author === "나" ? (
+              {msg.author === "user" ? (
                 <></>
               ) : (
                 <div className="text-sm font-semibold mb-1 hidden">
@@ -51,12 +51,6 @@ export default function ChatRoom({ messages }: ChatRoomProps) {
                 </div>
               )}
               <p className="text-sm">{msg.content}</p>
-              <span className="text-xs text-gray-500 block text-right mt-1">
-                {new Date(msg.timestamp).toLocaleTimeString("ko-KR", {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })}
-              </span>
             </div>
           </div>
         ))}
