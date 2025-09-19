@@ -22,8 +22,8 @@ export interface S2cSessionCreated {
 }
 
 export interface S2cHistory {
-  type: "S2C_HISTORY";
-  payload: { history: Message[] };
+  type: "HISTORY";
+  content: Message[];
 }
 
 export interface S2cBroadcastMessage {
@@ -45,6 +45,6 @@ export const isC2sSendMessage = (msg: any): msg is C2sSendMessage =>
 export const isS2cSessionCreated = (msg: any): msg is S2cSessionCreated =>
   msg?.type === "S2C_SESSION_CREATED";
 export const isS2cHistory = (msg: any): msg is S2cHistory =>
-  msg?.type === "S2C_HISTORY";
+  msg?.type === "HISTORY";
 export const isS2cBroadcastMessage = (msg: any): msg is S2cBroadcastMessage =>
   msg?.type === "S2C_BROADCAST_MESSAGE";

@@ -17,7 +17,7 @@ export const useSocket = () => {
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [isConnected, setIsConnected] = useState(false);
-
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     const ws = new WebSocket(WEBSOCKET_URL);
 
@@ -34,12 +34,12 @@ export const useSocket = () => {
 
     ws.onmessage = (event) => {
       const received: ServerToClientMessage = JSON.parse(event.data);
+      console.log("Received:", received);
 
       if (isS2cSessionCreated(received)) {
         setSessionId(received.payload.sessionId);
       } else if (isS2cHistory(received)) {
-        console.log(received);
-        setMessages(received.payload.history);
+        setMessages(received.content);
       } else if (isS2cBroadcastMessage(received)) {
         setMessages((prev) => [...prev, received.payload]);
       }
