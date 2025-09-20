@@ -41,6 +41,7 @@ export const useSocket = () => {
       } else if (isS2cHistory(received)) {
         setMessages(received.content);
       } else if (isS2cBroadcastMessage(received)) {
+        setIsLoading(false);
         setMessages((prev) => [...prev, received.payload]);
       }
     };
@@ -65,10 +66,11 @@ export const useSocket = () => {
         type: "C2S_SEND_MESSAGE",
         payload: { content },
       };
+      setIsLoading(true);
       socket.send(JSON.stringify(message));
       setMessages((prev) => [...prev, { content, author: "user" }]);
     }
   };
 
-  return { messages, isConnected, sendMessage, setMessages };
+  return { messages, isConnected, sendMessage, setMessages, isLoading };
 };
