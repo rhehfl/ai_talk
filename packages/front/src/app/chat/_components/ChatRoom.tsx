@@ -15,47 +15,45 @@ export default function ChatRoom({ messages }: ChatRoomProps) {
   }, [messages]);
 
   return (
-    <div className="flex flex-col h-full overflow-x-hidden overflow-y-auto mb-4">
-      <div className="flex flex-col h-full">
-        {messages.map((msg, index) => (
+    <div className="overflow-y-auto">
+      {messages.map((msg, index) => (
+        <div
+          key={index}
+          className={`flex items-end mb-2 ${
+            msg.author === "user" ? "justify-end" : ""
+          }`}
+        >
+          {msg.author !== "user" && (
+            <div className="flex flex-col items-center space-y-2 order-1 mr-2">
+              <img
+                src={`https://api.dicebear.com/7.x/pixel-art/svg?seed=${msg.author}`}
+                alt="Avatar"
+                className="w-8 h-8 rounded-full"
+              />
+              <span className="text-xs text-gray-500 break-words max-w-[50px] text-center">
+                {msg.author}
+              </span>
+            </div>
+          )}
           <div
-            key={index}
-            className={`flex items-end mb-2 ${
-              msg.author === "user" ? "justify-end" : ""
-            }`}
+            className="relative max-w-xs px-4 py-2 rounded-lg"
+            style={{
+              backgroundColor: msg.author === "user" ? "#E0E7FF" : "#F3F4F6",
+              order: msg.author === "user" ? 2 : 1,
+            }}
           >
-            {msg.author !== "user" && (
-              <div className="flex flex-col items-center space-y-2 order-1 mr-2">
-                <img
-                  src={`https://api.dicebear.com/7.x/pixel-art/svg?seed=${msg.author}`}
-                  alt="Avatar"
-                  className="w-8 h-8 rounded-full"
-                />
-                <span className="text-xs text-gray-500 break-words max-w-[50px] text-center">
-                  {msg.author}
-                </span>
+            {msg.author === "user" ? (
+              <></>
+            ) : (
+              <div className="text-sm font-semibold mb-1 hidden">
+                {msg.author}
               </div>
             )}
-            <div
-              className="relative max-w-xs px-4 py-2 rounded-lg"
-              style={{
-                backgroundColor: msg.author === "user" ? "#E0E7FF" : "#F3F4F6",
-                order: msg.author === "user" ? 2 : 1,
-              }}
-            >
-              {msg.author === "user" ? (
-                <></>
-              ) : (
-                <div className="text-sm font-semibold mb-1 hidden">
-                  {msg.author}
-                </div>
-              )}
-              <p className="text-sm">{msg.content}</p>
-            </div>
+            <p className="text-sm">{msg.content}</p>
           </div>
-        ))}
-        <div ref={messagesEndRef} />
-      </div>
+        </div>
+      ))}
+      <div ref={messagesEndRef} />
     </div>
   );
 }

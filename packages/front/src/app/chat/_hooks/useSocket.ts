@@ -11,13 +11,13 @@ import {
   Message,
   ServerToClientMessage,
 } from "common";
-import { WEBSOCKET_URL } from "../_constants";
+import { WEBSOCKET_URL } from "@/app/chat/_constants";
 
 export const useSocket = () => {
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [isConnected, setIsConnected] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     const ws = new WebSocket(WEBSOCKET_URL);
 
