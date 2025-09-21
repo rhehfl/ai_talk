@@ -15,7 +15,7 @@ export default function ChatRoom({ messages }: ChatRoomProps) {
   }, [messages]);
 
   return (
-    <div className="overflow-y-auto">
+    <div className="overflow-y-auto ">
       {messages.map((msg, index) => (
         <div
           key={index}
