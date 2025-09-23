@@ -17,7 +17,10 @@ export default function ChatSendForm({ onSubmit }: ChatSendFormProps) {
   };
 
   return (
-    <form className="flex w-full mt-5" onSubmit={handleSendMessage}>
+    <form
+      className="flex w-full mt-5 flex-shrink-0"
+      onSubmit={handleSendMessage}
+    >
       <div className="flex-grow ml-4">
         <div className="relative w-full">
           <input

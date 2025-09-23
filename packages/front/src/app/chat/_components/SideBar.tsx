@@ -18,7 +18,7 @@ export default function SideBar() {
               className="h-full w-full"
             />
           </div>
-          <div className="text-sm font-semibold mt-2">게스트</div>
+          <div className="text-sm font-semibold mt-2">Gemini</div>
           <div className="text-xs text-gray-500">Active</div>
         </div>
       </div>

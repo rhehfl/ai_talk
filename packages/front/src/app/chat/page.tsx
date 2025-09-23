@@ -13,10 +13,12 @@ export default function ChatPage() {
     <div className="flex h-screen bg-gray-100 antialiased text-gray-800">
       <div className="flex flex-row h-full w-full overflow-x-hidden">
         <SideBar />
-        <div className="p-0 lg:p-10 flex flex-col w-full ">
-          <div className="flex flex-col h-full bg-white rounded-2xl py-10 px-4 lg:fpx-8 justify-between">
-            <ChatRoom messages={messages} />
-            {isLoading && <AILoadingMessage />}
+        <div className="p-0 lg:p-10 flex flex-col w-full">
+          <div className="flex flex-col h-full bg-white rounded-2xl py-10 px-4 lg:px-8">
+            <div className="flex-grow overflow-y-auto">
+              <ChatRoom messages={messages} />
+              {isLoading && <AILoadingMessage />}
+            </div>
             <ChatSendForm onSubmit={handleSendMessage} />
           </div>
         </div>
