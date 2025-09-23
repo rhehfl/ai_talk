@@ -3,7 +3,7 @@ import http from "http";
 import { ChatRepository } from "./repositories/chatRepository";
 import { ChatService } from "./services/chatService";
 import { ChatController } from "./controllers/chatController";
-import { isC2sInit, isC2sSendMessage, Message } from "common";
+import { isC2sInit, isC2sSendMessage } from "common";
 interface InitializedWebSocket extends WebSocket {
   isInitialized?: boolean;
 }
