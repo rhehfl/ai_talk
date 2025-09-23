@@ -1,0 +1,29 @@
+# docker-compose.yml
+
+version: "3.8" # 도커 컴포즈 버전
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: ./packages/back/Dockerfile
+    ports:
+      - "8080:8080" # 내 PC 8080 포트와 컨테이너 8080 포트 연결
+    volumes:
+      - ./packages/back:/usr/src/app/packages/back
+      - /usr/src/app/node_modules
+    depends_on:
+      - redis # redis 서비스가 먼저 실행된 후에 backend 서비스가 실행되도록 설정
+    environment:
+      - REDIS_URL=redis://redis:6379 # 컨테이너 내부에서 사용할 Redis 주소
+
+  # 2. Redis 서버 설정
+  redis:
+    image: "redis:alpine" # 가벼운 redis 이미지 사용
+    ports:
+      - "6379:6379" # 내 PC 6379 포트와 컨테이너 6379 포트 연결
+    volumes:
+      - redis-data:/data # 데이터를 보존하기 위한 볼륨 설정
+
+volumes:
+  redis-data: # 위에서 사용한 볼륨 정의

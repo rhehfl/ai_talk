@@ -30,8 +30,8 @@ export class ChatService {
     this.chatRepository.mapClientToSession(ws, finalSessionId);
     return { finalSessionId, isNew };
   }
-  public getHistory(sessionId: string): Message[] {
-    return this.chatRepository.getHistory(sessionId) || [];
+  public async getHistory(sessionId: string): Promise<Message[]> {
+    return (await this.chatRepository.getHistory(sessionId)) || [];
   }
 
   public async processMessage(ws: WebSocket, userMessage: string) {
@@ -43,7 +43,7 @@ export class ChatService {
       author: "user",
       content: userMessage,
     });
-    const history = this.getHistory(sessionId) || [];
+    const history = await this.getHistory(sessionId);
     const geminiResponse = await callGemini(history);
     const aiContent = geminiResponse.text;
     if (!aiContent) {
