@@ -8,15 +8,12 @@ export class ChatRepository {
 
   constructor() {
     this.client = createClient({
-      // Docker Compose 환경 변수를 사용하거나, 없으면 로컬 주소를 사용
       url: process.env.REDIS_URL || "redis://localhost:6379",
     });
     this.client.connect().catch(console.error);
     console.log("✅ Redis client connected");
   }
 
-  // ... (나머지 코드는 이전 답변과 동일합니다) ...
-  // --- Session과 WebSocket 매핑은 계속 메모리에 유지 ---
   public mapClientToSession(ws: WebSocket, sessionId: string) {
     this.wsToSessionId.set(ws, sessionId);
   }
@@ -42,7 +39,16 @@ export class ChatRepository {
   public async getHistory(sessionId: string): Promise<Message[]> {
     const key = `history:${sessionId}`;
     const historyJson = await this.client.get(key);
-    return historyJson ? JSON.parse(historyJson) : [];
+
+    if (!historyJson) {
+      return [];
+    }
+    const history = JSON.parse(historyJson);
+    if (Array.isArray(history)) {
+      return history;
+    } else {
+      return [];
+    }
   }
 
   public async setHistory(sessionId: string, history: Message[]) {
