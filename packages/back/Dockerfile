@@ -22,7 +22,8 @@ COPY packages/common/ ./packages/common/
 COPY packages/back/ ./packages/back/
 
 # 7. 백엔드 앱 빌드
+RUN yarn workspace common build
 RUN yarn workspace back build
 
 # 8. 서버 실행 명령어
-CMD node packages/back/dist/server.js
+CMD ["yarn", "workspace", "back", "start"]

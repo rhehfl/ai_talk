@@ -31,7 +31,7 @@ export class ChatService {
     return { finalSessionId, isNew };
   }
   public async getHistory(sessionId: string): Promise<Message[]> {
-    return (await this.chatRepository.getHistory(sessionId)) || [];
+    return await this.chatRepository.getHistory(sessionId);
   }
 
   public async processMessage(ws: WebSocket, userMessage: string) {

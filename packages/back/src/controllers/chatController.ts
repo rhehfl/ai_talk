@@ -7,7 +7,7 @@ import { Message, S2cBroadcastMessage, S2cSessionCreated } from "common";
 export class ChatController {
   constructor(private chatService: ChatService) {}
 
-  public initialize(ws: WebSocket, sessionId: string | null) {
+  public async initialize(ws: WebSocket, sessionId: string | null) {
     const { finalSessionId, isNew } = this.chatService.initializeSession(
       ws,
       sessionId,
@@ -20,7 +20,7 @@ export class ChatController {
       };
       ws.send(JSON.stringify(sessionMsg));
     }
-    const history = this.chatService.getHistory(finalSessionId);
+    const history = await this.chatService.getHistory(finalSessionId);
     ws.send(JSON.stringify({ type: "HISTORY", content: history }));
   }
 
