@@ -1,4 +1,1 @@
-export interface Message {
-  author: "user" | "Gemini";
-  content: string;
-}
+export * from "./chat";

@@ -9,7 +9,6 @@ import {
   isS2cHistory,
   isS2cSessionCreated,
   Message,
-  ServerToClientMessage,
 } from "common";
 import { WEBSOCKET_URL } from "@/app/chat/_constants";
 
@@ -33,8 +32,7 @@ export const useSocket = () => {
     };
 
     ws.onmessage = (event) => {
-      const received: ServerToClientMessage = JSON.parse(event.data);
-      console.log("Received:", received);
+      const received = JSON.parse(event.data);
 
       if (isS2cSessionCreated(received)) {
         setSessionId(received.payload.sessionId);
@@ -64,7 +62,7 @@ export const useSocket = () => {
     if (socket && socket.readyState === WebSocket.OPEN) {
       const message: C2sSendMessage = {
         type: "C2S_SEND_MESSAGE",
-        payload: { content },
+        payload: { author: "user", content },
       };
       setIsLoading(true);
       socket.send(JSON.stringify(message));

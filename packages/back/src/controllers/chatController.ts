@@ -8,7 +8,7 @@ export class ChatController {
   constructor(private chatService: ChatService) {}
 
   public async initialize(ws: WebSocket, sessionId: string | null) {
-    const { finalSessionId, isNew } = this.chatService.initializeSession(
+    const { finalSessionId, isNew } = await this.chatService.initializeSession(
       ws,
       sessionId,
     );

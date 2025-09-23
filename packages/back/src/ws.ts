@@ -17,19 +17,16 @@ export default (server: http.Server) => {
 
   wss.on("connection", (ws: InitializedWebSocket) => {
     console.log("🚀 클라이언트 연결됨");
-    ws.isInitialized = false; // 👈 연결 시 초기화 상태를 false로 설정
+    ws.isInitialized = false;
 
     ws.on("message", (data: string) => {
       try {
         const message = JSON.parse(data);
 
-        // INIT 메시지는 항상 처리
         if (isC2sInit(message)) {
           chatController.initialize(ws, message.payload.sessionId);
-          ws.isInitialized = true; // 👈 초기화 완료 후 상태를 true로 변경
-        }
-        // 👇 초기화가 완료된 클라이언트의 메시지만 처리
-        else if (ws.isInitialized && isC2sSendMessage(message)) {
+          ws.isInitialized = true;
+        } else if (ws.isInitialized && isC2sSendMessage(message)) {
           chatController.handleMessage(wss, ws, message.payload.content);
         } else if (!ws.isInitialized) {
           console.warn(

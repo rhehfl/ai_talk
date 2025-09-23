@@ -7,10 +7,10 @@ import { callGemini } from "../client";
 export class ChatService {
   constructor(private chatRepository: ChatRepository) {}
 
-  public initializeSession(
+  public async initializeSession(
     ws: WebSocket,
     sessionId: string | null,
-  ): { finalSessionId: string; isNew: boolean } {
+  ): Promise<{ finalSessionId: string; isNew: boolean }> {
     let finalSessionId = sessionId;
     let isNew = false;
 
@@ -18,13 +18,12 @@ export class ChatService {
       isNew = true;
       finalSessionId = uuidv4();
       this.chatRepository.setHistory(finalSessionId, []);
-    } else if (!this.chatRepository.getHistory(finalSessionId)) {
-      console.log(
-        "No history found for sessionId:",
-        this.chatRepository.getHistory(finalSessionId),
-      );
+    } else {
+      const history = await this.chatRepository.getHistory(finalSessionId);
       isNew = false;
-      this.chatRepository.setHistory(finalSessionId, []);
+      if (!history || history.length === 0) {
+        await this.chatRepository.setHistory(finalSessionId, []);
+      }
     }
 
     this.chatRepository.mapClientToSession(ws, finalSessionId);
