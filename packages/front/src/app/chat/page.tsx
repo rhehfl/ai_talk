@@ -12,7 +12,6 @@ const getOrCreateSession = async (): Promise<string> => {
   return data.sessionId;
 };
 export default function ChatPage() {
-  getOrCreateSession();
   const { sendMessage, messages, isLoading } = useSocket();
   const handleSendMessage = (msg: string) => {
     sendMessage(msg);

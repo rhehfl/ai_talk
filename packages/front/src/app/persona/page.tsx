@@ -1,3 +1,5 @@
+import { PersonaCard } from "@/app/persona/_components/PersonaCard";
+import { PERSONA_PROMPTS } from "common";
 import Link from "next/link";
 
 export default function PersonasPage() {
@@ -12,11 +14,11 @@ export default function PersonasPage() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {/* {ALL_PERSONAS.map((persona) => (
+          {PERSONA_PROMPTS.map((persona) => (
             <Link key={persona.id} href={`/chat?personaId=${persona.id}`}>
               <PersonaCard persona={persona} />
             </Link>
-          ))} */}
+          ))}
         </div>
       </div>
     </div>
