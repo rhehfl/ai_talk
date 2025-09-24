@@ -16,7 +16,9 @@ export function PersonaCard({ persona }: PersonaCardProps) {
           width={200}
           height={200}
         />
+        <p>{persona.description}</p>
       </div>
+
       <div className="mt-6 text-right">
         <span className="text-indigo-600 font-semibold hover:text-indigo-800">
           대화 시작하기 &rarr;

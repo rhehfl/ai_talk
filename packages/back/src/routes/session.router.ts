@@ -9,6 +9,6 @@ const chatRepository = new ChatRepository();
 const sessionService = new SessionService(chatRepository);
 const sessionController = new SessionController(sessionService);
 
-router.post("/", sessionController.createSession);
+router.post("/", sessionController.createSession.bind(sessionController));
 
 export default router;

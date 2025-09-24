@@ -1,6 +1,6 @@
 import { ChatRepository } from "../repositories/chatRepository";
 import { Message } from "common";
-import { v4 as uuidv4 } from "uuid";
+
 import { WebSocket } from "ws";
 import { callGemini } from "../client";
 

@@ -4,12 +4,6 @@ import { cookies } from "next/headers";
 const SESSION_COOKIE_KEY = "chat_session_id";
 const BACKEND_API_URL = "http://localhost:8080/api/sessions";
 
-/**
- * 이 핸들러는 클라이언트의 세션 생성 요청을 받아 처리합니다.
- * 1. 쿠키 확인
- * 2. 없으면 백엔드에 새 세션 요청
- * 3. 받은 세션 ID를 쿠키에 저장하고, 클라이언트에도 반환
- */
 export async function POST(request: NextRequest) {
   const cookieStore = await cookies();
   let sessionId = cookieStore.get(SESSION_COOKIE_KEY)?.value;
@@ -35,7 +29,6 @@ export async function POST(request: NextRequest) {
     }
   }
 
-  // API Route Handler의 응답 객체를 생성합니다.
   const response = NextResponse.json({ sessionId });
 
   // 만약 새로운 세션이었다면, 여기서 쿠키를 설정합니다.
