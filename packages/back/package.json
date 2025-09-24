@@ -4,6 +4,8 @@
   "dependencies": {
     "@google/genai": "^1.17.0",
     "common": "workspace:*",
+    "cookie": "^1.0.2",
+    "cors": "^2.8.5",
     "dotenv": "^17.2.2",
     "express": "^5.1.0",
     "redis": "^5.8.2",
@@ -11,6 +13,8 @@
     "ws": "^8.18.3"
   },
   "devDependencies": {
+    "@types/cookie": "^1.0.0",
+    "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
     "@types/node": "^24.3.1",
     "@types/uuid": "^10.0.0",

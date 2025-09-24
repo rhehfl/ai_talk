@@ -3,8 +3,16 @@
 import { ChatRoom, ChatSendForm, SideBar } from "@/app/chat/_components";
 import AILoadingMessage from "@/app/chat/_components/AILoadingMessage";
 import { useSocket } from "@/app/chat/_hooks";
-
+const getOrCreateSession = async (): Promise<string> => {
+  const response = await fetch("/api/session", { method: "POST" });
+  if (!response.ok) {
+    throw new Error("Failed to get session from Next.js server");
+  }
+  const data = await response.json();
+  return data.sessionId;
+};
 export default function ChatPage() {
+  getOrCreateSession();
   const { sendMessage, messages, isLoading } = useSocket();
   const handleSendMessage = (msg: string) => {
     sendMessage(msg);

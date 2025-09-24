@@ -7,7 +7,8 @@ export class SessionController {
   constructor(private sessionService: SessionService) {}
 
   public createSession = (req: Request, res: Response) => {
-    const { sessionId } = req.body as { sessionId: string | null };
+    console.log("Received sessionId:", req.body);
+    const sessionId = req.body;
 
     if (sessionId) {
       res.status(201).json({ sessionId });

@@ -4,6 +4,7 @@ import { ChatRepository } from "./repositories/chatRepository";
 import { ChatService } from "./services/chatService";
 import { ChatController } from "./controllers/chatController";
 import { isC2sInit, isC2sSendMessage } from "common";
+import { parse } from "cookie";
 interface InitializedWebSocket extends WebSocket {
   isInitialized?: boolean;
 }
@@ -15,33 +16,38 @@ export default (server: http.Server) => {
   const chatService = new ChatService(chatRepository);
   const chatController = new ChatController(chatService);
 
-  wss.on("connection", (ws: InitializedWebSocket) => {
-    console.log("🚀 클라이언트 연결됨");
-    ws.isInitialized = false;
+  wss.on(
+    "connection",
+    (ws: InitializedWebSocket, req: http.IncomingMessage) => {
+      console.log("🚀 클라이언트 연결됨");
+      ws.isInitialized = false;
+      const cookieString = req.headers.cookie || "";
+      const cookies = parse(cookieString);
+      const sessionId = cookies.chat_session_id ?? null;
+      ws.on("message", (data: string) => {
+        try {
+          const message = JSON.parse(data);
 
-    ws.on("message", (data: string) => {
-      try {
-        const message = JSON.parse(data);
-
-        if (isC2sInit(message)) {
-          chatController.initialize(ws, message.payload.sessionId);
-          ws.isInitialized = true;
-        } else if (ws.isInitialized && isC2sSendMessage(message)) {
-          chatController.handleMessage(ws, message.payload.content);
-        } else if (!ws.isInitialized) {
-          console.warn(
-            "세션이 초기화되지 않은 클라이언트의 메시지를 무시합니다.",
-          );
+          if (isC2sInit(message)) {
+            chatController.initialize(ws, sessionId);
+            ws.isInitialized = true;
+          } else if (ws.isInitialized && isC2sSendMessage(message)) {
+            chatController.handleMessage(ws, message.payload.content);
+          } else if (!ws.isInitialized) {
+            console.warn(
+              "세션이 초기화되지 않은 클라이언트의 메시지를 무시합니다.",
+            );
+          }
+        } catch (error) {
+          console.error("메시지 처리 중 오류:", error);
         }
-      } catch (error) {
-        console.error("메시지 처리 중 오류:", error);
-      }
-    });
+      });
 
-    ws.on("close", () => {
-      chatController.disconnect(ws);
-    });
+      ws.on("close", () => {
+        chatController.disconnect(ws);
+      });
 
-    ws.on("error", console.error);
-  });
+      ws.on("error", console.error);
+    },
+  );
 };
