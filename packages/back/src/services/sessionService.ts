@@ -1,0 +1,12 @@
+import { ChatRepository } from "../repositories/chatRepository";
+import { v4 as uuidv4 } from "uuid";
+
+export class SessionService {
+  constructor(private chatRepository: ChatRepository) {}
+
+  public async createNewSession() {
+    const sessionId = uuidv4();
+    await this.chatRepository.setHistory(sessionId, []);
+    return sessionId;
+  }
+}

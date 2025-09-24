@@ -7,38 +7,20 @@ import { callGemini } from "../client";
 export class ChatService {
   constructor(private chatRepository: ChatRepository) {}
 
-  public async initializeSession(
-    ws: WebSocket,
-    sessionId: string | null,
-  ): Promise<{ finalSessionId: string; isNew: boolean }> {
-    let finalSessionId = sessionId;
-    let isNew = false;
-
-    if (!finalSessionId) {
-      isNew = true;
-      finalSessionId = uuidv4();
-      this.chatRepository.setHistory(finalSessionId, []);
-    } else {
-      const history = await this.chatRepository.getHistory(finalSessionId);
-      isNew = false;
-      if (!history || history.length === 0) {
-        await this.chatRepository.setHistory(finalSessionId, []);
-      }
-    }
-
-    this.chatRepository.mapClientToSession(ws, finalSessionId);
-    return { finalSessionId, isNew };
+  public async initializeSession(ws: WebSocket, sessionId: string | null) {
+    if (!sessionId) return;
+    this.chatRepository.mapClientToSession(ws, sessionId);
   }
+
   public async getHistory(sessionId: string): Promise<Message[]> {
     return await this.chatRepository.getHistory(sessionId);
   }
 
   public async processMessage(ws: WebSocket, userMessage: string) {
     const sessionId = this.chatRepository.getSessionId(ws);
-    console.log("Session ID:", userMessage);
     if (!sessionId) return null;
 
-    this.chatRepository.addMessage(sessionId, {
+    await this.chatRepository.addMessage(sessionId, {
       author: "user",
       content: userMessage,
     });

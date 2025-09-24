@@ -8,27 +8,14 @@ export class ChatController {
   constructor(private chatService: ChatService) {}
 
   public async initialize(ws: WebSocket, sessionId: string | null) {
-    const { finalSessionId, isNew } = await this.chatService.initializeSession(
-      ws,
-      sessionId,
-    );
+    if (!sessionId) return;
+    await this.chatService.initializeSession(ws, sessionId);
 
-    if (isNew) {
-      const sessionMsg: S2cSessionCreated = {
-        type: "S2C_SESSION_CREATED",
-        payload: { sessionId: finalSessionId },
-      };
-      ws.send(JSON.stringify(sessionMsg));
-    }
-    const history = await this.chatService.getHistory(finalSessionId);
+    const history = await this.chatService.getHistory(sessionId);
     ws.send(JSON.stringify({ type: "HISTORY", content: history }));
   }
 
-  public async handleMessage(
-    wss: WebSocketServer,
-    ws: WebSocket,
-    content: string,
-  ) {
+  public async handleMessage(ws: WebSocket, content: string) {
     const aiMessage = await this.chatService.processMessage(ws, content);
     if (!aiMessage) return;
 

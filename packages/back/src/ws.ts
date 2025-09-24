@@ -27,7 +27,7 @@ export default (server: http.Server) => {
           chatController.initialize(ws, message.payload.sessionId);
           ws.isInitialized = true;
         } else if (ws.isInitialized && isC2sSendMessage(message)) {
-          chatController.handleMessage(wss, ws, message.payload.content);
+          chatController.handleMessage(ws, message.payload.content);
         } else if (!ws.isInitialized) {
           console.warn(
             "세션이 초기화되지 않은 클라이언트의 메시지를 무시합니다.",
