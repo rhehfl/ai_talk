@@ -29,4 +29,8 @@ export class PersonaController {
       personaId: result,
     });
   };
+  public getPersona = async (req: Request, res: Response) => {
+    const personas = await this.personaService.getAllPersonas();
+    res.status(200).json(personas);
+  };
 }

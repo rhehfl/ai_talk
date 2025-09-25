@@ -8,6 +8,7 @@ const personaRepository = new PersonaRepository();
 const personaService = new PersonaService(personaRepository);
 const personaController = new PersonaController(personaService);
 
-router.post("/", personaController.setSessionPersona);
+router.get("/", personaController.getPersona.bind(personaService));
+router.post("/", personaController.setSessionPersona.bind(personaService));
 
 export default router;

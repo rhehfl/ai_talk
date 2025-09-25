@@ -24,4 +24,7 @@ export class PersonaRepository {
     const key = `session_persona:${sessionId}`;
     return this.client.get(key);
   }
+  public async getAllPersonas() {
+    return PERSONA_PROMPTS;
+  }
 }

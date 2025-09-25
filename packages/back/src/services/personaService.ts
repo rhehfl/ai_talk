@@ -16,4 +16,7 @@ export class PersonaService {
     //페르소나 id로 값 가져오기
     // return this.personaRepository.getSessionPersonaId(sessionId);
   }
+  public async getAllPersonas() {
+    return this.personaRepository.getAllPersonas();
+  }
 }
