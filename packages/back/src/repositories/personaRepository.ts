@@ -1,4 +1,5 @@
 import { createClient, RedisClientType } from "redis";
+import { PERSONA_PROMPTS } from "../constants/persona";
 
 export class PersonaRepository {
   private client: RedisClientType;
@@ -25,6 +26,10 @@ export class PersonaRepository {
     return this.client.get(key);
   }
   public async getAllPersonas() {
-    return PERSONA_PROMPTS;
+    return PERSONA_PROMPTS.map((persona) => ({
+      id: persona.id,
+      image: persona.image,
+      description: persona.description,
+    }));
   }
 }

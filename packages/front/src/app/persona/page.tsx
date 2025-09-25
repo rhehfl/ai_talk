@@ -1,6 +1,6 @@
-import { PersonaCard } from "@/app/persona/_components/PersonaCard";
-import { PERSONA_PROMPTS } from "common";
-import Link from "next/link";
+"use client";
+import { PersonaContainer } from "@/app/persona/_components";
+import { Suspense } from "react";
 
 export default function PersonasPage() {
   return (
@@ -12,14 +12,9 @@ export default function PersonasPage() {
             대화하고 싶은 AI의 인격을 선택해주세요.
           </p>
         </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {PERSONA_PROMPTS.map((persona) => (
-            <Link key={persona.id} href={`/chat?personaId=${persona.id}`}>
-              <PersonaCard persona={persona} />
-            </Link>
-          ))}
-        </div>
+        <Suspense fallback={<div>Loading...</div>}>
+          <PersonaContainer />
+        </Suspense>
       </div>
     </div>
   );

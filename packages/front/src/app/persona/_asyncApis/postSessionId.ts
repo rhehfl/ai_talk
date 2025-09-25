@@ -1,4 +1,4 @@
-export const getSessionId = async (): Promise<string> => {
+export const postSessionId = async (): Promise<string> => {
   const json = await fetch("/api/session", {
     method: "POST",
     cache: "no-store",

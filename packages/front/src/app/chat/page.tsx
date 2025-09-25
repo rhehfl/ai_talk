@@ -2,10 +2,10 @@
 
 import { ChatRoom, ChatSendForm, SideBar } from "@/app/chat/_components";
 import AILoadingMessage from "@/app/chat/_components/AILoadingMessage";
-import { useSession, useSocket } from "@/app/chat/_hooks";
+import { useSocket } from "@/app/chat/_hooks";
+import { useParams } from "next/navigation";
 
 export default function ChatPage() {
-  useSession();
   const { sendMessage, messages, isLoading } = useSocket();
   const handleSendMessage = (msg: string) => {
     sendMessage(msg);

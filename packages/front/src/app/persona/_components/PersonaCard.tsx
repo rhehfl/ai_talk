@@ -1,3 +1,5 @@
+import { postSessionId } from "@/app/persona/_asyncApis";
+import { useMutation } from "@tanstack/react-query";
 import { Persona } from "common";
 import Image from "next/image";
 
@@ -5,9 +7,18 @@ interface PersonaCardProps {
   persona: Persona;
 }
 
-export function PersonaCard({ persona }: PersonaCardProps) {
+export default function PersonaCard({ persona }: PersonaCardProps) {
+  const mutation = useMutation({ mutationFn: postSessionId });
+
+  const handleClick = () => {
+    mutation.mutate();
+  };
   return (
-    <div className="bg-gray-100 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out h-full flex flex-col p-6 cursor-pointer">
+    <button
+      type="button"
+      onClick={handleClick}
+      className="bg-gray-100 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out h-full flex flex-col p-6 cursor-pointer"
+    >
       <div>
         <Image
           className="rounded-full"
@@ -24,6 +35,6 @@ export function PersonaCard({ persona }: PersonaCardProps) {
           대화 시작하기 &rarr;
         </span>
       </div>
-    </div>
+    </button>
   );
 }
