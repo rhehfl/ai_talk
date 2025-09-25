@@ -3,9 +3,13 @@ import { Message } from "common";
 
 import { WebSocket } from "ws";
 import { callGemini } from "../client";
+import { PersonaRepository } from "../repositories/personaRepository";
 
 export class ChatService {
-  constructor(private chatRepository: ChatRepository) {}
+  constructor(
+    private chatRepository: ChatRepository,
+    private personaRepository: PersonaRepository,
+  ) {}
 
   public async initializeSession(ws: WebSocket, sessionId: string | null) {
     if (!sessionId) return;
@@ -25,7 +29,11 @@ export class ChatService {
       content: userMessage,
     });
     const history = await this.getHistory(sessionId);
-    const geminiResponse = await callGemini(history);
+    const systemInstruction =
+      (await this.personaRepository.getSessionPersonaId(sessionId)) ??
+      "You are a helpful assistant.";
+    console.log("System Instruction:", systemInstruction);
+    const geminiResponse = await callGemini(history, systemInstruction);
     const aiContent = geminiResponse.text;
     if (!aiContent) {
       return;

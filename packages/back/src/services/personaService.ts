@@ -1,14 +1,17 @@
+import { PERSONA_PROMPTS } from "../constants/persona";
 import { PersonaRepository } from "../repositories/personaRepository";
 
 export class PersonaService {
   constructor(private personaRepository: PersonaRepository) {}
 
-  public async setPersonaForSession(
-    sessionId: string,
+  public async setPersona(
     personaId: string,
+    sessionId: string,
   ): Promise<string | null> {
-    await this.personaRepository.setSessionPersona(sessionId, personaId);
+    const persona = PERSONA_PROMPTS.find((p) => p.id.toString() === personaId);
+    if (!persona) return null;
 
+    await this.personaRepository.setSessionPersona(sessionId, personaId);
     return personaId;
   }
 

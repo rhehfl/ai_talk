@@ -1,17 +1,25 @@
-import { postSessionId } from "@/app/persona/_asyncApis";
+"use client";
+
+import { setPersona } from "@/app/persona/_asyncApis";
 import { useMutation } from "@tanstack/react-query";
 import { Persona } from "common";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 interface PersonaCardProps {
   persona: Persona;
 }
 
 export default function PersonaCard({ persona }: PersonaCardProps) {
-  const mutation = useMutation({ mutationFn: postSessionId });
+  const router = useRouter();
+  const mutation = useMutation({ mutationFn: setPersona });
 
   const handleClick = () => {
-    mutation.mutate();
+    mutation.mutate(persona.id, {
+      onSuccess: () => {
+        router.push("/chat");
+      },
+    });
   };
   return (
     <button

@@ -3,9 +3,10 @@
 import { ChatRoom, ChatSendForm, SideBar } from "@/app/chat/_components";
 import AILoadingMessage from "@/app/chat/_components/AILoadingMessage";
 import { useSocket } from "@/app/chat/_hooks";
-import { useParams } from "next/navigation";
+import { useSession } from "@/app/persona/_hooks/useSession";
 
 export default function ChatPage() {
+  useSession();
   const { sendMessage, messages, isLoading } = useSocket();
   const handleSendMessage = (msg: string) => {
     sendMessage(msg);

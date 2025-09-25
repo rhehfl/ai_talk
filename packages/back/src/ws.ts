@@ -5,6 +5,7 @@ import { ChatService } from "./services/chatService";
 import { ChatController } from "./controllers/chatController";
 import { isC2sInit, isC2sSendMessage } from "common";
 import { parse } from "cookie";
+import { PersonaRepository } from "./repositories/personaRepository";
 interface InitializedWebSocket extends WebSocket {
   isInitialized?: boolean;
 }
@@ -13,7 +14,8 @@ export default (server: http.Server) => {
   const wss = new WebSocketServer({ server });
 
   const chatRepository = new ChatRepository();
-  const chatService = new ChatService(chatRepository);
+  const personaRepository = new PersonaRepository();
+  const chatService = new ChatService(chatRepository, personaRepository);
   const chatController = new ChatController(chatService);
 
   wss.on(
