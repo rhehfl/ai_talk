@@ -21,14 +21,12 @@ jobs:
     steps:
       - name: Checkout source code
         uses: actions/checkout@v3
-
       - name: Log in to GHCR
         uses: docker/login-action@v2
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
@@ -49,15 +47,10 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            # 1. 변수를 docker compose 명령어에 직접 전달합니다.
-            #    이렇게 하면 변수가 사라지지 않고 정확하게 적용됩니다.
-            IMAGE_URL=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest \
-            GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }} \
+            # 1. EC2에 있는 .env 파일의 IMAGE_URL 값만 최신 버전으로 덮어씁니다.
+            echo "IMAGE_URL=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest" >> ~/.env
+
+            # 2. EC2에 미리 만들어 둔 docker-compose.yml과 .env 파일을 사용하여 서비스를 실행합니다.
             sudo docker compose -f ~/docker-compose.yml pull
-
-            IMAGE_URL=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest \
-            GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }} \
             sudo docker compose -f ~/docker-compose.yml up -d
-
-            # 3. 불필요한 이미지를 정리합니다.
             sudo docker image prune -f
