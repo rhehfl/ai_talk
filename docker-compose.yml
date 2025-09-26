@@ -1,22 +1,20 @@
 version: "3.8"
-
 services:
   backend:
-    image: ${IMAGE_URL}
+    image: ghcr.io/rhehfl/ai_talk:latest # 이미지 주소만 남깁니다.
     ports:
       - "8080:8080"
     depends_on:
       - redis
     environment:
       - REDIS_URL=redis://redis:6379
-      - GEMINI_API_KEY=${GEMINI_API_KEY}
-
+    env_file:
+      - ./packages/back/.env
   redis:
     image: "redis:alpine"
     ports:
       - "6379:6379"
     volumes:
       - redis-data:/data
-
 volumes:
   redis-data:
