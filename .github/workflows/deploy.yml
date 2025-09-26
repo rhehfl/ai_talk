@@ -1,0 +1,86 @@
+# .github/workflows/deploy.yml
+
+name: Deploy to EC2 with GHCR
+
+on:
+  push:
+    branches:
+      - main
+
+# GITHUB_USER/REPO_NAME 을 소문자로 설정하기 위한 환경 변수
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }} # 예: your-username/ai-talk
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      # 1. 소스 코드 체크아웃
+      - name: Checkout source code
+        uses: actions/checkout@v3
+
+      # 2. GHCR에 로그인 (secrets.GITHUB_TOKEN 사용)
+      - name: Log in to the Container registry
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # 3. Docker 이미지 빌드 및 GHCR에 푸시
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: ./packages/back/Dockerfile
+          push: true
+          # 이미지 태그를 GHCR 형식으로 변경 (소문자 변환 포함)
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+
+      # 4. EC2에 접속하여 배포
+      - name: Deploy to EC2 instance
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            # EC2에서 GHCR에 로그인
+            echo ${{ secrets.GITHUB_TOKEN }} | docker login ${{ env.REGISTRY }} -u ${{ github.actor }} --password-stdin
+
+            # docker-compose.yml 파일이 없다면 생성 (이미지 경로를 GHCR로 변경)
+            if [ ! -f docker-compose.yml ]; then
+              echo "version: '3.8'
+            services:
+              backend:
+                image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest # GHCR 이미지 경로
+                ports:
+                  - '8080:8080'
+                depends_on:
+                  - redis
+                environment:
+                  - REDIS_URL=redis://redis:6379
+                  - GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}
+              redis:
+                image: 'redis:alpine'
+                ports:
+                  - '6379:6379'
+                volumes:
+                  - redis-data:/data
+            volumes:
+              redis-data:" > docker-compose.yml
+            fi
+
+            # GHCR에서 최신 버전의 백엔드 이미지를 받아옴
+            docker-compose pull backend
+
+            # 백엔드 컨테이너만 재시작
+            docker-compose up -d --no-deps backend
+
+            # 불필요한 Docker 이미지 정리
+            docker image prune -f
