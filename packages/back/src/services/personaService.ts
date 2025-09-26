@@ -5,10 +5,10 @@ export class PersonaService {
   constructor(private personaRepository: PersonaRepository) {}
 
   public async setPersona(
-    personaId: string,
+    personaId: number,
     sessionId: string,
-  ): Promise<string | null> {
-    const persona = PERSONA_PROMPTS.find((p) => p.id.toString() === personaId);
+  ): Promise<number | null> {
+    const persona = PERSONA_PROMPTS.find((p) => p.id === personaId);
     if (!persona) return null;
 
     await this.personaRepository.setSessionPersona(sessionId, personaId);

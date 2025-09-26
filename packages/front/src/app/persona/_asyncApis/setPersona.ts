@@ -9,6 +9,7 @@ export const setPersona = async (personaId: number): Promise<Persona> => {
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include",
 
       body: JSON.stringify({ personaId }),
     },

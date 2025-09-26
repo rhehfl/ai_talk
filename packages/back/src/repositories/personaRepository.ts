@@ -15,15 +15,19 @@ export class PersonaRepository {
 
   public async setSessionPersona(
     sessionId: string,
-    personaId: string,
+    personaId: number,
   ): Promise<void> {
     const key = `session_persona:${sessionId}`;
-    await this.client.set(key, personaId);
+    const persona = PERSONA_PROMPTS.find((p) => p.id === personaId);
+    await this.client.set(key, persona?.prompt ?? "");
   }
 
-  public async getSessionPersonaId(sessionId: string): Promise<string | null> {
+  public async getSessionPersonaPrompt(
+    sessionId: string,
+  ): Promise<string | null> {
     const key = `session_persona:${sessionId}`;
-    return this.client.get(key);
+    const prompt = await this.client.get(key);
+    return prompt;
   }
   public async getAllPersonas() {
     return PERSONA_PROMPTS.map((persona) => ({

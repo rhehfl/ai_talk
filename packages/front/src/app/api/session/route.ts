@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
   if (isNew && sessionId) {
     response.cookies.set(SESSION_COOKIE_KEY, sessionId, {
       httpOnly: true,
-      sameSite: "strict",
+      sameSite: "lax",
       path: "/",
     });
   }

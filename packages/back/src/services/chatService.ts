@@ -30,7 +30,7 @@ export class ChatService {
     });
     const history = await this.getHistory(sessionId);
     const systemInstruction =
-      (await this.personaRepository.getSessionPersonaId(sessionId)) ??
+      (await this.personaRepository.getSessionPersonaPrompt(sessionId)) ??
       "You are a helpful assistant.";
     console.log("System Instruction:", systemInstruction);
     const geminiResponse = await callGemini(history, systemInstruction);
