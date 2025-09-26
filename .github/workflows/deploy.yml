@@ -42,7 +42,6 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      # 2. EC2에 접속하여 배포 실행
       - name: Deploy with Docker Compose
         uses: appleboy/ssh-action@master
         with:
@@ -50,9 +49,15 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            export IMAGE_URL=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
-            export GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}
-
+            # 1. 변수를 docker compose 명령어에 직접 전달합니다.
+            #    이렇게 하면 변수가 사라지지 않고 정확하게 적용됩니다.
+            IMAGE_URL=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest \
+            GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }} \
             sudo docker compose -f ~/docker-compose.yml pull
+
+            IMAGE_URL=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest \
+            GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }} \
             sudo docker compose -f ~/docker-compose.yml up -d
+
+            # 3. 불필요한 이미지를 정리합니다.
             sudo docker image prune -f
