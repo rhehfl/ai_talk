@@ -70,7 +70,7 @@ jobs:
               redis-data:
             EOF
 
-            # Docker Compose로 배포 (명령어 수정!)
-            docker compose -f ~/docker-compose.yml pull backend
-            docker compose -f ~/docker-compose.yml up -d --no-deps backend
-            docker image prune -f
+            # Docker Compose로 배포 (모든 명령어에 sudo 추가!)
+            sudo docker compose -f ~/docker-compose.yml pull backend
+            sudo docker compose -f ~/docker-compose.yml up -d --no-deps backend
+            sudo docker image prune -f
