@@ -5,7 +5,6 @@ export interface Message {
 
 export interface C2sInit {
   type: "C2S_INIT";
-  payload: { sessionId: string | null };
 }
 
 export interface C2sSendMessage {
