@@ -24,4 +24,4 @@ RUN yarn workspace back build
 
 
 # 8. 서버 실행 명령어
-CMD ["/bin/sh", "-c", "exec yarn workspace back start"]
+CMD ["node", "--require", "./.pnp.cjs", "packages/back/dist/server.js"] 
