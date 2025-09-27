@@ -36,7 +36,6 @@ jobs:
           file: ./packages/back/Dockerfile
           push: true
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
-          # ✅ Docker 빌드 시점에 GEMINI_API_KEY를 전달합니다.
           build-args: |
             GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}
 
@@ -52,6 +51,7 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
+            export GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY }}"
             # ✅ EC2에서는 이제 정말 pull과 up만 실행합니다.
             sudo docker compose -f ~/docker-compose.yml pull
             sudo docker compose -f ~/docker-compose.yml up -d --force-recreate
