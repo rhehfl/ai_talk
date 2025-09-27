@@ -9,7 +9,7 @@ services:
     environment:
       - REDIS_URL=redis://redis:6379
     env_file:
-      - ./packages/back/.env
+      - /home/ubuntu/.env
   redis:
     image: "redis:alpine"
     ports:
