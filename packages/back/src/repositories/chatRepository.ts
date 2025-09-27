@@ -10,8 +10,12 @@ export class ChatRepository {
     this.client = createClient({
       url: process.env.REDIS_URL || "redis://localhost:6379",
     });
-    this.client.connect().catch(console.error);
+    this.client.connect();
     console.log("✅ Redis client connected");
+    this.client.on("error", (err) => {
+      console.error("❌ CRITICAL REDIS ERROR:", err);
+      process.exit(1);
+    });
   }
 
   public mapClientToSession(ws: WebSocket, sessionId: string) {
