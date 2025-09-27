@@ -1,4 +1,4 @@
-import { createClient } from "redis";
+import { createClient, RedisClientType } from "redis";
 import { WebSocket } from "ws";
 import { Message } from "common";
 
@@ -6,16 +6,8 @@ export class ChatRepository {
   private client;
   private wsToSessionId: Map<WebSocket, string> = new Map();
 
-  constructor() {
-    this.client = createClient({
-      url: process.env.REDIS_URL || "redis://localhost:6379",
-    });
-    this.client.connect();
-    console.log("✅ Redis client connected");
-    this.client.on("error", (err) => {
-      console.error("❌ CRITICAL REDIS ERROR:", err);
-      process.exit(1);
-    });
+  constructor(redisClient: RedisClientType) {
+    this.client = redisClient;
   }
 
   public mapClientToSession(ws: WebSocket, sessionId: string) {

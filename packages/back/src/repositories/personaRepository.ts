@@ -1,16 +1,11 @@
-import { createClient, RedisClientType } from "redis";
+import { RedisClientType } from "redis";
 import { PERSONA_PROMPTS } from "../constants/persona";
 
 export class PersonaRepository {
   private client: RedisClientType;
 
-  constructor() {
-    this.client = createClient({
-      url: process.env.REDIS_URL || "redis://localhost:6379",
-    });
-    if (!this.client.isOpen) {
-      this.client.connect().catch(console.error);
-    }
+  constructor(redisClient: RedisClientType) {
+    this.client = redisClient;
   }
 
   public async setSessionPersona(

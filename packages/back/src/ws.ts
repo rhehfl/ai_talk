@@ -6,6 +6,7 @@ import { ChatController } from "./controllers/chatController";
 import { isC2sInit, isC2sSendMessage } from "common";
 import { parse } from "cookie";
 import { PersonaRepository } from "./repositories/personaRepository";
+import { redisClient } from "./client";
 interface InitializedWebSocket extends WebSocket {
   isInitialized?: boolean;
 }
@@ -13,8 +14,8 @@ interface InitializedWebSocket extends WebSocket {
 export default (server: http.Server) => {
   const wss = new WebSocketServer({ server });
 
-  const chatRepository = new ChatRepository();
-  const personaRepository = new PersonaRepository();
+  const chatRepository = new ChatRepository(redisClient);
+  const personaRepository = new PersonaRepository(redisClient);
   const chatService = new ChatService(chatRepository, personaRepository);
   const chatController = new ChatController(chatService);
 

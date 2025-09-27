@@ -2,9 +2,10 @@ import { Router } from "express";
 import { PersonaController } from "../controllers/personaController";
 import { PersonaRepository } from "../repositories/personaRepository";
 import { PersonaService } from "../services/personaService";
+import { redisClient } from "../client";
 
 const router = Router();
-const personaRepository = new PersonaRepository();
+const personaRepository = new PersonaRepository(redisClient);
 const personaService = new PersonaService(personaRepository);
 const personaController = new PersonaController(personaService);
 
