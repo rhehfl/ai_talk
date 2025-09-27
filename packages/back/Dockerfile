@@ -21,12 +21,7 @@ COPY packages/back/ ./packages/back/
 RUN yarn workspace common build
 RUN yarn workspace back build
 
-# 7. 환경변수 설정
-# Redis 주소는 고정값이므로 여기에 직접 설정
-ENV REDIS_URL=redis://redis:6379
-# GEMINI_API_KEY는 빌드 시점에 외부에서 받아옵니다.
-ARG GEMINI_API_KEY
-ENV GEMINI_API_KEY=${GEMINI_API_KEY}
+
 
 # 8. 서버 실행 명령어
 CMD ["yarn", "workspace", "back", "start"]
