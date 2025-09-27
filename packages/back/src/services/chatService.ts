@@ -32,7 +32,6 @@ export class ChatService {
     const systemInstruction =
       (await this.personaRepository.getSessionPersonaPrompt(sessionId)) ??
       "You are a helpful assistant.";
-    console.log("System Instruction:", systemInstruction);
     const geminiResponse = await callGemini(history, systemInstruction);
     const aiContent = geminiResponse.text;
     if (!aiContent) {

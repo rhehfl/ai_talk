@@ -19,6 +19,8 @@ export class ChatController {
     const aiMessage = await this.chatService.processMessage(ws, content);
     if (!aiMessage) return;
 
+    console.log("AI Message:", aiMessage);
+
     const broadcastMsg: S2cBroadcastMessage = {
       type: "S2C_BROADCAST_MESSAGE",
       payload: aiMessage,

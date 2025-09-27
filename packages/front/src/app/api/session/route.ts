@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 
 const SESSION_COOKIE_KEY = "chat_session_id";
-const BACKEND_API_URL = "http://localhost:8080/api/sessions";
 
 export async function POST(request: NextRequest) {
   const cookieStore = await cookies();
@@ -11,10 +10,13 @@ export async function POST(request: NextRequest) {
 
   if (!sessionId) {
     try {
-      const response = await fetch(BACKEND_API_URL, {
-        method: "POST",
-        cache: "no-store",
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/sessions`,
+        {
+          method: "POST",
+          cache: "no-store",
+        },
+      );
 
       if (!response.ok) {
         throw new Error("Backend API call failed");
