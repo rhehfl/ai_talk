@@ -8,7 +8,6 @@ import {
   isS2cHistory,
   Message,
 } from "common";
-import { WEBSOCKET_URL } from "@/app/chat/_constants";
 
 export const useSocket = () => {
   const [socket, setSocket] = useState<WebSocket | null>(null);
@@ -17,7 +16,7 @@ export const useSocket = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const ws = new WebSocket(WEBSOCKET_URL);
+    const ws = new WebSocket(`${process.env.NEXT_PUBLIC_WS_URL}`);
 
     ws.onopen = () => {
       setIsConnected(true);
