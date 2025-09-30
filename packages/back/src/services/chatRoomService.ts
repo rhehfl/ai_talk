@@ -14,7 +14,6 @@ export class ChatRoomService {
     sessionId: string,
   ): Promise<Omit<Persona, "prompt"> | null> {
     const personaId = await this.personaRepository.getPersonaId(sessionId);
-    console.log("personaId", personaId);
 
     if (!personaId) {
       return null;
