@@ -27,6 +27,7 @@ export default (server: http.Server) => {
       const cookieString = req.headers.cookie || "";
       const cookies = parse(cookieString);
       const sessionId = cookies.chat_session_id ?? null;
+      console.log("ws진입", sessionId);
       ws.on("message", (data: string) => {
         try {
           const message = JSON.parse(data);
