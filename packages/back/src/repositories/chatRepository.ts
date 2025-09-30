@@ -22,7 +22,6 @@ export class ChatRepository {
     this.wsToSessionId.delete(ws);
   }
 
-  // --- 아래부터 Redis를 사용하는 비동기 메서드 ---
   public async setPersona(sessionId: string, personaId: string) {
     await this.client.hSet("personas", sessionId, personaId);
   }
