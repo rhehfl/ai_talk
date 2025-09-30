@@ -1,8 +1,6 @@
-// packages/back/src/controllers/chatController.ts
-
-import { WebSocketServer, WebSocket } from "ws";
+import { WebSocket } from "ws";
 import { ChatService } from "../services/chatService";
-import { Message, S2cBroadcastMessage, S2cSessionCreated } from "common";
+import { S2cBroadcastMessage } from "common";
 
 export class ChatController {
   constructor(private chatService: ChatService) {}

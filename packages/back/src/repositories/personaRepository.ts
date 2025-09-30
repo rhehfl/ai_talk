@@ -1,5 +1,6 @@
 import { RedisClientType } from "redis";
 import { PERSONA_PROMPTS } from "../constants/persona";
+import { Persona } from "common";
 
 export class PersonaRepository {
   private client: RedisClientType;
@@ -17,15 +18,13 @@ export class PersonaRepository {
     await this.client.set(key, personaId);
   }
 
-  public async getSessionPersonaPrompt(
-    sessionId: string,
-  ): Promise<string | null> {
+  public async getSessionPersona(sessionId: string): Promise<Persona | null> {
     const key = `session_persona:${sessionId}`;
     const personaId = await this.client.get(key);
     if (personaId === null) return null;
     const numberId = parseInt(personaId, 10);
     const persona = PERSONA_PROMPTS.find((p) => p.id === numberId);
-    return persona?.prompt ?? null;
+    return persona || null;
   }
 
   public async getPersonaId(sessionId: string) {

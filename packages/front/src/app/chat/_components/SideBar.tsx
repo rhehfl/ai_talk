@@ -14,8 +14,8 @@ export default function SideBar() {
           </div>
           <div className="ml-2 font-bold text-2xl">채팅방</div>
         </div>
-        <Suspense fallback={<div>Loading...</div>}>
-          <ProfileCard />
+        <Suspense fallback={<>Loading......</>}>
+          <ProfileCard size="large" />
         </Suspense>
       </div>
     </>

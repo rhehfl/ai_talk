@@ -29,10 +29,9 @@ export class ChatService {
       content: userMessage,
     });
     const history = await this.getHistory(sessionId);
-    const systemInstruction =
-      (await this.personaRepository.getSessionPersonaPrompt(sessionId)) ??
-      "You are a helpful assistant.";
-    const geminiResponse = await callGemini(history, systemInstruction);
+    const persona = await this.personaRepository.getSessionPersona(sessionId);
+    if (!persona) return null;
+    const geminiResponse = await callGemini(history, persona.prompt);
     const aiContent = geminiResponse.text;
 
     if (!aiContent) {
