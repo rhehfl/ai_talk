@@ -20,9 +20,7 @@ export class ChatRoomService {
       return null;
     }
 
-    const currentPersona = PERSONA_PROMPTS.find(
-      (p) => p.id.toString() === personaId,
-    );
+    const currentPersona = PERSONA_PROMPTS.find((p) => p.id === personaId);
 
     if (!currentPersona) {
       return null;

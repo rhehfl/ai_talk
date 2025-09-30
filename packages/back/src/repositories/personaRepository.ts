@@ -31,7 +31,7 @@ export class PersonaRepository {
     const key = `session_persona:${sessionId}`;
     const personaId = await this.client.get(key);
     if (personaId === null) return null;
-    return personaId;
+    return Number(personaId);
   }
 
   public async getAllPersonas() {

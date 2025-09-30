@@ -22,8 +22,11 @@ export class ChatRepository {
     this.wsToSessionId.delete(ws);
   }
 
-  public async getHistory(sessionId: string): Promise<Message[]> {
-    const key = `history:${sessionId}`;
+  public async getHistory(
+    sessionId: string,
+    personaId: number,
+  ): Promise<Message[]> {
+    const key = `history:${sessionId}:${personaId}`;
     const historyJson = await this.client.get(key);
 
     if (!historyJson) {
@@ -37,14 +40,22 @@ export class ChatRepository {
     }
   }
 
-  public async setHistory(sessionId: string, history: Message[]) {
-    const key = `history:${sessionId}`;
+  public async setHistory(
+    sessionId: string,
+    personaId: number,
+    history: Message[],
+  ) {
+    const key = `history:${sessionId}:${personaId}`;
     await this.client.set(key, JSON.stringify(history));
   }
 
-  public async addMessage(sessionId: string, message: Message) {
-    const history = await this.getHistory(sessionId);
+  public async addMessage(
+    sessionId: string,
+    personaId: number,
+    message: Message,
+  ) {
+    const history = await this.getHistory(sessionId, personaId);
     history.push(message);
-    await this.setHistory(sessionId, history);
+    await this.setHistory(sessionId, personaId, history);
   }
 }

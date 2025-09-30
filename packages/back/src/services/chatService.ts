@@ -17,33 +17,35 @@ export class ChatService {
   }
 
   public async getHistory(sessionId: string): Promise<Message[]> {
-    return await this.chatRepository.getHistory(sessionId);
+    const personaId = await this.personaRepository.getPersonaId(sessionId);
+    if (!personaId) return [];
+    return await this.chatRepository.getHistory(sessionId, personaId);
   }
 
   public async processMessage(ws: WebSocket, userMessage: string) {
     const sessionId = this.chatRepository.getSessionId(ws);
     if (!sessionId) return null;
 
-    await this.chatRepository.addMessage(sessionId, {
+    const persona = await this.personaRepository.getSessionPersona(sessionId);
+    if (!persona) return null;
+
+    await this.chatRepository.addMessage(sessionId, persona.id, {
       author: "user",
       content: userMessage,
     });
     const history = await this.getHistory(sessionId);
-    const persona = await this.personaRepository.getSessionPersona(sessionId);
-    if (!persona) return null;
+
     const geminiResponse = await callGemini(history, persona.prompt);
     const aiContent = geminiResponse.text;
 
-    if (!aiContent) {
-      return;
-    }
+    if (!aiContent) return null;
 
     const aiMessage: Message = {
       author: "Gemini",
       content: aiContent,
     };
 
-    this.chatRepository.addMessage(sessionId, aiMessage);
+    this.chatRepository.addMessage(sessionId, persona.id, aiMessage);
 
     return aiMessage;
   }
