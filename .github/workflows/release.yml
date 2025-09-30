@@ -1,0 +1,40 @@
+# .github/workflows/release.yml
+
+name: 🏷️ Semantic Release (Versioning)
+
+on:
+  # main 브랜치에 코드가 push될 때 (PR merge 포함) 실행됩니다.
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    name: Create Semantic Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Git Tag, Release, 파일 커밋을 위해 write 권한 필요
+      # packages: write # GHCR과 관련 없으므로 제거해도 됩니다.
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v3
+        with:
+          # Semantic Release가 모든 커밋을 분석할 수 있도록 fetch-depth를 0으로 설정합니다.
+          fetch-depth: 0
+
+      - name: Setup Node.js and Yarn
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+          cache: "yarn"
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      # Semantic Release 실행
+      - name: Run Semantic Release
+        uses: cycjimmy/semantic-release-action@v4
+        env:
+          # GitHub 토큰을 사용하여 Release 및 Tag를 생성합니다.
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

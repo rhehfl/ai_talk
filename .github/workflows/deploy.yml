@@ -1,9 +1,8 @@
 name: Deploy to EC2 with GHCR
 
 on:
-  push:
-    branches:
-      - main
+  release:
+    types: [published]
 
 env:
   REGISTRY: ghcr.io
@@ -33,7 +32,7 @@ jobs:
           context: .
           file: ./packages/back/Dockerfile
           push: true
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest, ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.event.release.tag_name }}
           build-args: |
             GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}
 
