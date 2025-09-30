@@ -22,7 +22,6 @@ export class ChatService {
 
   public async processMessage(ws: WebSocket, userMessage: string) {
     const sessionId = this.chatRepository.getSessionId(ws);
-    console.log("Session ID:", sessionId);
     if (!sessionId) return null;
 
     await this.chatRepository.addMessage(sessionId, {
@@ -35,7 +34,6 @@ export class ChatService {
       "You are a helpful assistant.";
     const geminiResponse = await callGemini(history, systemInstruction);
     const aiContent = geminiResponse.text;
-    console.log("Session ID:", aiContent);
 
     if (!aiContent) {
       return;
