@@ -9,7 +9,7 @@ export class PersonaController {
     const cookies = parse(cookieString);
     const sessionId = cookies.chat_session_id ?? "";
     const { personaId } = req.body;
-    const result = await this.personaService.setPersona(personaId, sessionId);
+    const result = await this.personaService.setPersonaId(personaId, sessionId);
     res.status(200).json({ personaId: result });
   };
   public getPersona = async (req: Request, res: Response) => {

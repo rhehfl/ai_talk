@@ -4,13 +4,10 @@ import { PersonaRepository } from "../repositories/personaRepository";
 export class PersonaService {
   constructor(private personaRepository: PersonaRepository) {}
 
-  public async setPersona(
+  public async setPersonaId(
     personaId: number,
     sessionId: string,
   ): Promise<number | null> {
-    const persona = PERSONA_PROMPTS.find((p) => p.id === personaId);
-    if (!persona) return null;
-
     await this.personaRepository.setSessionPersona(sessionId, personaId);
     return personaId;
   }

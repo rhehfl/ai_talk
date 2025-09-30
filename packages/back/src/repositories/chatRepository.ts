@@ -22,15 +22,6 @@ export class ChatRepository {
     this.wsToSessionId.delete(ws);
   }
 
-  public async setPersona(sessionId: string, personaId: string) {
-    await this.client.hSet("personas", sessionId, personaId);
-  }
-
-  public async getPersona(sessionId: string): Promise<string | undefined> {
-    const persona = await this.client.hGet("personas", sessionId);
-    return persona ?? undefined;
-  }
-
   public async getHistory(sessionId: string): Promise<Message[]> {
     const key = `history:${sessionId}`;
     const historyJson = await this.client.get(key);

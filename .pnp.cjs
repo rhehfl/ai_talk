@@ -3664,6 +3664,7 @@ const RAW_RUNTIME_STATE =
           ["eslint-config-next", "virtual:4f72ecec8ccd6075255530a21f87d2eaa1b4d665c97e02bec7797e7f8f6c377f552a2fd4ef370a4faf6004a239c51affe70f3301701d3693184e066368ade02c#npm:15.5.2"],\
           ["framer-motion", "virtual:4f72ecec8ccd6075255530a21f87d2eaa1b4d665c97e02bec7797e7f8f6c377f552a2fd4ef370a4faf6004a239c51affe70f3301701d3693184e066368ade02c#npm:12.23.22"],\
           ["front", "workspace:packages/front"],\
+          ["ky", "npm:1.11.0"],\
           ["next", "virtual:4f72ecec8ccd6075255530a21f87d2eaa1b4d665c97e02bec7797e7f8f6c377f552a2fd4ef370a4faf6004a239c51affe70f3301701d3693184e066368ade02c#npm:15.5.2"],\
           ["react", "npm:19.1.0"],\
           ["react-dom", "virtual:4f72ecec8ccd6075255530a21f87d2eaa1b4d665c97e02bec7797e7f8f6c377f552a2fd4ef370a4faf6004a239c51affe70f3301701d3693184e066368ade02c#npm:19.1.0"],\
@@ -4645,6 +4646,15 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["json-buffer", "npm:3.0.1"],\
           ["keyv", "npm:4.5.4"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["ky", [\
+      ["npm:1.11.0", {\
+        "packageLocation": "./.yarn/cache/ky-npm-1.11.0-c2ab92790f-ce656988aa.zip/node_modules/ky/",\
+        "packageDependencies": [\
+          ["ky", "npm:1.11.0"]\
         ],\
         "linkType": "HARD"\
       }]\
