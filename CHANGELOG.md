@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/rhehfl/ai_talk/compare/v1.0.2...v1.0.3) (2025-10-01)
+
+
+### Bug Fixes
+
+* 최신 릴리즈 태그 가져오기 기능 추가 및 태그 사용 수정 ([56618c9](https://github.com/rhehfl/ai_talk/commit/56618c95390f8095ad27b7153dede7e1fd8301ec))
+
 ## [1.0.2](https://github.com/rhehfl/ai_talk/compare/v1.0.1...v1.0.2) (2025-10-01)
 
 
