@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { externalApi } from "@/app/_libs";

@@ -1,3 +1,5 @@
+"use client";
+
 import { externalApi } from "@/app/_libs";
 import type { Persona } from "common/src/types";
 

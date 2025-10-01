@@ -1,3 +1,4 @@
+"use client";
 import LoadingSpinner from "@/app/_icons/LoadingSpinner.";
 
 export default function AILoadingMessage() {
