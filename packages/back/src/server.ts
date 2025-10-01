@@ -11,7 +11,11 @@ const PORT = 8080;
 
 app.use(
   cors({
-    origin: ["https://doran-doran.cloud/", "https://localhost:3000"],
+    origin: [
+      "https://doran-doran.cloud",
+      "https://www.doran-doran.cloud",
+      "https://localhost:3000",
+    ],
     credentials: true,
   }),
 );
