@@ -3,7 +3,6 @@
 name: 🏷️ Semantic Release (Versioning)
 
 on:
-  # main 브랜치에 코드가 push될 때 (PR merge 포함) 실행됩니다.
   push:
     branches:
       - main
