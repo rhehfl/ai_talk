@@ -13,6 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      issues: write # 추가
+      pull-requests: write # 추가
 
     steps:
       - name: Checkout source code
