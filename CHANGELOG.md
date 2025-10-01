@@ -1,3 +1,10 @@
+## [1.0.5](https://github.com/rhehfl/ai_talk/compare/v1.0.4...v1.0.5) (2025-10-01)
+
+
+### Bug Fixes
+
+* 세션 생성 시 쿠키 설정 및 도메인 추가 ([30c29f9](https://github.com/rhehfl/ai_talk/commit/30c29f9d6634e38bb5d9b7b8aca33675dc1ec354))
+
 ## [1.0.4](https://github.com/rhehfl/ai_talk/compare/v1.0.3...v1.0.4) (2025-10-01)
 
 
