@@ -1,3 +1,10 @@
+## [1.0.8](https://github.com/rhehfl/ai_talk/compare/v1.0.7...v1.0.8) (2025-10-01)
+
+
+### Bug Fixes
+
+* 세션 쿠키 이름을 'sessionId'에서 'chat_session_id'로 변경 ([6af7334](https://github.com/rhehfl/ai_talk/commit/6af7334b5267eb3accd0fa21e21670b4b01c772b))
+
 ## [1.0.7](https://github.com/rhehfl/ai_talk/compare/v1.0.6...v1.0.7) (2025-10-01)
 
 
