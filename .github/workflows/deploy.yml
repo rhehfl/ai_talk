@@ -1,8 +1,10 @@
 name: Deploy to EC2 with GHCR
 
 on:
-  release:
-    types: [published]
+  workflow_run:
+    workflows: ["🏷️ Semantic Release (Versioning)"]
+    types:
+      - completed
 
 env:
   REGISTRY: ghcr.io
