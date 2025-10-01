@@ -33,7 +33,6 @@ export async function POST() {
 
   const response = NextResponse.json({ sessionId });
 
-  // 만약 새로운 세션이었다면, 여기서 쿠키를 설정합니다.
   if (isNew && sessionId) {
     response.cookies.set(SESSION_COOKIE_KEY, sessionId, {
       httpOnly: true,

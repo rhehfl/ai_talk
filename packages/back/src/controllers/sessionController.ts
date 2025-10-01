@@ -6,6 +6,11 @@ export class SessionController {
 
   async createSession(req: Request, res: Response) {
     const newSessionId = await this.sessionService.createNewSession();
-    res.status(201).json({ sessionId: newSessionId });
+    res.cookie("sessionId", newSessionId, {
+      httpOnly: true,
+      path: "/",
+      secure: process.env.NODE_ENV === "production",
+    });
+    res.status(200).json({ message: "Session created successfully" });
   }
 }
