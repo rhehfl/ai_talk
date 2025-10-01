@@ -1,3 +1,10 @@
+## [1.0.7](https://github.com/rhehfl/ai_talk/compare/v1.0.6...v1.0.7) (2025-10-01)
+
+
+### Bug Fixes
+
+* CORS 설정에 www 도메인 추가 ([c63d31d](https://github.com/rhehfl/ai_talk/commit/c63d31dfcdf6f2e90461e688e94de6b68354f3eb))
+
 ## [1.0.6](https://github.com/rhehfl/ai_talk/compare/v1.0.5...v1.0.6) (2025-10-01)
 
 
