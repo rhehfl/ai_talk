@@ -26,7 +26,7 @@
   "scripts": {
     "dev": "yarn dev:back && yarn dev:front",
     "dev:back": "yarn workspace back dev",
-    "dev:front": "yarn workspace front dev",
+    "dev:front": "yarn workspace front dev --experimental-https --experimental-https-key ./localhost-key.pem --experimental-https-cert ./localhost.pem",
     "typecheck": "tsc -b",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix"
