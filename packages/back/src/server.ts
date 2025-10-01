@@ -9,12 +9,13 @@ const app = express();
 const server = http.createServer(app);
 const PORT = 8080;
 
-// --- 👇 빠진 미들웨어 설정 추가 ---
+app.use(
+  cors({
+    origin: ["http://doran-doran.cloud/", "http://localhost:3000"],
+    credentials: true,
+  }),
+);
 
-// 1. CORS 미들웨어: 다른 주소(localhost:3000)의 프론트엔드 요청을 허용합니다.
-app.use(cors({ origin: "http://localhost:3000", credentials: true }));
-
-// 2. JSON 파싱 미들웨어: POST 요청의 본문(body)을 JSON으로 파싱합니다.
 app.use(express.json());
 
 async function startServer() {

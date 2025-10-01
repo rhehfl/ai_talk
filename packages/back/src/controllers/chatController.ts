@@ -1,8 +1,6 @@
-// packages/back/src/controllers/chatController.ts
-
-import { WebSocketServer, WebSocket } from "ws";
+import { WebSocket } from "ws";
 import { ChatService } from "../services/chatService";
-import { Message, S2cBroadcastMessage, S2cSessionCreated } from "common";
+import { S2cBroadcastMessage } from "common";
 
 export class ChatController {
   constructor(private chatService: ChatService) {}
@@ -18,8 +16,6 @@ export class ChatController {
   public async handleMessage(ws: WebSocket, content: string) {
     const aiMessage = await this.chatService.processMessage(ws, content);
     if (!aiMessage) return;
-
-    console.log("AI Message:", aiMessage);
 
     const broadcastMsg: S2cBroadcastMessage = {
       type: "S2C_BROADCAST_MESSAGE",

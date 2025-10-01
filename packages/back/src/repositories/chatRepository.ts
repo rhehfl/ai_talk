@@ -1,4 +1,4 @@
-import { createClient, RedisClientType } from "redis";
+import { RedisClientType } from "redis";
 import { WebSocket } from "ws";
 import { Message } from "common";
 
@@ -22,18 +22,11 @@ export class ChatRepository {
     this.wsToSessionId.delete(ws);
   }
 
-  // --- 아래부터 Redis를 사용하는 비동기 메서드 ---
-  public async setPersona(sessionId: string, personaId: string) {
-    await this.client.hSet("personas", sessionId, personaId);
-  }
-
-  public async getPersona(sessionId: string): Promise<string | undefined> {
-    const persona = await this.client.hGet("personas", sessionId);
-    return persona ?? undefined;
-  }
-
-  public async getHistory(sessionId: string): Promise<Message[]> {
-    const key = `history:${sessionId}`;
+  public async getHistory(
+    sessionId: string,
+    personaId: number,
+  ): Promise<Message[]> {
+    const key = `history:${sessionId}:${personaId}`;
     const historyJson = await this.client.get(key);
 
     if (!historyJson) {
@@ -47,14 +40,22 @@ export class ChatRepository {
     }
   }
 
-  public async setHistory(sessionId: string, history: Message[]) {
-    const key = `history:${sessionId}`;
+  public async setHistory(
+    sessionId: string,
+    personaId: number,
+    history: Message[],
+  ) {
+    const key = `history:${sessionId}:${personaId}`;
     await this.client.set(key, JSON.stringify(history));
   }
 
-  public async addMessage(sessionId: string, message: Message) {
-    const history = await this.getHistory(sessionId);
+  public async addMessage(
+    sessionId: string,
+    personaId: number,
+    message: Message,
+  ) {
+    const history = await this.getHistory(sessionId, personaId);
     history.push(message);
-    await this.setHistory(sessionId, history);
+    await this.setHistory(sessionId, personaId, history);
   }
 }

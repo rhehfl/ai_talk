@@ -1,9 +1,9 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 
 const SESSION_COOKIE_KEY = "chat_session_id";
 
-export async function POST(request: NextRequest) {
+export async function POST() {
   const cookieStore = await cookies();
   let sessionId = cookieStore.get(SESSION_COOKIE_KEY)?.value;
   let isNew = false;

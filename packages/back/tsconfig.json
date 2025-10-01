@@ -2,7 +2,6 @@
 
 {
   "compilerOptions": {
-    // --- 기본 설정 ---
     "target": "es2020",
     "module": "commonjs",
     "moduleResolution": "node",

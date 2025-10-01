@@ -6,7 +6,6 @@ export class SessionService {
 
   public async createNewSession() {
     const sessionId = uuidv4();
-    await this.chatRepository.setHistory(sessionId, []);
     return sessionId;
   }
 }

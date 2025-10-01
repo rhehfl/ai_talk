@@ -1,8 +1,10 @@
+import { externalApi } from "@/app/_libs/api";
+
 export const postSessionId = async (): Promise<string> => {
-  const json = await fetch("/api/session", {
+  const res = await externalApi("api/session", {
     method: "POST",
     cache: "no-store",
-  });
-  const res = await json.json();
+  }).json<string>();
+
   return res;
 };
