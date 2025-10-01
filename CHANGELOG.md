@@ -1,3 +1,10 @@
+## [1.0.6](https://github.com/rhehfl/ai_talk/compare/v1.0.5...v1.0.6) (2025-10-01)
+
+
+### Bug Fixes
+
+* "use client" 지시문 추가 ([a94657c](https://github.com/rhehfl/ai_talk/commit/a94657c6fc1b95612eac5ba7122140170eee0038))
+
 ## [1.0.5](https://github.com/rhehfl/ai_talk/compare/v1.0.4...v1.0.5) (2025-10-01)
 
 
