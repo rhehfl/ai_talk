@@ -12,14 +12,12 @@ jobs:
     name: Create Semantic Release
     runs-on: ubuntu-latest
     permissions:
-      contents: write # Git Tag, Release, 파일 커밋을 위해 write 권한 필요
-      # packages: write # GHCR과 관련 없으므로 제거해도 됩니다.
+      contents: write
 
     steps:
       - name: Checkout source code
         uses: actions/checkout@v3
         with:
-          # Semantic Release가 모든 커밋을 분석할 수 있도록 fetch-depth를 0으로 설정합니다.
           fetch-depth: 0
 
       - name: Setup Node.js and Yarn
@@ -31,9 +29,7 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable
 
-      # Semantic Release 실행
       - name: Run Semantic Release
         uses: cycjimmy/semantic-release-action@v4
         env:
-          # GitHub 토큰을 사용하여 Release 및 Tag를 생성합니다.
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
