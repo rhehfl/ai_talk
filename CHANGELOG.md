@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/rhehfl/ai_talk/compare/v1.0.1...v1.0.2) (2025-10-01)
+
+
+### Bug Fixes
+
+* 배포조건수정 ([02bf662](https://github.com/rhehfl/ai_talk/commit/02bf662b994d66fc07449edc8eeda6625cf470dd))
+
 ## [1.0.1](https://github.com/rhehfl/ai_talk/compare/v1.0.0...v1.0.1) (2025-10-01)
 
 
