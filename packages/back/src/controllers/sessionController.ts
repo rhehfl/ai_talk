@@ -13,7 +13,7 @@ export class SessionController {
     if (sessionId)
       return res.status(200).json({ message: "Session already exists" });
     const newSessionId = await this.sessionService.createNewSession();
-    res.cookie("sessionId", newSessionId, {
+    res.cookie("chat_session_id", newSessionId, {
       httpOnly: true,
       path: "/",
       secure: true, // https 통신이므로 필수
