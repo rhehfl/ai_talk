@@ -27,6 +27,9 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Get latest release tag
+        id: get_tag
+        uses: actions-ecosystem/action-get-latest-tag@v1
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
@@ -34,7 +37,7 @@ jobs:
           context: .
           file: ./packages/back/Dockerfile
           push: true
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest, ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.event.release.tag_name }}
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest, ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.get_tag.outputs.tag  }}
           build-args: |
             GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}
 
