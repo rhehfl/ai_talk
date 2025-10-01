@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/rhehfl/ai_talk/compare/v1.0.3...v1.0.4) (2025-10-01)
+
+
+### Bug Fixes
+
+* 세션 생성 시 쿠키 설정 및 응답 메시지 수정 ([0abcf61](https://github.com/rhehfl/ai_talk/commit/0abcf61fbff7024920c0e6f489de7657c204daf3))
+
 ## [1.0.3](https://github.com/rhehfl/ai_talk/compare/v1.0.2...v1.0.3) (2025-10-01)
 
 
