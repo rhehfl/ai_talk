@@ -1,4 +1,4 @@
-import { createClient, RedisClientType } from "redis";
+import { RedisClientType } from "redis";
 import { WebSocket } from "ws";
 import { Message } from "common";
 

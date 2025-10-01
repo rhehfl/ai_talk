@@ -25,7 +25,7 @@ export class ChatRoomService {
       return null;
     }
 
-    const { prompt, ...rest } = currentPersona;
+    const { prompt: _, ...rest } = currentPersona;
     return rest;
   }
 }
