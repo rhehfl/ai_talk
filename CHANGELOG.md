@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/rhehfl/ai_talk/compare/v1.0.0...v1.0.1) (2025-10-01)
+
+
+### Bug Fixes
+
+* 릴리즈 수정 ([7e9fb00](https://github.com/rhehfl/ai_talk/commit/7e9fb000131f0342c2476098994b6b75cea96ac3))
+
 # 1.0.0 (2025-10-01)
 
 
