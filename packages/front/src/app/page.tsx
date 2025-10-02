@@ -76,7 +76,8 @@ export default async function Home() {
               </MotionWrapper>
             </div>
 
-            <div className="relative w-full min-h-[50vh] lg:min-h-screen">
+            <div className="relative w-full min-h-[50vh] lg:min-h-screen flex items-center justify-center">
+              <div className="absolute my-20 inset-0 bg-gradient-to-r bg-white rounded-lg"></div>
               <Image
                 src="/main-character.png"
                 alt="도란도란 메인 캐릭터"
