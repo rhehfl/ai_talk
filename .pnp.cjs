@@ -6111,6 +6111,7 @@ const RAW_RUNTIME_STATE =
           ["next", "virtual:4f72ecec8ccd6075255530a21f87d2eaa1b4d665c97e02bec7797e7f8f6c377f552a2fd4ef370a4faf6004a239c51affe70f3301701d3693184e066368ade02c#npm:15.5.2"],\
           ["react", "npm:19.1.0"],\
           ["react-dom", "virtual:4f72ecec8ccd6075255530a21f87d2eaa1b4d665c97e02bec7797e7f8f6c377f552a2fd4ef370a4faf6004a239c51affe70f3301701d3693184e066368ade02c#npm:19.1.0"],\
+          ["react-icons", "virtual:4f72ecec8ccd6075255530a21f87d2eaa1b4d665c97e02bec7797e7f8f6c377f552a2fd4ef370a4faf6004a239c51affe70f3301701d3693184e066368ade02c#npm:5.5.0"],\
           ["react-markdown", "virtual:4f72ecec8ccd6075255530a21f87d2eaa1b4d665c97e02bec7797e7f8f6c377f552a2fd4ef370a4faf6004a239c51affe70f3301701d3693184e066368ade02c#npm:10.1.0"],\
           ["tailwindcss", "npm:4.1.13"],\
           ["typescript", "patch:typescript@npm%3A5.9.2#optional!builtin<compat/typescript>::version=5.9.2&hash=5786d5"]\
@@ -10128,6 +10129,28 @@ const RAW_RUNTIME_STATE =
           ["react", "npm:19.1.0"],\
           ["react-dom", "virtual:4f72ecec8ccd6075255530a21f87d2eaa1b4d665c97e02bec7797e7f8f6c377f552a2fd4ef370a4faf6004a239c51affe70f3301701d3693184e066368ade02c#npm:19.1.0"],\
           ["scheduler", "npm:0.26.0"]\
+        ],\
+        "packagePeers": [\
+          "@types/react",\
+          "react"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["react-icons", [\
+      ["npm:5.5.0", {\
+        "packageLocation": "./.yarn/cache/react-icons-npm-5.5.0-906730a3cf-a24309bfc9.zip/node_modules/react-icons/",\
+        "packageDependencies": [\
+          ["react-icons", "npm:5.5.0"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:4f72ecec8ccd6075255530a21f87d2eaa1b4d665c97e02bec7797e7f8f6c377f552a2fd4ef370a4faf6004a239c51affe70f3301701d3693184e066368ade02c#npm:5.5.0", {\
+        "packageLocation": "./.yarn/__virtual__/react-icons-virtual-3d1927b8d3/0/cache/react-icons-npm-5.5.0-906730a3cf-a24309bfc9.zip/node_modules/react-icons/",\
+        "packageDependencies": [\
+          ["@types/react", "npm:19.1.12"],\
+          ["react", "npm:19.1.0"],\
+          ["react-icons", "virtual:4f72ecec8ccd6075255530a21f87d2eaa1b4d665c97e02bec7797e7f8f6c377f552a2fd4ef370a4faf6004a239c51affe70f3301701d3693184e066368ade02c#npm:5.5.0"]\
         ],\
         "packagePeers": [\
           "@types/react",\
