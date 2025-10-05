@@ -16,7 +16,7 @@ export default function ProfileCard({ size }: ProfileCardProps) {
 
   if (size === "small") {
     return (
-      <div className="flex flex-col items-center space-y-2 order-1 mr-2">
+      <div className="flex flex-col min-w-15 items-center space-y-2 order-1 mr-2">
         <Image src={`/${data.image}`} alt="Avatar" width={32} height={32} />
         <span className="text-xs text-gray-500 break-words max-w-[50px] text-center">
           {data.name}
