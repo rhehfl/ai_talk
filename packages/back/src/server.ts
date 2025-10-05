@@ -4,6 +4,7 @@ import http from "http";
 import webSocketInitializer from "./ws";
 import createApiRouter from "./routes"; // 👈 API 라우터 가져오기
 import cors from "cors"; // 👈 CORS 미들웨어 가져오기
+import { errorHandler } from "./middlewares/errorHandler";
 
 const app = express();
 const server = http.createServer(app);
@@ -30,7 +31,7 @@ startServer();
 webSocketInitializer(server);
 
 app.use("/api", createApiRouter());
-
+app.use(errorHandler);
 app.get("/", (req, res) => {
   res.send("안녕하세요, Express 서버입니다!");
 });
