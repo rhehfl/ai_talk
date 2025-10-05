@@ -30,4 +30,14 @@ export class ChatRoomController {
       res.status(500).json({ message: "서버 내부 오류" });
     }
   };
+
+  public getChatRoomHistory = async (req: Request, res: Response) => {
+    const cookieString = req.headers.cookie || "";
+    const cookies = parse(cookieString);
+    const sessionId = cookies.chat_session_id ?? "";
+    if (!sessionId) {
+      return res.status(401).json({ message: "세션이 존재하지 않습니다." });
+    }
+    return await this.chatRoomService.getChatRoomHistory(sessionId);
+  };
 }
