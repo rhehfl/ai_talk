@@ -1,5 +1,5 @@
 import { RedisClientType } from "redis";
-import { PERSONA_PROMPTS } from "../constants/persona";
+import { PERSONAS } from "../constants/persona";
 import { Persona } from "common";
 
 export class PersonaRepository {
@@ -26,7 +26,7 @@ export class PersonaRepository {
     console.log("페아이디에요2222", personaId);
     if (personaId === null) return null;
     const numberId = parseInt(personaId, 10);
-    const persona = PERSONA_PROMPTS.find((p) => p.id === numberId);
+    const persona = PERSONAS.find((p) => p.id === numberId);
     return persona || null;
   }
 
@@ -38,7 +38,7 @@ export class PersonaRepository {
   }
 
   public async getAllPersonas() {
-    return PERSONA_PROMPTS.map((persona) => ({
+    return PERSONAS.map((persona) => ({
       id: persona.id,
       image: persona.image,
       description: persona.description,

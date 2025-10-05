@@ -11,7 +11,7 @@ export async function initializeRedisClient(): Promise<void> {
 
   try {
     await redisClient.connect();
-    console.log("✅ Global Redis client connected successfully.");
+    console.info("✅ Global Redis client connected successfully.");
   } catch (err) {
     console.error("❌ FATAL ERROR: Failed to connect to Redis!", err);
     process.exit(1);

@@ -1,5 +1,5 @@
 import { PersonaRepository } from "../repositories/personaRepository";
-import { PERSONA_PROMPTS } from "../constants/persona";
+import { PERSONAS } from "../constants/persona";
 import { Persona } from "common";
 import { ChatRepository } from "../repositories/chatRepository";
 
@@ -22,7 +22,7 @@ export class ChatRoomService {
       return null;
     }
 
-    const currentPersona = PERSONA_PROMPTS.find((p) => p.id === personaId);
+    const currentPersona = PERSONAS.find((p) => p.id === personaId);
 
     if (!currentPersona) {
       return null;
