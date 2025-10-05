@@ -65,7 +65,7 @@ export default async function Home() {
               <MotionWrapper delay={0.4}>
                 <div className="mt-12">
                   <Link href="/persona">
-                    <button className="group relative inline-flex items-center justify-center overflow-hidden rounded-full p-0.5 text-lg font-semibold text-white shadow-lg transition-all duration-300 ease-in-out hover:scale-105 bg-gradient-to-r from-orange-500 to-amber-500">
+                    <button className="cursor-pointer group relative inline-flex items-center justify-center overflow-hidden rounded-full p-0.5 text-lg font-semibold text-white shadow-lg transition-all duration-300 ease-in-out hover:scale-105 bg-gradient-to-r from-orange-500 to-amber-500">
                       <span className="absolute h-full w-full bg-gradient-to-r from-orange-500 to-amber-500 transition-all duration-500 ease-in-out group-hover:w-0"></span>
                       <span className="relative rounded-full bg-slate-900 px-8 py-4 transition-colors duration-300 group-hover:bg-transparent">
                         대화 시작하기!
@@ -77,13 +77,13 @@ export default async function Home() {
             </div>
 
             <div className="relative w-full min-h-[50vh] lg:min-h-screen flex items-center justify-center">
-              <div className="absolute my-20 inset-0 bg-gradient-to-r bg-white rounded-lg"></div>
+              <div className="absolute my-20 inset-0 bg-gradient-to-r rounded-lg"></div>
               <Image
-                src="/main-character.png"
+                src="/herosection_main.png"
                 alt="도란도란 메인 캐릭터"
-                width={800}
-                height={1200}
-                className="absolute object-contain"
+                width={400}
+                height={400}
+                className="absolute object-contain shadow-2xl rounded-2xl  border-3 border-black transition-transform duration-300 ease-out hover:scale-105"
                 priority
               />
             </div>
