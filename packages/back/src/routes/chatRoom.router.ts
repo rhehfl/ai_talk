@@ -11,6 +11,13 @@ const personaRepository = new PersonaRepository(redisClient);
 const chatRoomService = new ChatRoomService(personaRepository, chatRepository);
 const chatRoomController = new ChatRoomController(chatRoomService);
 
-router.get("/", chatRoomController.getChatRoomInfo.bind(chatRoomController));
+router.get(
+  "/persona",
+  chatRoomController.getChatRoomInfo.bind(chatRoomController),
+);
+router.get(
+  "/history",
+  chatRoomController.getChatRoomHistory.bind(chatRoomController),
+);
 
 export default router;
