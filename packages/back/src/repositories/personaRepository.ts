@@ -23,7 +23,6 @@ export class PersonaRepository {
   public async getSessionPersona(sessionId: string): Promise<Persona | null> {
     const key = `session_persona:${sessionId}`;
     const personaId = await this.client.get(key);
-    console.log("페아이디에요2222", personaId);
     if (personaId === null) return null;
     const numberId = parseInt(personaId, 10);
     const persona = PERSONAS.find((p) => p.id === numberId);
