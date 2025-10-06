@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { ChatRoomService } from "../services/chatRoomService";
-import { parse } from "cookie";
 import { getCookie } from "../utils/getCookie";
 
 export class ChatRoomController {
