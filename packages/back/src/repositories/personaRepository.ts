@@ -16,8 +16,6 @@ export class PersonaRepository {
     const key = `session_persona:${sessionId}`;
 
     await this.client.set(key, personaId);
-    const cachedPersonaId = await this.client.get(key);
-    
   }
 
   public async getSessionPersona(sessionId: string): Promise<Persona | null> {
