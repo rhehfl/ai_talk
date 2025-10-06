@@ -4,7 +4,7 @@ import { Persona } from "common";
 export const getPersona = async (): Promise<Persona[]> => {
   const res = await externalApi(`api/personas`, {
     method: "GET",
-    cache: "no-store",
+    cache: "force-cache",
   }).json<Persona[]>();
   return res;
 };

@@ -9,6 +9,8 @@ services:
       - GEMINI_API_KEY=${GEMINI_API_KEY}
     networks:
       - ai_talk_net
+    volumes:
+      - ./config/personas.json:/usr/src/app/prompt/personas.json:ro
 
   redis:
     image: "redis:alpine"

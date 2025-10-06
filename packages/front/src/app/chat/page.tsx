@@ -3,7 +3,6 @@
 import { ChatSendForm } from "@/app/chat/_components";
 import AILoadingMessage from "@/app/chat/_components/AILoadingMessage";
 import { useSocket } from "@/app/chat/_hooks";
-import { useSession } from "@/app/persona/_hooks/useSession";
 import dynamic from "next/dynamic";
 
 const DynamicSideBarWithNoSSR = dynamic(
@@ -15,7 +14,6 @@ const DynamicChatRoomWithNoSSR = dynamic(
   { ssr: false },
 );
 export default function ChatPage() {
-  useSession();
   const { sendMessage, messages, isLoading } = useSocket();
   const handleSendMessage = (msg: string) => {
     sendMessage(msg);
