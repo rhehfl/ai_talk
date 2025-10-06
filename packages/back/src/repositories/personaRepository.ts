@@ -17,13 +17,12 @@ export class PersonaRepository {
 
     await this.client.set(key, personaId);
     const cachedPersonaId = await this.client.get(key);
-    console.log("페아이디에요", cachedPersonaId);
+    
   }
 
   public async getSessionPersona(sessionId: string): Promise<Persona | null> {
     const key = `session_persona:${sessionId}`;
     const personaId = await this.client.get(key);
-    console.log("페아이디에요2222", personaId);
     if (personaId === null) return null;
     const numberId = parseInt(personaId, 10);
     const persona = PERSONAS.find((p) => p.id === numberId);
