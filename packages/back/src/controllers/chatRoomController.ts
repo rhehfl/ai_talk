@@ -1,14 +1,13 @@
 import { Request, Response } from "express";
 import { ChatRoomService } from "../services/chatRoomService";
 import { parse } from "cookie";
+import { getCookie } from "../utils/getCookie";
 
 export class ChatRoomController {
   constructor(private chatRoomService: ChatRoomService) {}
 
   public getChatRoomInfo = async (req: Request, res: Response) => {
-    const cookieString = req.headers.cookie || "";
-    const cookies = parse(cookieString);
-    const sessionId = cookies.chat_session_id ?? "";
+    const sessionId = getCookie(req, "chat_session_id");
 
     if (!sessionId) {
       return res.status(401).json({ message: "세션이 존재하지 않습니다." });
@@ -32,9 +31,8 @@ export class ChatRoomController {
   };
 
   public getChatRoomHistory = async (req: Request, res: Response) => {
-    const cookieString = req.headers.cookie || "";
-    const cookies = parse(cookieString);
-    const sessionId = cookies.chat_session_id ?? "";
+    const sessionId = getCookie(req, "chat_session_id");
+
     if (!sessionId) {
       return res.status(401).json({ message: "세션이 존재하지 않습니다." });
     }
