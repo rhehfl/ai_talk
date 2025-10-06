@@ -17,7 +17,7 @@ export class PersonaRepository {
 
     await this.client.set(key, personaId);
     const cachedPersonaId = await this.client.get(key);
-    console.log("페아이디에요", cachedPersonaId);
+    
   }
 
   public async getSessionPersona(sessionId: string): Promise<Persona | null> {
