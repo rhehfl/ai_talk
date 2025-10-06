@@ -1,3 +1,17 @@
+## [1.0.9](https://github.com/rhehfl/ai_talk/compare/v1.0.8...v1.0.9) (2025-10-06)
+
+
+### Bug Fixes
+
+* 랜딩페이지 수정 ([4ca784b](https://github.com/rhehfl/ai_talk/commit/4ca784bbeb906b0e317d70ff7465bde08193c66c))
+* 메인 화면 레이아웃 개선 및 배경 그라데이션 추가 ([831abc8](https://github.com/rhehfl/ai_talk/commit/831abc88223e53a2e4f54c94df706ffa6500b9d8))
+* 백엔드 에러핸들링 수정 ([481cc0a](https://github.com/rhehfl/ai_talk/commit/481cc0a1726b1261fdf219d7cd8d93dea6332660))
+* 불필요한 캐시된 personaId 가져오기 제거 ([520497a](https://github.com/rhehfl/ai_talk/commit/520497a60458f75f0190f2ccbff94a4b8ddff0b1))
+* 불필요한 쿠키 파서 임포트 제거 ([26b1df3](https://github.com/rhehfl/ai_talk/commit/26b1df342539fc749cb97dadb2107f98b9fc9f8f))
+* 세션발급로직 수정 ([c8dc75e](https://github.com/rhehfl/ai_talk/commit/c8dc75ef6dc5c1fcee6be4a748ce1007b551a666))
+* 제미나이 key 제거 ([a60b27c](https://github.com/rhehfl/ai_talk/commit/a60b27c5c4f57f719b32fd22e6ccf61bf30a2ab9))
+* 쿠키 유틸함수 작성 ([0911e55](https://github.com/rhehfl/ai_talk/commit/0911e5599fb2f745e3e5567a961aa02a470fa5a1))
+
 ## [1.0.8](https://github.com/rhehfl/ai_talk/compare/v1.0.7...v1.0.8) (2025-10-01)
 
 
