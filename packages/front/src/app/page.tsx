@@ -37,6 +37,9 @@ export const metadata: Metadata = {
       "코딩하다 막힐 때, 기술적인 대화가 필요할 때, AI 개발 친구와 가볍게 커피챗을 나눠보세요.",
     images: [{ url: "/og-image.png" }],
   },
+  verification: {
+    google: "WarevXJVP2Z_N5SBMfbbvIDL5vC-7EnmYpJG8YC7CzQ",
+  },
 };
 
 export default async function Home() {
