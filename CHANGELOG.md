@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/rhehfl/ai_talk/compare/v1.1.0...v1.2.0) (2025-10-08)
+
+
+### Features
+
+* 로봇 메타데이터 규칙 추가 및 사이트맵 반환 ([5ec7645](https://github.com/rhehfl/ai_talk/commit/5ec7645aebe396887107d7f8430282b60a686436))
+
 # [1.1.0](https://github.com/rhehfl/ai_talk/compare/v1.0.9...v1.1.0) (2025-10-08)
 
 
