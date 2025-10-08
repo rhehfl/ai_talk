@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/rhehfl/ai_talk/compare/v1.2.0...v1.3.0) (2025-10-08)
+
+
+### Features
+
+* 구글 애널리틱스 스크립트 추가 ([dd3e1f2](https://github.com/rhehfl/ai_talk/commit/dd3e1f2964193eff3741cbdc31197217a361c6cc))
+
 # [1.2.0](https://github.com/rhehfl/ai_talk/compare/v1.1.0...v1.2.0) (2025-10-08)
 
 
