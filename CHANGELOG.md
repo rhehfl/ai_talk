@@ -1,3 +1,17 @@
+# [1.1.0](https://github.com/rhehfl/ai_talk/compare/v1.0.9...v1.1.0) (2025-10-08)
+
+
+### Bug Fixes
+
+* 히스토리 로직 분리 ([9e52749](https://github.com/rhehfl/ai_talk/commit/9e5274926642c758ecd2205247c8199046b8e318))
+
+
+### Features
+
+* 검색등록 ([591d833](https://github.com/rhehfl/ai_talk/commit/591d8337eab820667e8c255d733658d979aae6bd))
+* 메타 데이터 추가 ([f4a65e5](https://github.com/rhehfl/ai_talk/commit/f4a65e5f5a9f225aeaeaa8392caa8870c7ab2d58))
+* 채팅방 기능 개선 및 새로운 API 추가 ([56098ee](https://github.com/rhehfl/ai_talk/commit/56098eead6d0eb87fc2ff22f540b05f37be5ed38))
+
 ## [1.0.9](https://github.com/rhehfl/ai_talk/compare/v1.0.8...v1.0.9) (2025-10-06)
 
 
