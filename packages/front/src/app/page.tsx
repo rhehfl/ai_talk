@@ -3,6 +3,7 @@ import Link from "next/link";
 import MotionWrapper from "./_components/MotionWrapper";
 import { getPersona } from "@/app/persona/_asyncApis";
 import { FiCode, FiMessageSquare, FiTrendingUp } from "react-icons/fi";
+import { Metadata } from "next";
 
 // 각 섹션을 구분하고 시각적 효과를 주기 위한 컴포넌트
 const Section = ({
@@ -16,6 +17,27 @@ const Section = ({
     <div className="container mx-auto px-6 lg:px-8">{children}</div>
   </section>
 );
+export const metadata: Metadata = {
+  title: "도란도란 | 당신의 AI 개발 친구와의 커피챗",
+  description:
+    "코딩하다 막힐 때, 기술적인 대화가 필요할 때, AI 개발 친구와 가볍게 커피챗을 나눠보세요. 여러 전문 AI가 당신의 이야기를 기다립니다.",
+  keywords: [
+    "AI",
+    "개발자",
+    "커피챗",
+    "친구",
+    "코딩",
+    "프로그래밍",
+    "기술 대화",
+    "페어 프로그래밍",
+  ],
+  openGraph: {
+    title: "도란도란 | AI 개발 친구와 나누는 기술 수다",
+    description:
+      "코딩하다 막힐 때, 기술적인 대화가 필요할 때, AI 개발 친구와 가볍게 커피챗을 나눠보세요.",
+    images: [{ url: "/og-image.png" }],
+  },
+};
 
 export default async function Home() {
   const personas = await getPersona();
