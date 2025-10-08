@@ -1,12 +1,21 @@
 "use client";
 
+import { getChatRoomHistory } from "@/app/chat/_asyncApis";
 import { ChatCard, ChatSendForm } from "@/app/chat/_components";
 import AILoadingMessage from "@/app/chat/_components/AILoadingMessage";
 import { useSocket } from "@/app/chat/_hooks";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { useEffect, useRef } from "react";
 
 export default function ChatRoom() {
-  const { sendMessage, messages, isLoading } = useSocket();
+  const { data: chatHistory } = useSuspenseQuery({
+    queryFn: getChatRoomHistory,
+    queryKey: ["chatRoomHistory"],
+  });
+
+  const { sendMessage, messages, isLoading } = useSocket({
+    initialMessages: chatHistory,
+  });
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

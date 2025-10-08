@@ -9,8 +9,7 @@ export class ChatController {
     if (!sessionId) return;
     await this.chatService.initializeSession(ws, sessionId);
 
-    const history = await this.chatService.getHistory(sessionId);
-    ws.send(JSON.stringify({ type: "HISTORY", content: history }));
+    ws.send(JSON.stringify({ type: "S2C_INIT_COMPLETE" }));
   }
 
   public async handleMessage(ws: WebSocket, content: string) {

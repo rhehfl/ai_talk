@@ -1,10 +1,11 @@
 "use client";
 
 import { externalApi } from "@/app/_libs";
-import type { Persona } from "common/src/types";
+import type { Message } from "common/src/types";
 
-export const getChatRoomInfo = async () => {
-  const res =
-    await externalApi(`api/chatroom/history`).json<Omit<Persona, "prompt">>();
+export const getChatRoomHistory = async () => {
+  const res = await externalApi
+    .get(`api/chatroom/history`)
+    .json<Omit<Message, "prompt">[]>();
   return res;
 };
