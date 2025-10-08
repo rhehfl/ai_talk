@@ -35,6 +35,8 @@ export class ChatRoomController {
     if (!sessionId) {
       return res.status(401).json({ message: "세션이 존재하지 않습니다." });
     }
-    return await this.chatRoomService.getChatRoomHistory(sessionId);
+    const result = await this.chatRoomService.getChatRoomHistory(sessionId);
+
+    res.status(200).json(result.chatHistory);
   };
 }

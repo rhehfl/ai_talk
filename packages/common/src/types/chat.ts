@@ -18,8 +18,7 @@ export interface S2cSessionCreated {
 }
 
 export interface S2cHistory {
-  type: "HISTORY";
-  content: Message[];
+  type: "S2C_INIT_COMPLETE";
 }
 
 export interface S2cBroadcastMessage {

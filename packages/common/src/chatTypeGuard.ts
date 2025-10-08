@@ -24,11 +24,11 @@ export const isS2cSessionCreated = (msg: unknown): msg is S2cSessionCreated =>
   "type" in msg &&
   (msg as { type: unknown }).type === "S2C_SESSION_CREATED";
 
-export const isS2cHistory = (msg: unknown): msg is S2cHistory =>
+export const isS2cComplete = (msg: unknown): msg is S2cHistory =>
   typeof msg === "object" &&
   msg !== null &&
   "type" in msg &&
-  (msg as { type: unknown }).type === "HISTORY";
+  (msg as { type: unknown }).type === "S2C_INIT_COMPLETE";
 
 export const isS2cBroadcastMessage = (
   msg: unknown,

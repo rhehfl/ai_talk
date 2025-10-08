@@ -5,13 +5,16 @@ import {
   C2sInit,
   C2sSendMessage,
   isS2cBroadcastMessage,
-  isS2cHistory,
+  isS2cComplete,
   Message,
 } from "common";
 
-export const useSocket = () => {
+interface UseSocketProps {
+  initialMessages?: Omit<Message, "prompt">[];
+}
+export const useSocket = ({ initialMessages }: UseSocketProps) => {
   const [socket, setSocket] = useState<WebSocket | null>(null);
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<Message[]>(initialMessages || []);
   const [isConnected, setIsConnected] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -30,8 +33,8 @@ export const useSocket = () => {
     ws.onmessage = (event) => {
       const received = JSON.parse(event.data);
 
-      if (isS2cHistory(received)) {
-        setMessages(received.content);
+      if (isS2cComplete(received)) {
+        return;
       } else if (isS2cBroadcastMessage(received)) {
         setIsLoading(false);
         setMessages((prev) => [...prev, received.payload]);
