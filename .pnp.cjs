@@ -6109,6 +6109,7 @@ const RAW_RUNTIME_STATE =
           ["front", "workspace:packages/front"],\
           ["ky", "npm:1.11.0"],\
           ["next", "virtual:4f72ecec8ccd6075255530a21f87d2eaa1b4d665c97e02bec7797e7f8f6c377f552a2fd4ef370a4faf6004a239c51affe70f3301701d3693184e066368ade02c#npm:15.5.2"],\
+          ["next-themes", "virtual:4f72ecec8ccd6075255530a21f87d2eaa1b4d665c97e02bec7797e7f8f6c377f552a2fd4ef370a4faf6004a239c51affe70f3301701d3693184e066368ade02c#npm:0.4.6"],\
           ["react", "npm:19.1.0"],\
           ["react-dom", "virtual:4f72ecec8ccd6075255530a21f87d2eaa1b4d665c97e02bec7797e7f8f6c377f552a2fd4ef370a4faf6004a239c51affe70f3301701d3693184e066368ade02c#npm:19.1.0"],\
           ["react-icons", "virtual:4f72ecec8ccd6075255530a21f87d2eaa1b4d665c97e02bec7797e7f8f6c377f552a2fd4ef370a4faf6004a239c51affe70f3301701d3693184e066368ade02c#npm:5.5.0"],\
@@ -8979,6 +8980,32 @@ const RAW_RUNTIME_STATE =
           "react-dom",\
           "react",\
           "sass"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["next-themes", [\
+      ["npm:0.4.6", {\
+        "packageLocation": "./.yarn/cache/next-themes-npm-0.4.6-7c480d5b1d-83590c11d3.zip/node_modules/next-themes/",\
+        "packageDependencies": [\
+          ["next-themes", "npm:0.4.6"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:4f72ecec8ccd6075255530a21f87d2eaa1b4d665c97e02bec7797e7f8f6c377f552a2fd4ef370a4faf6004a239c51affe70f3301701d3693184e066368ade02c#npm:0.4.6", {\
+        "packageLocation": "./.yarn/__virtual__/next-themes-virtual-e3c0521fd6/0/cache/next-themes-npm-0.4.6-7c480d5b1d-83590c11d3.zip/node_modules/next-themes/",\
+        "packageDependencies": [\
+          ["@types/react", "npm:19.1.12"],\
+          ["@types/react-dom", "virtual:4f72ecec8ccd6075255530a21f87d2eaa1b4d665c97e02bec7797e7f8f6c377f552a2fd4ef370a4faf6004a239c51affe70f3301701d3693184e066368ade02c#npm:19.1.9"],\
+          ["next-themes", "virtual:4f72ecec8ccd6075255530a21f87d2eaa1b4d665c97e02bec7797e7f8f6c377f552a2fd4ef370a4faf6004a239c51affe70f3301701d3693184e066368ade02c#npm:0.4.6"],\
+          ["react", "npm:19.1.0"],\
+          ["react-dom", "virtual:4f72ecec8ccd6075255530a21f87d2eaa1b4d665c97e02bec7797e7f8f6c377f552a2fd4ef370a4faf6004a239c51affe70f3301701d3693184e066368ade02c#npm:19.1.0"]\
+        ],\
+        "packagePeers": [\
+          "@types/react-dom",\
+          "@types/react",\
+          "react-dom",\
+          "react"\
         ],\
         "linkType": "HARD"\
       }]\

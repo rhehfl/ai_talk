@@ -12,7 +12,7 @@ const DynamicChatRoomWithNoSSR = dynamic(
 );
 export default function ChatPage() {
   return (
-    <div className="flex h-screen bg-gray-100 antialiased text-gray-800">
+    <div className="flex h-screen bg-gray-100 antialiased dark:bg-red-500 text-gray-800">
       <div className="flex flex-row h-full w-full overflow-x-hidden">
         <DynamicSideBarWithNoSSR />
         <div className="p-0 lg:p-10 flex flex-col w-full">

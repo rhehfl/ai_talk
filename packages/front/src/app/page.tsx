@@ -52,13 +52,13 @@ export default async function Home() {
         "코딩하다 막혔을 때, 사소한 궁금증이 생겼을 때! 언제든 AI 친구에게 편하게 말을 걸어보세요. 칼답은 기본!",
     },
     {
-      icon: <FiCode className="w-10 h-10 text-green-400" />, // green은 유지하여 다양성 부여
+      icon: <FiCode className="w-10 h-10 text-green-400" />,
       title: "따끔따끔 코드 수다",
       description:
         '"이 코드.. 괜찮을까?" 혼자 끙끙 앓지 말고 AI 친구에게 보여주세요. 생각지 못한 꿀팁을 얻을지도 몰라요!',
     },
     {
-      icon: <FiTrendingUp className="w-10 h-10 text-rose-400" />, // rose는 유지하여 다양성 부여
+      icon: <FiTrendingUp className="w-10 h-10 text-rose-400" />,
       title: "나만의 공부 페이스메이커",
       description:
         "뭘 공부해야 할지 막막하다면? AI 친구와 함께 나만의 학습 계획을 세우고 차근차근 레벨업 해봐요!",
