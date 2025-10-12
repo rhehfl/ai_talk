@@ -3,6 +3,7 @@ import "./globals.css";
 import ReactQueryProvider from "@/app/_provider/ReactQueryProvider";
 import Script from "next/script";
 import { ThemeProvider } from "@/app/_provider";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -42,7 +43,10 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <ReactQueryProvider>{children}</ReactQueryProvider>
+          <ReactQueryProvider>
+            {children}
+            <ReactQueryDevtools initialIsOpen={false} />
+          </ReactQueryProvider>
         </ThemeProvider>
       </body>
     </html>

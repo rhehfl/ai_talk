@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@tanstack/react-query": "^5.90.2",
+    "@tanstack/react-query-devtools": "^5.90.2",
     "common": "workspace:*",
     "framer-motion": "^12.23.22",
     "ky": "^1.11.0",

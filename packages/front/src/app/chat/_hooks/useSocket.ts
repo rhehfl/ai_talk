@@ -17,6 +17,9 @@ export const useSocket = ({ initialMessages }: UseSocketProps) => {
   const [messages, setMessages] = useState<Message[]>(initialMessages || []);
   const [isConnected, setIsConnected] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  useEffect(() => {
+    setMessages(initialMessages || []);
+  }, [initialMessages]);
 
   useEffect(() => {
     const ws = new WebSocket(`${process.env.NEXT_PUBLIC_WS_URL}`);

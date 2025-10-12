@@ -1,6 +1,6 @@
 "use client";
 
-import { getChatRoomHistory } from "@/app/chat/_asyncApis";
+import { getChatRoomHistory, getChatRoomInfo } from "@/app/chat/_asyncApis";
 import { ChatCard, ChatSendForm } from "@/app/chat/_components";
 import AILoadingMessage from "@/app/chat/_components/AILoadingMessage";
 import { useSocket } from "@/app/chat/_hooks";
@@ -8,14 +8,17 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { useEffect, useRef } from "react";
 
 export default function ChatRoom() {
+  const { data } = useSuspenseQuery({
+    queryKey: ["chatRoomInfo"],
+    queryFn: getChatRoomInfo,
+  });
+  console.log(data);
   const { data: chatHistory } = useSuspenseQuery({
     queryFn: getChatRoomHistory,
-    queryKey: ["chatRoomHistory"],
+    queryKey: ["chatRoomHistory", data.id],
   });
 
-  const { sendMessage, messages, isLoading } = useSocket({
-    initialMessages: chatHistory,
-  });
+  const { sendMessage, messages, isLoading } = useSocket();
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -29,7 +32,7 @@ export default function ChatRoom() {
   return (
     <>
       <div className="px-4 flex-grow overflow-y-auto">
-        {messages.map((msg, index) => (
+        {chatHistory.map((msg, index) => (
           <ChatCard key={index} author={msg.author} content={msg.content} />
         ))}
         <div ref={messagesEndRef} />

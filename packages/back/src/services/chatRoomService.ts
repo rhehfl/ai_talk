@@ -49,12 +49,14 @@ export class ChatRoomService {
         author: "user",
         content: "안녕!",
       };
-
+      console.log("defaultMessage", persona.id);
       const geminiResponse = await callGemini([defaultMessage], persona.prompt);
       const aiMessage: Message = {
         author: "Gemini",
         content: geminiResponse,
       };
+      console.log("aiMessage", aiMessage);
+      await this.chatRepository.setHistory(sessionId, persona.id, [aiMessage]);
 
       return { chatHistory: [aiMessage] };
     }
