@@ -5,7 +5,6 @@ import { getPersona } from "@/app/persona/_asyncApis";
 import { FiCode, FiMessageSquare, FiTrendingUp } from "react-icons/fi";
 import { Metadata } from "next";
 
-// 각 섹션을 구분하고 시각적 효과를 주기 위한 컴포넌트
 const Section = ({
   children,
   className,
@@ -45,7 +44,6 @@ export const metadata: Metadata = {
 export default async function Home() {
   const personas = await getPersona();
 
-  // 서비스의 핵심 기능을 나타내는 데이터 (아이콘 색상 수정)
   const features = [
     {
       icon: <FiMessageSquare className="w-10 h-10 text-orange-400" />,
