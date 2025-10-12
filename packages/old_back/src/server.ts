@@ -5,11 +5,20 @@ import webSocketInitializer from "./ws";
 import createApiRouter from "./routes"; // 👈 API 라우터 가져오기
 import cors from "cors"; // 👈 CORS 미들웨어 가져오기
 import { errorHandler } from "./middlewares/errorHandler";
+import { Server } from "socket.io";
 
 const app = express();
 const server = http.createServer(app);
 const PORT = 8080;
-
+const io = new Server(server, {
+  cors: {
+    origin: [
+      "https://doran-doran.cloud",
+      "https://www.doran-doran.cloud",
+      "https://localhost:3000",
+    ],
+  },
+});
 app.use(
   cors({
     origin: [

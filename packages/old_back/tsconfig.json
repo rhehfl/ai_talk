@@ -1,0 +1,20 @@
+// packages/back/tsconfig.json
+
+{
+  "compilerOptions": {
+    "target": "es2020",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "strict": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+
+    // --- 핵심 설정 ---
+    "outDir": "./dist", // 빌드 결과물을 ./dist 폴더에 생성
+    "esModuleInterop": true, // CommonJS 모듈 호환성 활성화
+    "sourceMap": true, // 디버깅을 위한 소스맵 생성
+    "rootDir": "./src" // 소스코드 루트 폴더 지정
+  },
+  "include": ["src/**/*"], // 컴파일할 파일 범위
+  "exclude": ["node_modules", "dist"] // 컴파일에서 제외할 폴더
+}
