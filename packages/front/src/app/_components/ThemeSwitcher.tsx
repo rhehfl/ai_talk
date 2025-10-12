@@ -17,16 +17,16 @@ export default function ThemeSwitcher() {
   }
 
   return (
-    <div className="fixed bottom-4 right-4 z-50">
+    <div className="fixed bottom-7 right-7 z-50">
       <button
         onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-        className="p-2 rounded-full transition-colors duration-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+        className="p-2 rounded-full border border-gray-300 dark:border-gray-700 transition-colors duration-200 hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer"
         aria-label="Toggle Dark Mode"
       >
         {theme === "dark" ? (
-          <FiSun className="w-5 h-5 text-yellow-500" />
+          <FiSun className="w-7 h-7 text-yellow-500" />
         ) : (
-          <FiMoon className="w-5 h-5 text-gray-700" />
+          <FiMoon className="w-7 h-7 text-gray-700" />
         )}
       </button>
     </div>

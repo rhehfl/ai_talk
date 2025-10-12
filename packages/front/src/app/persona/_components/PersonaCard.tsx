@@ -25,7 +25,7 @@ export default function PersonaCard({ persona }: PersonaCardProps) {
     <button
       type="button"
       onClick={handleClick}
-      className="bg-gray-100 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out h-full flex flex-col p-6 cursor-pointer"
+      className="bg-gray-100 dark:bg-gray-700 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out h-full flex flex-col p-6 cursor-pointer"
     >
       <div>
         <Image

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { FiSend } from "react-icons/fi";
 
 interface ChatSendFormProps {
   onSubmit: (msg: string) => void;
@@ -25,7 +26,7 @@ export default function ChatSendForm({ onSubmit }: ChatSendFormProps) {
         <div className="relative w-full">
           <input
             type="text"
-            className="flex w-full border rounded-xl focus:outline-none focus:border-indigo-300 pl-4 h-10"
+            className="dark:bg-slate-400 dark:text-white flex w-full border rounded-xl focus:outline-none focus:border-indigo-300 pl-4 h-10"
             value={inputMessage}
             onChange={(e) => setInputMessage(e.target.value)}
             placeholder="메시지를 입력하세요..."
@@ -39,29 +40,10 @@ export default function ChatSendForm({ onSubmit }: ChatSendFormProps) {
         >
           <span className="hidden lg:block">보내기</span>
           <span className="m-0 lg:ml-2">
-            <SendIcon />
+            <FiSend />
           </span>
         </button>
       </div>
     </form>
-  );
-}
-
-function SendIcon() {
-  return (
-    <svg
-      className="w-4 h-4 transform rotate-45 -mt-px"
-      fill="none"
-      stroke="currentColor"
-      viewBox="0 0 24 24"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-        d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
-      ></path>
-    </svg>
   );
 }
