@@ -36,13 +36,10 @@ export class ChatService {
     const history = await this.getHistory(sessionId);
 
     const geminiResponse = await callGemini(history, persona.prompt);
-    const aiContent = geminiResponse.text;
-
-    if (!aiContent) return null;
 
     const aiMessage: Message = {
       author: "Gemini",
-      content: aiContent,
+      content: geminiResponse,
     };
 
     this.chatRepository.addMessage(sessionId, persona.id, aiMessage);

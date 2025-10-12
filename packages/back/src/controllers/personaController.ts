@@ -4,6 +4,7 @@ import { getCookie } from "../utils/getCookie";
 
 export class PersonaController {
   constructor(private personaService: PersonaService) {}
+
   public setPersona = async (req: Request, res: Response) => {
     const sessionId = getCookie(req, "chat_session_id");
     if (!sessionId)
@@ -12,6 +13,7 @@ export class PersonaController {
     const result = await this.personaService.setPersonaId(personaId, sessionId);
     res.status(200).json({ personaId: result });
   };
+
   public getPersona = async (req: Request, res: Response) => {
     const personas = await this.personaService.getAllPersonas();
     res.status(200).json(personas);

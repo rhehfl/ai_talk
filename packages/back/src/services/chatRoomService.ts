@@ -1,7 +1,8 @@
 import { PersonaRepository } from "../repositories/personaRepository";
 import { PERSONAS } from "../constants/persona";
-import { Persona } from "common";
+import { Message, Persona } from "common";
 import { ChatRepository } from "../repositories/chatRepository";
+import { callGemini } from "../client";
 
 export class ChatRoomService {
   constructor(
@@ -33,14 +34,31 @@ export class ChatRoomService {
   }
 
   public async getChatRoomHistory(sessionId: string) {
-    const personaId = await this.personaRepository.getPersonaId(sessionId);
-    if (!personaId) {
+    const persona = await this.personaRepository.getSessionPersona(sessionId);
+    if (!persona) {
       throw new Error("페르소나 ID를 찾을 수 없습니다.");
     }
+
     const chatHistory = await this.chatRepository.getHistory(
       sessionId,
-      personaId,
+      persona.id,
     );
+
+    if (chatHistory.length === 0) {
+      const defaultMessage: Message = {
+        author: "user",
+        content: "안녕!",
+      };
+
+      const geminiResponse = await callGemini([defaultMessage], persona.prompt);
+      const aiMessage: Message = {
+        author: "Gemini",
+        content: geminiResponse,
+      };
+
+      return { chatHistory: [aiMessage] };
+    }
+
     return { chatHistory };
   }
 }

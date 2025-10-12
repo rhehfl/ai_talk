@@ -16,9 +16,9 @@ export class SessionController {
     res.cookie("chat_session_id", newSessionId, {
       httpOnly: true,
       path: "/",
-      secure: true, // https 통신이므로 필수
-      sameSite: "none", // 다른 도메인 간 통신이므로 필수
-      // domain: ".doran-doran.cloud", // 👈 이 부분을 추가해주세요!
+      secure: true,
+      sameSite: "none",
+      // domain: ".doran-doran.cloud",
     });
 
     res.status(200).json({ message: "Session created successfully" });
