@@ -7,7 +7,7 @@ export class PersonasService {
   constructor(private readonly personaRepository: PersonaRepository) {}
 
   getAllPersonas() {
-    return PERSONAS.map(({ prompt, ...rest }) => rest);
+    return this.personaRepository.getAllPersonas();
   }
 
   async setPersona(sessionId: string, personaId: number) {

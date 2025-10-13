@@ -1,12 +1,13 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, OnModuleInit } from '@nestjs/common';
 import { RedisClientType } from 'redis';
 import { RedisService } from '@/core/redis/redis.service';
 
 @Injectable()
 export class ChatRoomRepository {
-  private readonly redisClient: RedisClientType;
+  private redisClient: RedisClientType;
 
-  constructor(private readonly redisService: RedisService) {
+  constructor(private readonly redisService: RedisService) {}
+  onModuleInit() {
     this.redisClient = this.redisService.getClient();
   }
 

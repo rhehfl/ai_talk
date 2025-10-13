@@ -1,3 +1,3 @@
 export * from "./getPersona";
-export * from "./postSessionId";
+export * from "./postSession";
 export * from "./setPersona";

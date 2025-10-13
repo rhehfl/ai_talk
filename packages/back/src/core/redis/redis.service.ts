@@ -18,6 +18,9 @@ export class RedisService implements OnModuleInit, OnModuleDestroy {
   }
 
   getClient(): RedisClientType {
+    if (!this.client || !this.client.isReady) {
+      throw new Error('Redis client is not ready.');
+    }
     return this.client;
   }
 }

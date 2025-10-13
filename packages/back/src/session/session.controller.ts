@@ -2,6 +2,8 @@ import { SessionService } from '@/session/session.service';
 import { Controller, Post, Res } from '@nestjs/common';
 import type { Response } from 'express';
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 @Controller('session')
 export class SessionController {
   constructor(private readonly sessionService: SessionService) {}
@@ -9,11 +11,17 @@ export class SessionController {
   @Post()
   createSession(@Res({ passthrough: true }) res: Response) {
     const sessionId = this.sessionService.create();
-    res.cookie('chat_session_id', sessionId, {
+    const cookieOptions = {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      maxAge: 1000 * 60 * 60 * 24,
-    });
+      path: '/',
+      sameSite: 'none' as const,
+      secure: true,
+    };
+    if (isProduction) {
+      Object.assign(cookieOptions, { domain: '.doran-doran.cloud' });
+    }
+
+    res.cookie('chat_session_id', sessionId, cookieOptions);
     return { sessionId };
   }
 }
