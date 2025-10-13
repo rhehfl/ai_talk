@@ -4,9 +4,20 @@ import { AppService } from './app.service';
 import { RedisModule } from './core/redis/redis.module';
 import { SessionModule } from './session/session.module';
 import { PersonasModule } from './personas/personas.module';
+import { ChatRoomsModule } from './chat_rooms/chat_rooms.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [RedisModule, SessionModule, PersonasModule],
+  imports: [
+    RedisModule,
+    SessionModule,
+    PersonasModule,
+    ChatRoomsModule,
+    ConfigModule.forRoot({
+      envFilePath: `src/configs/env/.${process.env.NODE_ENV}.env`,
+      isGlobal: true,
+    }),
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

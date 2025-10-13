@@ -19,3 +19,4 @@ node_modules
 #!.yarn/cache
 .env
 *personas.json
+**/*.env
