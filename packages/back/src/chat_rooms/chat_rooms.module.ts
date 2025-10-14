@@ -1,11 +1,14 @@
 import { Module } from '@nestjs/common';
 import { ChatRoomsService } from '@/chat_rooms/chat_rooms.service';
 import { ChatRoomsController } from '@/chat_rooms/chat_rooms.controller';
-import { ChatRoomRepository } from '@/chat_rooms/chat_rooms.repository';
+import { ChatRoomsRepository } from '@/chat_rooms/chat_rooms.repository';
+import { ChatRoom } from '@/chat_rooms/chat-room.entity';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
+  imports: [TypeOrmModule.forFeature([ChatRoom])],
   controllers: [ChatRoomsController],
-  providers: [ChatRoomsService, ChatRoomRepository],
-  exports: [ChatRoomRepository],
+  providers: [ChatRoomsService, ChatRoomsRepository],
+  exports: [ChatRoomsRepository],
 })
 export class ChatRoomsModule {}

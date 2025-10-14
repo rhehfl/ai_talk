@@ -2482,7 +2482,7 @@ const RAW_RUNTIME_STATE =
           ["@types/reflect-metadata", null],\
           ["@types/rxjs", null],\
           ["class-transformer", null],\
-          ["class-validator", null],\
+          ["class-validator", "npm:0.14.2"],\
           ["file-type", "npm:21.0.0"],\
           ["iterare", "npm:1.2.1"],\
           ["load-esm", "npm:1.0.2"],\
@@ -2599,7 +2599,7 @@ const RAW_RUNTIME_STATE =
           ["@types/nestjs__common", null],\
           ["@types/reflect-metadata", null],\
           ["class-transformer", null],\
-          ["class-validator", null],\
+          ["class-validator", "npm:0.14.2"],\
           ["reflect-metadata", "npm:0.2.2"]\
         ],\
         "packagePeers": [\
@@ -4869,6 +4869,15 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["@types/validator", [\
+      ["npm:13.15.3", {\
+        "packageLocation": "./.yarn/cache/@types-validator-npm-13.15.3-245f3deb5a-ee1f626672.zip/node_modules/@types/validator/",\
+        "packageDependencies": [\
+          ["@types/validator", "npm:13.15.3"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["@types/ws", [\
       ["npm:8.18.1", {\
         "packageLocation": "./.yarn/cache/@types-ws-npm-8.18.1-61dc106ff0-61aff11291.zip/node_modules/@types/ws/",\
@@ -7034,6 +7043,7 @@ const RAW_RUNTIME_STATE =
           ["@types/supertest", "npm:6.0.3"],\
           ["add", "npm:2.0.6"],\
           ["back", "workspace:packages/back"],\
+          ["class-validator", "npm:0.14.2"],\
           ["common", "workspace:packages/common"],\
           ["cookie-parser", "npm:1.4.7"],\
           ["cross-env", "npm:10.1.0"],\
@@ -7568,6 +7578,18 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/cjs-module-lexer-npm-2.1.0-c520790078-91cf28686d.zip/node_modules/cjs-module-lexer/",\
         "packageDependencies": [\
           ["cjs-module-lexer", "npm:2.1.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["class-validator", [\
+      ["npm:0.14.2", {\
+        "packageLocation": "./.yarn/cache/class-validator-npm-0.14.2-e722f4bf99-5bb67389d3.zip/node_modules/class-validator/",\
+        "packageDependencies": [\
+          ["@types/validator", "npm:13.15.3"],\
+          ["class-validator", "npm:0.14.2"],\
+          ["libphonenumber-js", "npm:1.12.24"],\
+          ["validator", "npm:13.15.15"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -12907,6 +12929,15 @@ const RAW_RUNTIME_STATE =
           ["libnpmversion", "npm:7.0.0"],\
           ["proc-log", "npm:5.0.0"],\
           ["semver", "npm:7.7.2"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["libphonenumber-js", [\
+      ["npm:1.12.24", {\
+        "packageLocation": "./.yarn/cache/libphonenumber-js-npm-1.12.24-16f62de007-e31cf01e3d.zip/node_modules/libphonenumber-js/",\
+        "packageDependencies": [\
+          ["libphonenumber-js", "npm:1.12.24"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -18734,6 +18765,15 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/validate-npm-package-name-npm-6.0.2-814ec4eccc-c4c23a8b9f.zip/node_modules/validate-npm-package-name/",\
         "packageDependencies": [\
           ["validate-npm-package-name", "npm:6.0.2"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["validator", [\
+      ["npm:13.15.15", {\
+        "packageLocation": "./.yarn/cache/validator-npm-13.15.15-143146ad19-f5349d1fbb.zip/node_modules/validator/",\
+        "packageDependencies": [\
+          ["validator", "npm:13.15.15"]\
         ],\
         "linkType": "HARD"\
       }]\

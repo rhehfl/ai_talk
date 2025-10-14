@@ -3,8 +3,8 @@ import { Entity, PrimaryGeneratedColumn, Column, Unique } from 'typeorm';
 @Entity('chat_room')
 @Unique(['userId', 'personaId'])
 export class ChatRoom {
-  @PrimaryGeneratedColumn()
-  id: string; // 채팅방 고유 ID (PK)
+  @PrimaryGeneratedColumn('increment')
+  id: number;
 
   @Column({ name: 'user_id' })
   userId: string;

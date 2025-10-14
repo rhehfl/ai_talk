@@ -1,34 +1,73 @@
-import { ChatRoomRepository } from '@/chat_rooms/chat_rooms.repository';
-import { RedisKey } from '@/utils/redis-key.util';
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+
+import { CreateChatRoomDto } from '@/chat_rooms/dto/create-chat-room.dto';
+import { ChatRoom } from '@/chat_rooms/chat-room.entity';
 
 @Injectable()
 export class ChatRoomsService {
-  constructor(private readonly chatRoomRepository: ChatRoomRepository) {}
-  async createChatRoom(sessionId: string, personaId: number) {
-    const roomId = RedisKey.getRoomId(sessionId, personaId);
-    const userRoomsKey = RedisKey.getUserRoomsKey(sessionId);
+  constructor(
+    @InjectRepository(ChatRoom)
+    private chatRoomRepository: Repository<ChatRoom>,
+  ) {}
 
-    const roomExists = await this.chatRoomRepository.exists(roomId);
+  /**
+   * 1. CREATE: 채팅방 생성 (이미 존재하는 경우, 기존 채팅방 반환)
+   */
+  async createChatRoom(createDto: CreateChatRoomDto): Promise<ChatRoom> {
+    const { userId, personaId } = createDto;
 
-    if (!roomExists) {
-      await this.chatRoomRepository.create(roomId, personaId);
+    // 1. 기존 채팅방이 있는지 확인합니다 (@Unique 제약 조건 확인)
+    const existingRoom = await this.chatRoomRepository.findOne({
+      where: { userId, personaId },
+    });
 
-      await this.chatRoomRepository.addUserRoom(userRoomsKey, roomId);
-      console.log(`새로운 채팅방 생성: ${roomId}`);
-    } else {
-      console.log(`기존 채팅방 입장: ${roomId}`);
+    if (existingRoom) {
+      console.log('Chat room already exists, returning existing room.');
+      return existingRoom; // 이미 존재하면 기존 방 반환
     }
 
-    return { roomId };
-    return `Chat room for persona ${personaId} created.`;
+    // 2. 새로운 채팅방 생성 및 저장
+    const newRoom = this.chatRoomRepository.create({ userId, personaId });
+    return this.chatRoomRepository.save(newRoom);
   }
 
-  deleteChatRoom(roomId: string) {
-    return `Chat room ${roomId} deleted.`;
+  /**
+   * 2. READ: 특정 채팅방 ID로 조회
+   */
+  async getChatRoomById(id: number): Promise<ChatRoom> {
+    const chatRoom = await this.chatRoomRepository.findOne({ where: { id } });
+
+    if (!chatRoom) {
+      throw new NotFoundException(`ChatRoom with ID ${id} not found.`);
+    }
+
+    return chatRoom;
+  }
+  async getAllChatRooms(userId: string): Promise<ChatRoom[]> {
+    return this.chatRoomRepository.find({
+      where: { userId },
+      order: { updatedAt: 'DESC' },
+    });
   }
 
-  getMyChatRooms() {
-    return 'My chat rooms.';
+  /**
+   * 3. DELETE: 특정 채팅방 ID로 삭제
+   */
+  async deleteChatRoom(
+    id: number,
+  ): Promise<{ deleted: boolean; message: string }> {
+    const result = await this.chatRoomRepository.delete(id);
+
+    if (result.affected === 0) {
+      throw new NotFoundException(`ChatRoom with ID ${id} not found.`);
+    }
+
+    // 실제 채팅 앱에서는 이 시점에 해당 채팅방의 모든 메시지도 함께 삭제해야 합니다.
+    return {
+      deleted: true,
+      message: `ChatRoom with ID ${id} successfully deleted.`,
+    };
   }
 }
