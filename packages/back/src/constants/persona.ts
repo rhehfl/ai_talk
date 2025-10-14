@@ -6,7 +6,7 @@ const loadPersonasFromFile = (): Persona[] => {
   const env = process.env.NODE_ENV;
   const file =
     env === 'dev'
-      ? '../../src/prompt/personas.json'
+      ? '../../../configs/prompt/personas.json'
       : '../prompt/personas.json';
 
   try {
