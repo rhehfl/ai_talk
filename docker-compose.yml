@@ -1,15 +1,15 @@
 version: "3.8"
 services:
   db:
-    image: postgres:15-alpine # 안정적인 최신 버전 이미지
+    image: postgres:15-alpine
     restart: always
     environment:
       # NestJS TypeORM 설정에 사용할 환경 변수 (필수)
-      POSTGRES_USER: chat_user
-      POSTGRES_PASSWORD: chat_password_secure # ⭐️ 보안을 위해 실제 환경에서는 더 복잡하게 설정하세요!
-      POSTGRES_DB: ai_talk_db
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_DB: "aiTalkDb"
     ports:
-      - "5432:5432" # 로컬에서 DB 접속이 필요한 경우만 설정
+      - "5433:5432" # 로컬에서 DB 접속이 필요한 경우만 설정
     volumes:
       - postgres_data:/var/lib/postgresql/data # 데이터 영속성을 위한 볼륨
     networks:
@@ -24,9 +24,9 @@ services:
       # ⭐️ 2. 백엔드에서 DB에 접속하기 위한 환경 변수 추가
       - DATABASE_HOST=db # DB 서비스 이름
       - DATABASE_PORT=5432
-      - DATABASE_USER=chat_user
-      - DATABASE_PASSWORD=chat_password_secure
-      - DATABASE_NAME=ai_talk_db
+      - DATABASE_USER=postgres
+      - DATABASE_PASSWORD=chatPasswordSecure
+      - DATABASE_NAME=aiTalkDb
     networks:
       - ai_talk_net
     volumes:
