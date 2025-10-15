@@ -10,7 +10,7 @@ export const externalApi = ky.create({
 });
 
 export const internalApi = ky.create({
-  credentials: "include",
+  prefixUrl: "/api",
   cache: "no-store",
   headers: {
     "Content-Type": "application/json",

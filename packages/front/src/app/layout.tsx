@@ -45,7 +45,6 @@ export default function RootLayout({
         >
           <ReactQueryProvider>
             {children}
-            <ReactQueryDevtools initialIsOpen={false} />
           </ReactQueryProvider>
         </ThemeProvider>
       </body>

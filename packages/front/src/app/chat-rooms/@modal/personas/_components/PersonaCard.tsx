@@ -1,6 +1,6 @@
 "use client";
 
-import { setPersona } from "@/app/persona/_asyncApis";
+import { setPersona } from "@/app/chat-rooms/@modal/personas/_asyncApis";
 import { useMutation } from "@tanstack/react-query";
 import { Persona } from "common";
 import Image from "next/image";

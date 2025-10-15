@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import MotionWrapper from "./_components/MotionWrapper";
-import { getPersona } from "@/app/persona/_asyncApis";
 import { FiCode, FiMessageSquare, FiTrendingUp } from "react-icons/fi";
 import { Metadata } from "next";
+import { getPersona } from "@/app/chat-rooms/@modal/personas/_asyncApis";
 
 const Section = ({
   children,

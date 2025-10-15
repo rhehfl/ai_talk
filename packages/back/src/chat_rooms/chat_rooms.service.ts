@@ -24,7 +24,6 @@ export class ChatRoomsService {
     });
 
     if (existingRoom) {
-      console.log('Chat room already exists, returning existing room.');
       return existingRoom; // 이미 존재하면 기존 방 반환
     }
 
@@ -46,6 +45,7 @@ export class ChatRoomsService {
     return chatRoom;
   }
   async getAllChatRooms(userId: string): Promise<ChatRoom[]> {
+    console.log(`Fetching all chat rooms for userId: ${userId}`);
     return this.chatRoomRepository.find({
       where: { userId },
       order: { updatedAt: 'DESC' },

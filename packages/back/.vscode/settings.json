@@ -1,0 +1,28 @@
+// back/.vscode/settings.json
+
+{
+  // 1. Prettier 경로 설정
+  "prettier.prettierPath": "../.yarn/sdks/prettier/index.cjs",
+
+  // 2. TypeScript SDK 경로 설정
+  "typescript.tsdk": "../.yarn/sdks/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+
+  // 3. ESLint 및 저장 시 자동 포맷 설정 (NestJS 환경에 맞게)
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "eslint.validate": [
+    "javascript",
+    "typescript" // React 관련 타입은 제외
+  ],
+
+  // 4. 검색/분석 제외 (back 폴더 내에서만 동작)
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "../front": true, // front 폴더를 검색 대상에서 명시적으로 제외
+    "../shared": true
+  }
+}

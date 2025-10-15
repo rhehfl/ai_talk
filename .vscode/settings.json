@@ -1,10 +1,13 @@
 {
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit"
+    // "source.fixAll.eslint": "explicit"
   },
   "search.exclude": {
-    "**/.yarn": true,
-    "**/.pnp.*": true
+    "**/.pnp.*": true,
+    "**/node_modules/**": true,
+    "**/.git/objects/**": true,
+    "**/.yarn/**": true,
+    "**/dist/**": true
   },
   "eslint.validate": [
     "javascript",
@@ -16,7 +19,8 @@
   "prettier.prettierPath": ".yarn/sdks/prettier/index.cjs",
   "typescript.tsdk": ".yarn/sdks/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
-  "typescript.tsserver.maxTsServerMemory": 4096,
+  "typescript.tsserver.maxTsServerMemory": 8192,
 
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "eslint.enable": false
 }
