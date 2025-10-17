@@ -1,4 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column, Unique } from 'typeorm';
+import { Personas } from '@/personas/personas.entity';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  Unique,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 
 @Entity('chat_room')
 @Unique(['userId', 'personaId'])
@@ -9,12 +17,17 @@ export class ChatRoom {
   @Column({ name: 'user_id' })
   userId: string;
 
-  // 2. 페르소나 ID (외래 키가 아닌 일반 숫자 컬럼으로만 저장)
-  @Column({ name: 'persona_id' })
-  personaId: number;
+  // 2. 외래 키 설정: ManyToOne 관계
+  // ChatRoom (N) : Persona (1) -> 하나의 페르소나에 여러 개의 채팅방이 연결됨
+  @ManyToOne(() => Personas, (personas) => personas.chatRooms) // (Optional) Persona 엔티티에 역관계 필드(chatRooms)가 있다고 가정
+  @JoinColumn({ name: 'persona_id' }) // 실제 DB 컬럼 이름은 'persona_id'로 지정
+  persona: Personas; // 관계 객체 (코드에서 사용)
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
+
+  @Column()
+  personaId: number;
 
   @Column({
     type: 'timestamp',

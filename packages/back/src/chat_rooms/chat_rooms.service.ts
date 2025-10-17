@@ -20,7 +20,7 @@ export class ChatRoomsService {
 
     // 1. 기존 채팅방이 있는지 확인합니다 (@Unique 제약 조건 확인)
     const existingRoom = await this.chatRoomRepository.findOne({
-      where: { userId, personaId },
+      where: { userId, persona: { id: personaId } },
     });
 
     if (existingRoom) {
@@ -28,7 +28,10 @@ export class ChatRoomsService {
     }
 
     // 2. 새로운 채팅방 생성 및 저장
-    const newRoom = this.chatRoomRepository.create({ userId, personaId });
+    const newRoom = this.chatRoomRepository.create({
+      userId,
+      persona: { id: personaId },
+    });
     return this.chatRoomRepository.save(newRoom);
   }
 

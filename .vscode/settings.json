@@ -19,7 +19,7 @@
   "typescript.tsserver.maxTsServerMemory": 8192,
 
   "eslint.enable": false,
-    "editor.formatOnSave": false, 
+    "editor.formatOnSave": true, 
   
   // ESLint 확장 기능에서 지원하는 파일 타입에 대해서만 Prettier를 비활성화
   "[javascript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },

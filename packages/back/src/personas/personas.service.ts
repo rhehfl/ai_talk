@@ -1,22 +1,18 @@
+import { Personas } from '@/personas/personas.entity';
 import { Injectable } from '@nestjs/common';
-import { PERSONAS } from '@/constants/persona'; // old-back에서 constants 폴더를 복사해오세요.
-import { PersonaRepository } from '@/personas/personas.repository';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class PersonasService {
-  constructor(private readonly personaRepository: PersonaRepository) {}
+  constructor(
+    @InjectRepository(Personas)
+    private personasRepository: Repository<Personas>,
+  ) {}
 
   getAllPersonas() {
-    return this.personaRepository.getAllPersonas();
-  }
-
-  async setPersona(sessionId: string, personaId: number) {
-    await this.personaRepository.setPersonaId(sessionId, personaId);
-    const currentPersona = PERSONAS.find((p) => p.id === personaId);
-    if (!currentPersona) {
-      throw new Error('Persona not found');
-    }
-    const { prompt, ...rest } = currentPersona;
-    return rest;
+    return this.personasRepository.find({
+      select: ['id', 'name', 'description', 'image'],
+    });
   }
 }
