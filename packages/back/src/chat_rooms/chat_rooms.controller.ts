@@ -49,18 +49,16 @@ export class ChatRoomsController {
         'Missing chat_session_id cookie. Please log in.',
       );
     }
-
     return this.chatRoomsService.getAllChatRooms(sessionId);
   }
 
   @Get(':id')
   findOne(@Param('id') id: number): Promise<ChatRoom> {
-    // URL 파라미터는 기본적으로 string이므로, number 타입으로 변환 (NestJS가 자동으로 처리하기도 합니다)
     return this.chatRoomsService.getChatRoomById(id);
   }
 
   @Delete(':id')
-  @HttpCode(HttpStatus.NO_CONTENT) // 삭제 성공 시 204 No Content 반환
+  @HttpCode(HttpStatus.NO_CONTENT)
   remove(
     @Param('id') id: number,
   ): Promise<{ deleted: boolean; message: string }> {

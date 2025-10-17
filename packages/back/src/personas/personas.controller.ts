@@ -7,6 +7,7 @@ export class PersonasController {
 
   @Get()
   getAllPersonas() {
+    console.log('asd');
     return this.personasService.getAllPersonas();
   }
 

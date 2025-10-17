@@ -4,6 +4,7 @@ import ReactQueryProvider from "@/app/_provider/ReactQueryProvider";
 import Script from "next/script";
 import { ThemeProvider } from "@/app/_provider";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { GetSession } from "@/app/_components";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -44,6 +45,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <ReactQueryProvider>
+            <GetSession />
             {children}
           </ReactQueryProvider>
         </ThemeProvider>
