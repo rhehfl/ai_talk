@@ -14,33 +14,19 @@ interface ModalProps {
 export default function Modal({ children, title }: ModalProps) {
   const router = useRouter();
 
-  // 모달을 닫고 이전 경로로 돌아가는 함수
   const handleClose = useCallback(() => {
     router.back();
   }, [router]);
 
-  // 배경 클릭 시 모달 닫기
   const handleBackgroundClick = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
       if (e.target === e.currentTarget) {
-        // 배경만 클릭했을 때 닫히도록
         handleClose();
       }
     },
     [handleClose],
   );
 
-  // Esc 키 누를 시 모달 닫기 (선택 사항)
-  const handleKeyDown = useCallback(
-    (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        handleClose();
-      }
-    },
-    [handleClose],
-  );
-
-  // 애니메이션 Variants 정의
   const backdropVariants = {
     visible: { opacity: 1 },
     hidden: { opacity: 0 },
@@ -92,7 +78,7 @@ export default function Modal({ children, title }: ModalProps) {
       >
         {/* 모달 창 */}
         <motion.div
-          className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-2xl w-full max-w-lg cursor-default relative"
+          className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-2xl cursor-default relative"
           variants={modalVariants} // 모달 창에 애니메이션 Variants 적용
           onClick={(e) => e.stopPropagation()} // 모달 창 클릭 시 배경 클릭 이벤트 방지
         >
@@ -104,11 +90,7 @@ export default function Modal({ children, title }: ModalProps) {
           >
             &times;
           </button>
-          <div className="max-h-[70vh] overflow-y-auto pr-2">
-            {" "}
-            {/* 내용이 길 경우 스크롤 */}
-            {children}
-          </div>
+          <div className="max-h-[70vh] overflow-y-auto pr-2">{children}</div>
         </motion.div>
       </motion.div>
     </AnimatePresence>

@@ -1,12 +1,9 @@
 "use client";
 import Modal from "@/app/_components/Modal";
 import { PersonaContainer } from "@/app/chat-rooms/@modal/personas/_components";
-import { useSession } from "@/app/chat-rooms/@modal/personas/_hooks/useSession";
 import { Suspense } from "react";
 
 export default function PersonasPage() {
-  useSession();
-
   return (
     <Modal title="AI 페르소나 선택">
       <main className="dark:bg-gray-800 bg-gray-100 min-h-screen p-4 sm:p-6 lg:p-8">
