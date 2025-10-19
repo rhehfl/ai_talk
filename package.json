@@ -33,7 +33,8 @@
     "dev:front": "yarn workspace front dev --experimental-https --experimental-https-key ./localhost-key.pem --experimental-https-cert ./localhost.pem",
     "typecheck": "tsc -b",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix"
+    "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
+    "build:common": "yarn workspace common build"
   },
   "dependenciesMeta": {
     "eslint-plugin-prettier@5.5.4": {

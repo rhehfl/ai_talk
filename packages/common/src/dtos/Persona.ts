@@ -1,7 +1,7 @@
 export interface Persona {
   id: number;
-  image: string;
   name: string;
+  image: string;
   description: string;
   prompt: string;
 }

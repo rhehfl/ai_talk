@@ -56,6 +56,14 @@ export class ChatRoomsService {
     return this.chatRoomRepository.find({
       where: { userId },
       order: { updatedAt: 'DESC' },
+      select: {
+        id: true,
+        userId: true,
+        createdAt: true,
+        updatedAt: true,
+        persona: { id: true, name: true, image: true },
+      },
+      relations: ['persona'],
     });
   }
 

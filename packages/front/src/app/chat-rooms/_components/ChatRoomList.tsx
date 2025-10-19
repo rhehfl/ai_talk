@@ -14,7 +14,7 @@ export default function ChatRoomList() {
   return (
     <div>
       {data.map((chat) => (
-        <ChatRoomCard key={chat.id} chat={chat} />
+        <ChatRoomCard key={chat.id} {...chat} />
       ))}
     </div>
   );
