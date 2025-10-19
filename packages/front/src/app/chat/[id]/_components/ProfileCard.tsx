@@ -1,6 +1,6 @@
 "use client";
 
-import { getChatRoomInfo } from "@/app/chat/_asyncApis";
+import { getChatRoomInfo } from "@/app/chat/[id]/_asyncApis";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import Image from "next/image";
 

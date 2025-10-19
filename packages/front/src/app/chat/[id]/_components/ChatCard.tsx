@@ -1,4 +1,4 @@
-import ProfileCard from "@/app/chat/_components/ProfileCard";
+import { ProfileCard } from "@/app/chat/[id]/_components";
 import Markdown from "react-markdown";
 
 interface ChatCardProps {

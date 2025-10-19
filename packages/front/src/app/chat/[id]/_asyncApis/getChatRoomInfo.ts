@@ -1,7 +1,7 @@
 "use client";
 
 import { externalApi } from "@/app/_libs";
-import type { Persona } from "common/src/types";
+import type { Persona } from "common";
 
 export const getChatRoomInfo = async () => {
   const res = await externalApi

@@ -1,7 +1,7 @@
 "use client";
 
 import { ChatIcon } from "@/app/_icons";
-import ProfileCard from "@/app/chat/_components/ProfileCard";
+import { ProfileCard } from "@/app/chat/[id]/_components/";
 import { Suspense } from "react";
 
 export default function SideBar() {
