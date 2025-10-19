@@ -38,17 +38,21 @@ export class ChatRoomsService {
   /**
    * 2. READ: 특정 채팅방 ID로 조회
    */
-  async getChatRoomById(id: number): Promise<ChatRoom> {
+  async getChatRoomById(id: number, userId: string): Promise<ChatRoom> {
     const chatRoom = await this.chatRoomRepository.findOne({ where: { id } });
 
     if (!chatRoom) {
       throw new NotFoundException(`ChatRoom with ID ${id} not found.`);
     }
+    if (chatRoom.userId !== userId) {
+      throw new NotFoundException(
+        `ChatRoom with ID ${id} not found for this user.`,
+      );
+    }
 
     return chatRoom;
   }
   async getAllChatRooms(userId: string): Promise<ChatRoom[]> {
-    console.log(`Fetching all chat rooms for userId: ${userId}`);
     return this.chatRoomRepository.find({
       where: { userId },
       order: { updatedAt: 'DESC' },

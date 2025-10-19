@@ -8,6 +8,8 @@ import { ChatRoomsModule } from './chat_rooms/chat_rooms.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeORMConfig } from 'typeorm.config';
+import { ChatModule } from './chat/chat.module';
+import { ChatGateway } from './chat.gateway';
 
 @Module({
   imports: [
@@ -25,8 +27,9 @@ import { typeORMConfig } from 'typeorm.config';
     SessionModule,
     PersonasModule,
     ChatRoomsModule,
+    ChatModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, ChatGateway],
 })
 export class AppModule {}

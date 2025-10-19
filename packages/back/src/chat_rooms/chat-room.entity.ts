@@ -6,6 +6,7 @@ import {
   Unique,
   ManyToOne,
   JoinColumn,
+  RelationId,
 } from 'typeorm';
 
 @Entity('chat_room')
@@ -26,7 +27,8 @@ export class ChatRoom {
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 
-  @Column()
+  @RelationId((chatRoom: ChatRoom) => chatRoom.persona, 'personaId') // "persona" 관계의 ID를 이 필드에 로드하도록 지정
+  @Column({ name: 'persona_id' }) // 실제 DB의 컬럼 이름과 동일하게 맞춰줍니다.
   personaId: number;
 
   @Column({

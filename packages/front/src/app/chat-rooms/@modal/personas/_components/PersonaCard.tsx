@@ -1,6 +1,6 @@
 "use client";
 
-import { setPersona } from "@/app/chat-rooms/@modal/personas/_asyncApis";
+import { postChatRoom } from "@/app/chat-rooms/_asyncApis";
 import { useMutation } from "@tanstack/react-query";
 import { Persona } from "common";
 import Image from "next/image";
@@ -12,7 +12,7 @@ interface PersonaCardProps {
 
 export default function PersonaCard({ persona }: PersonaCardProps) {
   const router = useRouter();
-  const mutation = useMutation({ mutationFn: setPersona });
+  const mutation = useMutation({ mutationFn: postChatRoom });
 
   const handleClick = () => {
     mutation.mutate(persona.id, {
