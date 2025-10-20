@@ -66,10 +66,9 @@ export class ChatGateway {
     const systemInstruction = await this.chatService.getSystemInstruction(
       Number(roomId),
     );
-    console.log(payload);
     if (!systemInstruction) return '';
     const aiResponseText = await this.geminiService.generateContent(
-      recentHistory,
+      recentHistory.reverse(),
       systemInstruction,
     );
     const aiMessage: Message = {

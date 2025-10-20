@@ -8,6 +8,7 @@ import {
 } from "@tanstack/react-query";
 import Link from "next/link";
 import { cookies } from "next/headers";
+import { chatRoomQueries } from "@/app/_queries";
 
 export default async function ChatRoomsPage() {
   const queryClient = new QueryClient();
@@ -16,8 +17,11 @@ export default async function ChatRoomsPage() {
   const cookieHeaderValue = sessionToken
     ? `chat_session_id=${sessionToken}`
     : undefined;
+
+  const chatRoomQuery = chatRoomQueries.list();
+
   await queryClient.prefetchQuery({
-    queryKey: ["chatRooms"],
+    queryKey: chatRoomQuery.queryKey,
     queryFn: () =>
       externalApi("api/chatrooms", {
         headers: {

@@ -1,6 +1,6 @@
 "use client";
 
-import { getChatRoomInfo } from "@/app/chat/[id]/_asyncApis";
+import { chatRoomQueries } from "@/app/_queries";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useParams } from "next/navigation";
@@ -11,10 +11,7 @@ interface ProfileCardProps {
 
 export default function ProfileCard({ size }: ProfileCardProps) {
   const { id } = useParams();
-  const { data } = useSuspenseQuery({
-    queryKey: ["chatRoomInfo"],
-    queryFn: () => getChatRoomInfo(Number(id)),
-  });
+  const { data } = useSuspenseQuery(chatRoomQueries.detail(Number(id)));
   const { persona } = data;
 
   if (size === "small") {

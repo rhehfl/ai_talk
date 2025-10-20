@@ -3,7 +3,7 @@ import Link from "next/link";
 import MotionWrapper from "./_components/MotionWrapper";
 import { FiCode, FiMessageSquare, FiTrendingUp } from "react-icons/fi";
 import { Metadata } from "next";
-import { getPersona } from "@/app/chat-rooms/@modal/personas/_asyncApis";
+import { getAllPersonas } from "@/app/_asyncApis";
 
 const Section = ({
   children,
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  const personas = await getPersona();
+  const personas = await getAllPersonas();
 
   const features = [
     {

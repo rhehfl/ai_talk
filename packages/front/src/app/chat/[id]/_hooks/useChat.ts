@@ -3,15 +3,13 @@
 import { useCallback, useEffect, useState } from "react";
 import { Message } from "common";
 import { io, Socket } from "socket.io-client";
-import { getChatRoomHistory } from "@/app/chat/[id]/_asyncApis";
 import { useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
+import { getChatRoomHistory } from "@/app/_asyncApis";
+import { chatRoomQueries } from "@/app/_queries";
 
 export const useChat = (roomId?: number) => {
   const queryClient = useQueryClient();
-  const { data: messages } = useSuspenseQuery({
-    queryFn: () => getChatRoomHistory(Number(roomId)),
-    queryKey: ["chatRoomHistory", roomId],
-  });
+  const { data: messages } = useSuspenseQuery(chatRoomQueries.history(roomId!));
   const [socket, setSocket] = useState<Socket | null>(null);
   const [isConnected, setIsConnected] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
