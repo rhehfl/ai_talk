@@ -1,7 +1,7 @@
 'use client";';
 
 import { personaQueries } from "@/app/_queries/personaQueries";
-import PersonaCard from "@/app/chat-rooms/@modal/personas/_components/PersonaCard";
+import { PersonaCard } from "@/app/chat-rooms/personas/_components";
 import { useSuspenseQuery } from "@tanstack/react-query";
 
 export default function PersonaContainer() {

@@ -1,6 +1,6 @@
 "use client";
 import Modal from "@/app/_components/Modal";
-import { PersonaContainer } from "@/app/chat-rooms/@modal/personas/_components";
+import { PersonaContainer } from "@/app/chat-rooms/personas/_components";
 import { Suspense } from "react";
 
 export default function PersonasPage() {

@@ -1,6 +1,5 @@
 "use client";
 
-import { postChatRoom } from "@/app/_asyncApis";
 import { chatRoomMutations } from "@/app/_queries";
 import { useMutation } from "@tanstack/react-query";
 import { Persona } from "common";

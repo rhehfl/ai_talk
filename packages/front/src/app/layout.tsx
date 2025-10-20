@@ -17,9 +17,11 @@ const geistMono = Geist_Mono({
 });
 
 export default function RootLayout({
+  modal,
   children,
 }: Readonly<{
   children: React.ReactNode;
+  modal?: React.ReactNode;
 }>) {
   return (
     <html lang="ko" suppressHydrationWarning>
@@ -47,6 +49,7 @@ export default function RootLayout({
           <ReactQueryProvider>
             <GetSession />
             {children}
+            {modal}
           </ReactQueryProvider>
         </ThemeProvider>
       </body>
