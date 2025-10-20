@@ -41,15 +41,26 @@ export class ChatGateway {
       socket.disconnect();
       return;
     }
+    try {
+      const data = await this.chatRoomsService.getChatRoomById(
+        Number(roomId),
+        sessionId,
+      );
+      await this.chatService.setSystemInstruction(
+        Number(roomId),
+        data.persona.prompt,
+      );
+    } catch (error) {
+      const statusCode = error.status || 500;
+      socket.emit('error', {
+        message: '채팅방을 찾을 수 없거나 접근 권한이 없습니다.',
+        code: statusCode,
+      });
+
+      socket.disconnect();
+    }
+
     socket.join(`room_${roomId}`);
-    const data = await this.chatRoomsService.getChatRoomById(
-      Number(roomId),
-      sessionId,
-    );
-    await this.chatService.setSystemInstruction(
-      Number(roomId),
-      data.persona.prompt,
-    );
   }
 
   @SubscribeMessage('message')
@@ -57,7 +68,6 @@ export class ChatGateway {
     @ConnectedSocket() socket: Socket,
     @MessageBody() payload: Message,
   ) {
-    const cookieHeader = socket.handshake.headers.cookie;
     const roomId = socket.handshake.query.roomId as string;
 
     await this.chatService.saveChatMessage(Number(roomId), payload);

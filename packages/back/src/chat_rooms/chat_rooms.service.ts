@@ -35,9 +35,9 @@ export class ChatRoomsService {
     return this.chatRoomRepository.save(newRoom);
   }
 
-  async getChatRoomById(id: number, userId: string): Promise<ChatRoom> {
+  async getChatRoomById(roomId: number, userId: string): Promise<ChatRoom> {
     const chatRoom = await this.chatRoomRepository.findOne({
-      where: { id },
+      where: { id: roomId },
       select: {
         id: true,
         userId: true,
@@ -49,11 +49,12 @@ export class ChatRoomsService {
     });
 
     if (!chatRoom) {
-      throw new NotFoundException(`ChatRoom with ID ${id} not found.`);
+      throw new NotFoundException(`ChatRoom with ID ${roomId} not found.`);
     }
+
     if (chatRoom.userId !== userId) {
       throw new NotFoundException(
-        `ChatRoom with ID ${id} not found for this user.`,
+        `ChatRoom with ID ${roomId} not found for this user.`,
       );
     }
 

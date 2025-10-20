@@ -17,8 +17,8 @@ export default function PersonaCard({ persona }: PersonaCardProps) {
 
   const handleClick = () => {
     mutation.mutate(persona.id, {
-      onSuccess: () => {
-        router.push(`/chat/${persona.id}`);
+      onSuccess: (data) => {
+        router.push(`/chat/${data.id}`);
       },
     });
   };

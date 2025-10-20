@@ -1,11 +1,11 @@
 "use client";
 
 import { externalApi } from "@/app/_libs";
-import type { Message } from "common/src/types";
+import { ChatRoom } from "common";
 
 export const postChatRoom = async (personaId: number) => {
   const res = await externalApi
     .post(`api/chatrooms`, { json: { personaId } })
-    .json<Omit<Message, "prompt">[]>();
+    .json<ChatRoom>();
   return res;
 };
