@@ -8,10 +8,10 @@ export default function ChatRoomList() {
   const { data } = useSuspenseQuery(chatRoomQueries.list());
 
   return (
-    <div>
+    <ul className="flex flex-col gap-5">
       {data.map((chat) => (
         <ChatRoomCard key={chat.id} {...chat} />
       ))}
-    </div>
+    </ul>
   );
 }

@@ -1,5 +1,4 @@
 import { externalApi, internalApi } from "@/app/_libs";
-import { ReactQueryProvider } from "@/app/_provider";
 import { SuspenseChatRoomList } from "@/app/chat-rooms/_components";
 import {
   dehydrate,
@@ -37,11 +36,11 @@ export default async function ChatRoomsPage() {
         <HydrationBoundary state={dehydratedState}>
           <SuspenseChatRoomList />
         </HydrationBoundary>
-        <div className="pt-8 text-center">
+        <div className="pt-8 text-center ">
           <Link href="/chat-rooms/personas">
             <button
               className="py-3 px-6 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-full shadow-md transition duration-150
-                         dark:bg-indigo-500 dark:hover:bg-indigo-600"
+                         dark:bg-indigo-500 dark:hover:bg-indigo-600 cursor-pointer"
             >
               + 새로운 AI와 대화 시작하기
             </button>
