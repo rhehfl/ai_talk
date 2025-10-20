@@ -1,12 +1,8 @@
 import { ProfileCard } from "@/app/chat/[id]/_components";
+import { Message } from "common";
 import Markdown from "react-markdown";
 
-interface ChatCardProps {
-  author: "user" | "Gemini";
-  content: string;
-}
-
-export default function ChatCard({ author, content }: ChatCardProps) {
+export default function ChatCard({ author, content }: Message) {
   return (
     <div
       className={`flex items-end mb-2 ${

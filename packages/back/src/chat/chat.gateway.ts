@@ -1,19 +1,25 @@
 import { ChatService } from '@/chat/chat.service';
+import { ChatRoomsService } from '@/chat_rooms/chat_rooms.service';
 import { GeminiService } from '@/gemini/gemini.service';
+import { PersonasService } from '@/personas/personas.service';
 import {
   ConnectedSocket,
   MessageBody,
   SubscribeMessage,
   WebSocketGateway,
+  WebSocketServer,
 } from '@nestjs/websockets';
 import { Message } from 'common';
-import { Socket } from 'socket.io';
+import { Server, Socket } from 'socket.io';
 
 @WebSocketGateway({ transports: ['websocket'] })
 export class ChatGateway {
+  @WebSocketServer()
+  server: Server;
   constructor(
     private readonly chatService: ChatService,
     private readonly geminiService: GeminiService,
+    private readonly chatRoomsService: ChatRoomsService,
   ) {}
   private extractTokenFromCookie(
     cookieHeader: string | undefined,
@@ -35,26 +41,43 @@ export class ChatGateway {
       socket.disconnect();
       return;
     }
-    console.log(sessionId, roomId);
     socket.join(`room_${roomId}`);
+    const data = await this.chatRoomsService.getChatRoomById(
+      Number(roomId),
+      sessionId,
+    );
+    await this.chatService.setSystemInstruction(
+      Number(roomId),
+      data.persona.prompt,
+    );
   }
 
   @SubscribeMessage('message')
   async handleMessage(
     @ConnectedSocket() socket: Socket,
     @MessageBody() payload: Message,
-  ): Promise<string> {
+  ) {
     const cookieHeader = socket.handshake.headers.cookie;
-    const sessionId = this.extractTokenFromCookie(cookieHeader);
     const roomId = socket.handshake.query.roomId as string;
-    const userMessage = payload.content;
-    console.log('Received:', payload);
+
     await this.chatService.saveChatMessage(Number(roomId), payload);
+
     const recentHistory = await this.chatService.getChatHistory(Number(roomId));
+    const systemInstruction = await this.chatService.getSystemInstruction(
+      Number(roomId),
+    );
+    console.log(payload);
+    if (!systemInstruction) return '';
     const aiResponseText = await this.geminiService.generateContent(
       recentHistory,
       systemInstruction,
     );
-    return 'Hello world!';
+    const aiMessage: Message = {
+      author: 'Gemini',
+      content: aiResponseText,
+    };
+    await this.chatService.saveChatMessage(Number(roomId), aiMessage);
+
+    this.server.to(`room_${roomId}`).emit('message', aiMessage);
   }
 }

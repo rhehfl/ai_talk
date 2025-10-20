@@ -35,11 +35,18 @@ export class ChatRoomsService {
     return this.chatRoomRepository.save(newRoom);
   }
 
-  /**
-   * 2. READ: 특정 채팅방 ID로 조회
-   */
   async getChatRoomById(id: number, userId: string): Promise<ChatRoom> {
-    const chatRoom = await this.chatRoomRepository.findOne({ where: { id } });
+    const chatRoom = await this.chatRoomRepository.findOne({
+      where: { id },
+      select: {
+        id: true,
+        userId: true,
+        createdAt: true,
+        updatedAt: true,
+        persona: { id: true, name: true, prompt: true, image: true },
+      },
+      relations: ['persona'],
+    });
 
     if (!chatRoom) {
       throw new NotFoundException(`ChatRoom with ID ${id} not found.`);

@@ -3,9 +3,9 @@
 import { externalApi } from "@/app/_libs";
 import type { Message } from "common/src/types";
 
-export const getChatRoomHistory = async () => {
+export const getChatRoomHistory = async (roomId: number) => {
   const res = await externalApi
-    .get(`api/chatroom/history`)
+    .get(`api/chat/history`, { searchParams: { roomId } })
     .json<Omit<Message, "prompt">[]>();
   return res;
 };

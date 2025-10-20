@@ -3,10 +3,16 @@
 import { useCallback, useEffect, useState } from "react";
 import { Message } from "common";
 import { io, Socket } from "socket.io-client";
+import { getChatRoomHistory } from "@/app/chat/[id]/_asyncApis";
+import { useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
 
-export const useSocket = (roomId?: string) => {
+export const useChat = (roomId?: number) => {
+  const queryClient = useQueryClient();
+  const { data: messages } = useSuspenseQuery({
+    queryFn: () => getChatRoomHistory(Number(roomId)),
+    queryKey: ["chatRoomHistory", roomId],
+  });
   const [socket, setSocket] = useState<Socket | null>(null);
-  const [messages, setMessages] = useState<Message[]>([]);
   const [isConnected, setIsConnected] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -18,6 +24,8 @@ export const useSocket = (roomId?: string) => {
       query: {
         roomId: roomId.toString(),
       },
+      reconnectionAttempts: 5,
+      reconnectionDelay: 1000,
     });
     setSocket(newSocket);
     setIsLoading(true);
@@ -30,7 +38,13 @@ export const useSocket = (roomId?: string) => {
       setIsLoading(false);
     });
     newSocket.on("message", (message: Message) => {
-      setMessages((prev) => [...prev, message]);
+      console.log("Received message:", message);
+      queryClient.setQueryData(
+        ["chatRoomHistory", roomId],
+        (oldData: Message[]) => {
+          return [...oldData, message];
+        },
+      );
     });
     return () => {
       newSocket.close();
@@ -50,9 +64,14 @@ export const useSocket = (roomId?: string) => {
       socket.emit("message", newMessage);
 
       // 💡 사용자 메시지를 UI에 즉시 반영 (UX 향상)
-      setMessages((prev) => [...prev, newMessage]);
+      queryClient.setQueryData(
+        ["chatRoomHistory", roomId],
+        (oldData: Message[]) => {
+          return [...oldData, newMessage];
+        },
+      );
     },
     [socket, isConnected],
   );
-  return { messages, isConnected, setMessages, isLoading, sendMessage };
+  return { messages, isConnected, isLoading, sendMessage };
 };

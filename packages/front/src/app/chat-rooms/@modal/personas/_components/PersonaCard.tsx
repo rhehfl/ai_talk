@@ -17,10 +17,11 @@ export default function PersonaCard({ persona }: PersonaCardProps) {
   const handleClick = () => {
     mutation.mutate(persona.id, {
       onSuccess: () => {
-        router.push("/chat");
+        router.push(`/chat/${persona.id}`);
       },
     });
   };
+
   return (
     <button
       type="button"
