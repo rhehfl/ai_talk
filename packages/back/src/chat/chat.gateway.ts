@@ -52,6 +52,10 @@ export class ChatGateway {
       );
     } catch (error) {
       const statusCode = error.status || 500;
+      console.error(
+        `[Connection Error] roomId: ${roomId}, sessionId: ${sessionId}`,
+        error.message,
+      );
       socket.emit('error', {
         message: '채팅방을 찾을 수 없거나 접근 권한이 없습니다.',
         code: statusCode,
@@ -69,7 +73,6 @@ export class ChatGateway {
     @MessageBody() payload: Message,
   ) {
     const roomId = socket.handshake.query.roomId as string;
-
     await this.chatService.saveChatMessage(Number(roomId), payload);
 
     const recentHistory = await this.chatService.getChatHistory(Number(roomId));
@@ -78,7 +81,7 @@ export class ChatGateway {
     );
     if (!systemInstruction) return '';
     const aiResponseText = await this.geminiService.generateContent(
-      recentHistory.reverse(),
+      recentHistory,
       systemInstruction,
     );
     const aiMessage: Message = {

@@ -4,15 +4,24 @@ import { useCallback, useEffect, useState } from "react";
 import { Message } from "common";
 import { io, Socket } from "socket.io-client";
 import { useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
-import { getChatRoomHistory } from "@/app/_asyncApis";
 import { chatRoomQueries } from "@/app/_queries";
 
 export const useChat = (roomId?: number) => {
   const queryClient = useQueryClient();
-  const { data: messages } = useSuspenseQuery(chatRoomQueries.history(roomId!));
+  const chatRoomQueryOption = chatRoomQueries.history(roomId!);
+  const { data: messages } = useSuspenseQuery(chatRoomQueryOption);
   const [socket, setSocket] = useState<Socket | null>(null);
   const [isConnected, setIsConnected] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  const historyUpdater = (message: Message) => {
+    queryClient.setQueryData(chatRoomQueryOption.queryKey, (oldData) => {
+      if (oldData === undefined) {
+        return [message];
+      }
+      return [...oldData, message];
+    });
+  };
 
   useEffect(() => {
     if (!roomId) return;
@@ -36,13 +45,7 @@ export const useChat = (roomId?: number) => {
       setIsLoading(false);
     });
     newSocket.on("message", (message: Message) => {
-      console.log("Received message:", message);
-      queryClient.setQueryData(
-        ["chatRoomHistory", roomId],
-        (oldData: Message[]) => {
-          return [...oldData, message];
-        },
-      );
+      historyUpdater(message);
     });
     return () => {
       newSocket.close();
@@ -54,20 +57,13 @@ export const useChat = (roomId?: number) => {
         console.error("Socket is not connected. Cannot send message.");
         return;
       }
+      console.log(123);
       const newMessage: Message = {
         author: "user",
         content,
       };
-
       socket.emit("message", newMessage);
-
-      // 💡 사용자 메시지를 UI에 즉시 반영 (UX 향상)
-      queryClient.setQueryData(
-        ["chatRoomHistory", roomId],
-        (oldData: Message[]) => {
-          return [...oldData, newMessage];
-        },
-      );
+      historyUpdater(newMessage);
     },
     [socket, isConnected],
   );
