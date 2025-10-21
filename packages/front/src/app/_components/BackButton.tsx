@@ -24,7 +24,7 @@ export default function BackButton({
   };
 
   return (
-    <div className="bg-blue-100 rounded-xl px-5 py-3 inline-block cursor-pointer hover:bg-blue-200 transition">
+    <div className="rounded-xl px-5 py-3 inline-block cursor-pointer hover:text-blue-400 transition">
       <button
         onClick={handleBack}
         className="flex cursor-pointer"

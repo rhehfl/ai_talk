@@ -40,7 +40,7 @@ export const useChat = (roomId?: number) => {
       setIsConnected(true);
     });
 
-    newSocket.on("disconnect", (reason) => {
+    newSocket.on("disconnect", () => {
       setIsConnected(false);
     });
 

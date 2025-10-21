@@ -2,8 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ReactQueryProvider from "@/app/_provider/ReactQueryProvider";
 import Script from "next/script";
-import { ThemeProvider } from "@/app/_provider";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { SsgoiProvider, ThemeProvider } from "@/app/_provider";
 import { GetSession } from "@/app/_components";
 
 const geistSans = Geist({
@@ -17,11 +16,9 @@ const geistMono = Geist_Mono({
 });
 
 export default function RootLayout({
-  modal,
   children,
 }: Readonly<{
   children: React.ReactNode;
-  modal?: React.ReactNode;
 }>) {
   return (
     <html lang="ko" suppressHydrationWarning>
@@ -48,8 +45,7 @@ export default function RootLayout({
         >
           <ReactQueryProvider>
             <GetSession />
-            {children}
-            {modal}
+            <SsgoiProvider>{children}</SsgoiProvider>
           </ReactQueryProvider>
         </ThemeProvider>
       </body>
