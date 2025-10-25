@@ -1,7 +1,6 @@
 import { ChatService } from '@/chat/chat.service';
 import { ChatRoomsService } from '@/chat_rooms/chat_rooms.service';
 import { GeminiService } from '@/gemini/gemini.service';
-import { PersonasService } from '@/personas/personas.service';
 import {
   ConnectedSocket,
   MessageBody,
@@ -29,6 +28,7 @@ export class ChatGateway {
     const tokenCookie = cookies.find((c) => c.startsWith('chat_session_id='));
     return tokenCookie ? tokenCookie.split('=')[1] : null;
   }
+
   async handleConnection(@ConnectedSocket() socket: Socket) {
     const cookieHeader = socket.handshake.headers.cookie;
     const roomId = socket.handshake.query.roomId;
@@ -73,16 +73,19 @@ export class ChatGateway {
     @MessageBody() payload: Message,
   ) {
     const roomId = socket.handshake.query.roomId as string;
-    await this.chatService.saveChatMessage(Number(roomId), payload);
 
+    await this.chatService.saveChatMessage(Number(roomId), payload);
     const recentHistory = await this.chatService.getChatHistory(Number(roomId));
     const systemInstruction = await this.chatService.getSystemInstruction(
       Number(roomId),
     );
     if (!systemInstruction) return '';
-    const aiResponseText = await this.geminiService.generateContent(
+
+    const aiResponseText = await this.geminiService.generateStreamContent(
       recentHistory,
       systemInstruction,
+      this.server,
+      payload.content,
     );
     const aiMessage: Message = {
       author: 'Gemini',
@@ -90,6 +93,6 @@ export class ChatGateway {
     };
     await this.chatService.saveChatMessage(Number(roomId), aiMessage);
 
-    this.server.to(`room_${roomId}`).emit('message', aiMessage);
+    // this.server.to(`room_${roomId}`).emit('message', aiMessage);
   }
 }

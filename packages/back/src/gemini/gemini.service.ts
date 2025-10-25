@@ -3,7 +3,7 @@
 import { Injectable } from '@nestjs/common';
 import { GoogleGenAI } from '@google/genai';
 import { Message } from 'common';
-
+import { Server } from 'socket.io';
 @Injectable()
 export class GeminiService {
   private readonly googleGenAI: GoogleGenAI;
@@ -13,15 +13,17 @@ export class GeminiService {
       apiKey: process.env.GEMINI_API_KEY!,
     });
   }
-
+  private formatHistory(history: Message[]) {
+    return history.map((m) => ({
+      role: m.author === 'user' ? 'user' : 'model',
+      parts: [{ text: m.content }],
+    }));
+  }
   async generateContent(
     history: Message[],
     systemInstruction: string,
   ): Promise<string> {
-    const contents = history.map((m) => ({
-      role: m.author === 'user' ? 'user' : 'model',
-      parts: [{ text: m.content }],
-    }));
+    const contents = this.formatHistory(history);
 
     try {
       const response = await this.googleGenAI.models.generateContent({
@@ -42,9 +44,41 @@ export class GeminiService {
     }
   }
 
-  // 💡 [참고] 스트리밍 세션 생성 메서드 (채팅 게이트웨이용)
-  async createChatSession(personaConfig: any) {
-    // 이전에 논의된 스트리밍 세션 생성 및 관리를 위한 메서드
-    // return this.googleGenAI.chats.create({...});
+  async generateStreamContent(
+    history: Message[],
+    systemInstruction: string,
+    server: Server,
+    message: string,
+  ) {
+    const contents = this.formatHistory(history);
+
+    const chat = this.googleGenAI.chats.create({
+      model: 'gemini-2.5-flash',
+      history: contents,
+      config: {
+        systemInstruction,
+      },
+    });
+
+    let fullResponseText = '';
+
+    try {
+      const stream = await chat.sendMessageStream({
+        message,
+      });
+      for await (const chunk of stream) {
+        if (chunk) {
+          fullResponseText += chunk.text; // 2. 청크를 변수에 누적
+          server.emit('ai-stream', { text: chunk.text }); // 3. 청크 전송
+        }
+      }
+      server.emit('ai-stream-done', {
+        fullText: fullResponseText,
+      });
+      return fullResponseText;
+    } catch (error) {
+      console.error('Error calling Gemini API:', error);
+      throw new Error('Gemini API 호출 중 오류가 발생했습니다.');
+    }
   }
 }

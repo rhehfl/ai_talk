@@ -8,7 +8,7 @@ import { Suspense } from "react";
 
 export default function ChatRoom() {
   const { id } = useParams();
-  const { sendMessage, isAiThinking } = useChat(Number(id));
+  const { sendMessage, isAiThinking, streamingMessage } = useChat(Number(id));
 
   return (
     <>
@@ -16,8 +16,10 @@ export default function ChatRoom() {
         <Suspense fallback={<div>Loading...</div>}>
           <ChatList />
         </Suspense>
+        {isAiThinking && (
+          <AILoadingMessage streamingMessage={streamingMessage} />
+        )}
       </div>
-      {isAiThinking && <AILoadingMessage />}
       <ChatSendForm onSubmit={sendMessage} />
     </>
   );

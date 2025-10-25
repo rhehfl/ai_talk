@@ -45,8 +45,7 @@
   // 5. 저장 시 동작 설정 (역할을 명확하게 분리)
   "editor.formatOnSave": true, // Prettier가 포맷팅을 담당
   "editor.codeActionsOnSave": {
-    // "source.fixAll": true, // 이것보다 아래의 명시적인 설정을 권장
-    "source.fixAll.eslint": true // ESLint는 자동 수정(fix)을 담당
+    "source.fixAll.eslint": "explicit"
   },
 
   // 6. 기본 포맷터 설정 (기존 설정 유지)
