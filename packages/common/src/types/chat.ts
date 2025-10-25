@@ -3,25 +3,7 @@ export interface Message {
   content: string;
 }
 
-export interface C2sInit {
-  type: "C2S_INIT";
-}
-
-export interface C2sSendMessage {
-  type: "C2S_SEND_MESSAGE";
-  payload: Message;
-}
-
-export interface S2cSessionCreated {
-  type: "S2C_SESSION_CREATED";
-  payload: { sessionId: string };
-}
-
-export interface S2cHistory {
-  type: "S2C_INIT_COMPLETE";
-}
-
-export interface S2cBroadcastMessage {
-  type: "S2C_BROADCAST_MESSAGE";
-  payload: Message;
+export interface ChatChunk {
+  type: "CHAT_CHUNK";
+  content: string;
 }

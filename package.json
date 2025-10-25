@@ -9,11 +9,15 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.5.0",
+    "@nestjs/cli": "^11.0.10",
+    "@nestjs/schematics": "^11.0.9",
     "@next/eslint-plugin-next": "^15.0.0-rc.0",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
+    "@types/copyfiles": "^2",
     "@typescript-eslint/eslint-plugin": "^8.45.0",
     "@typescript-eslint/parser": "^8.45.0",
+    "copyfiles": "^2.4.1",
     "eslint": "^9.5.0",
     "eslint-config-next": "15.0.0-rc.0",
     "eslint-plugin-react": "^7.34.2",
@@ -25,10 +29,16 @@
   },
   "scripts": {
     "dev": "yarn dev:back && yarn dev:front",
-    "dev:back": "yarn workspace back dev",
+    "dev:back": "yarn workspace back start:dev",
     "dev:front": "yarn workspace front dev --experimental-https --experimental-https-key ./localhost-key.pem --experimental-https-cert ./localhost.pem",
     "typecheck": "tsc -b",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix"
+    "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
+    "build:common": "yarn workspace common build"
+  },
+  "dependenciesMeta": {
+    "eslint-plugin-prettier@5.5.4": {
+      "unplugged": true
+    }
   }
 }
