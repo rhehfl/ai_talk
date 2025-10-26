@@ -1,3 +1,4 @@
+import { ThemeSwitcher } from "@/app/_components";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -13,5 +14,10 @@ export default function ChatLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <>{children}</>;
+  return (
+    <>
+      {children}
+      <ThemeSwitcher />
+    </>
+  );
 }

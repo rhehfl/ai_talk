@@ -2,6 +2,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ReactQueryProvider from "@/app/_provider/ReactQueryProvider";
 import Script from "next/script";
+import { SsgoiProvider, ThemeProvider } from "@/app/_provider";
+import { GetSession } from "@/app/_components";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,7 +21,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ko" suppressHydrationWarning>
       <Script
         src="https://www.googletagmanager.com/gtag/js?id=G-YWMN7HVGNH"
         strategy="afterInteractive"
@@ -33,9 +35,19 @@ export default function RootLayout({
         `}
       </Script>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white text-slate-800 dark:bg-slate-900 dark:text-slate-200`}
       >
-        <ReactQueryProvider>{children}</ReactQueryProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <ReactQueryProvider>
+            <GetSession />
+            <SsgoiProvider>{children}</SsgoiProvider>
+          </ReactQueryProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

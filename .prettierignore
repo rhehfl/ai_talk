@@ -1,0 +1,26 @@
+# 1. Node.js 모듈
+**/node_modules
+
+# 2. Yarn Berry 관련 파일
+.yarn/
+.pnp.*
+
+# 3. 빌드 결과물 (Front/Back 공통)
+**/dist
+**/build
+**/out
+**/.output
+**/.next
+
+# 4. 캐시 및 로그 파일
+*.log
+.eslintcache
+.stylelintcache
+
+# 5. 패키지 락 파일 (포맷팅 대상이 아님)
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# 6. 기타 (필요에 따라)
+# coverage/

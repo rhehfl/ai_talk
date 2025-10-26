@@ -1,11 +1,29 @@
 {
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit"
+  // 1. 파일 감시 제외 (성능 향상에 가장 중요!)
+  // VS Code가 파일 변경을 감시할 필요가 없는 폴더를 명시적으로 제외합니다.
+  // 이 설정이 빠져있던 것이 성능 저하의 핵심 원인일 수 있습니다.
+  "files.watcherExclude": {
+    "**/.pnp.*": true,
+    "**/node_modules/*/**": true, // node_modules 확실히 제외
+    "**/.git/objects/**": true,
+    "**/.yarn/**": true,
+    "**/dist/**": true,
+    "**/build/**": true, // 빌드 폴더 추가
+    "**/.next/**": true, // Next.js 사용 시
+    "**/.output/**": true // Nuxt.js 사용 시
   },
+
+  // 2. 검색 제외 (기존 설정 유지)
   "search.exclude": {
-    "**/.yarn": true,
-    "**/.pnp.*": true
+    "**/.pnp.*": true,
+    "**/node_modules/**": true,
+    "**/.git/objects/**": true,
+    "**/.yarn/**": true,
+    "**/dist/**": true
   },
+
+  // 3. ESLint 활성화 (기능을 사용하기 위해 다시 켭니다)
+  "eslint.enable": true,
   "eslint.validate": [
     "javascript",
     "javascriptreact",
@@ -13,8 +31,26 @@
     "typescriptreact"
   ],
   "eslint.nodePath": ".yarn/sdks",
+  "eslint.workingDirectories": [
+    { "directory": "packages/front", "changeProcessCWD": true },
+    { "directory": "packages/back", "changeProcessCWD": true }
+  ],
+
+  // 4. Yarn PnP SDK 설정 (기존 설정 유지 - 매우 좋습니다)
   "prettier.prettierPath": ".yarn/sdks/prettier/index.cjs",
   "typescript.tsdk": ".yarn/sdks/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
-  "typescript.tsserver.maxTsServerMemory": 4096
+  "typescript.tsserver.maxTsServerMemory": 8192, // 우선 유지 (나중에 줄여도 될 수 있음)
+
+  // 5. 저장 시 동작 설정 (역할을 명확하게 분리)
+  "editor.formatOnSave": true, // Prettier가 포맷팅을 담당
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+
+  // 6. 기본 포맷터 설정 (기존 설정 유지)
+  "[javascript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[javascriptreact]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[typescript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[typescriptreact]": { "editor.defaultFormatter": "esbenp.prettier-vscode" }
 }
