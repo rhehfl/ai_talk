@@ -2,6 +2,7 @@ import { DataSource, DataSourceOptions } from 'typeorm';
 import { SeederOptions } from 'typeorm-extension';
 import { ConfigService } from '@nestjs/config';
 import { config } from 'dotenv';
+import { join } from 'path';
 
 config({
   path: './configs/env/.dev.env',
@@ -19,6 +20,7 @@ const options: DataSourceOptions & SeederOptions = {
   seeds: ['database/seeds/**{.ts,.js}'],
   seedTracking: false,
   entities: ['src/**/*.entity{.ts,.js}'],
+  migrations: [join(__dirname, 'migrations', '*.{ts,js}')],
 };
 
 export const dataSource = new DataSource(options);

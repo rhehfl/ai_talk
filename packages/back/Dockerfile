@@ -1,9 +1,11 @@
 # 1. 베이스 이미지 설정
-FROM node:18-alpine
+FROM node:22-alpine
 
 # 2. 작업 디렉토리 설정
 WORKDIR /usr/src/app
 
+COPY .yarnrc.yml ./
+COPY .yarn ./.yarn
 # 3. 전체 모노레포의 package.json 파일들 복사
 COPY package.json yarn.lock ./
 COPY packages/common/package.json ./packages/common/
