@@ -1,3 +1,10 @@
+## [1.5.2](https://github.com/rhehfl/ai_talk/compare/v1.5.1...v1.5.2) (2025-10-26)
+
+
+### Bug Fixes
+
+* ㅁㄴ ([66ed5a0](https://github.com/rhehfl/ai_talk/commit/66ed5a018f5c23df98d24391e3dea843ee0feb58))
+
 ## [1.5.1](https://github.com/rhehfl/ai_talk/compare/v1.5.0...v1.5.1) (2025-10-26)
 
 
