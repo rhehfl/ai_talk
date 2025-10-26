@@ -4603,6 +4603,7 @@ __metadata:
     common: "workspace:*"
     cookie-parser: "npm:^1.4.7"
     cross-env: "npm:^10.1.0"
+    dotenv: "npm:^17.2.3"
     eslint: "npm:^9.18.0"
     eslint-config-prettier: "npm:^10.0.1"
     globals: "npm:^16.0.0"
@@ -4613,6 +4614,7 @@ __metadata:
     redis: "npm:^5.8.3"
     reflect-metadata: "npm:^0.2.2"
     rxjs: "npm:^7.8.1"
+    socket.io: "npm:^4.8.1"
     source-map-support: "npm:^0.5.21"
     supertest: "npm:^7.0.0"
     ts-jest: "npm:^29.2.5"
@@ -5892,6 +5894,13 @@ __metadata:
   version: 16.6.1
   resolution: "dotenv@npm:16.6.1"
   checksum: 10c0/15ce56608326ea0d1d9414a5c8ee6dcf0fffc79d2c16422b4ac2268e7e2d76ff5a572d37ffe747c377de12005f14b3cc22361e79fc7f1061cce81f77d2c973dc
+  languageName: node
+  linkType: hard
+
+"dotenv@npm:^17.2.3":
+  version: 17.2.3
+  resolution: "dotenv@npm:17.2.3"
+  checksum: 10c0/c884403209f713214a1b64d4d1defa4934c2aa5b0002f5a670ae298a51e3c3ad3ba79dfee2f8df49f01ae74290fcd9acdb1ab1d09c7bfb42b539036108bb2ba0
   languageName: node
   linkType: hard
 
@@ -12879,7 +12888,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"socket.io@npm:4.8.1":
+"socket.io@npm:4.8.1, socket.io@npm:^4.8.1":
   version: 4.8.1
   resolution: "socket.io@npm:4.8.1"
   dependencies:
