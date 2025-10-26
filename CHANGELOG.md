@@ -1,3 +1,12 @@
+## [1.5.1](https://github.com/rhehfl/ai_talk/compare/v1.5.0...v1.5.1) (2025-10-26)
+
+
+### Bug Fixes
+
+* 'crypto' 모듈 추가 및 ChatRoomLayout에서 modal 제거 ([4c16fce](https://github.com/rhehfl/ai_talk/commit/4c16fce84b896c39c424a6b7b7c3f6f3b7ae82fb))
+* seed:run 명령어에 cross-env 추가 ([f24b2db](https://github.com/rhehfl/ai_talk/commit/f24b2db9bed7c05d3cf3787c7287279bb1af7ee7))
+* 베이스이미지 변경 ([25836ed](https://github.com/rhehfl/ai_talk/commit/25836eda320622c6d48e037f4e71dfc0615a27ae))
+
 # [1.5.0](https://github.com/rhehfl/ai_talk/compare/v1.4.0...v1.5.0) (2025-10-26)
 
 
