@@ -1,5 +1,5 @@
 import { getAllPersonas } from "@/app/_asyncApis";
-import { mutationOptions, queryOptions } from "@tanstack/react-query";
+import { queryOptions } from "@tanstack/react-query";
 
 export const personaQueries = {
   all: () => ["personas"] as const,

@@ -1,6 +1,4 @@
-// GetChatHistoryQueryDto (예시)
-
-import { IsNumberString, IsOptional } from 'class-validator';
+import { IsNumberString } from 'class-validator';
 
 export class GetChatHistoryQueryDto {
   @IsNumberString()

@@ -2,8 +2,8 @@
 
 import { ChatRoom } from "common";
 import Link from "next/link";
-
-export default function ChatRoomCard({ id, persona, updatedAt }: ChatRoom) {
+import Image from "next/image";
+export default function ChatRoomCard({ id, persona }: ChatRoom) {
   return (
     <li>
       <Link href={`/chat/${id}`} passHref>
@@ -15,10 +15,12 @@ export default function ChatRoomCard({ id, persona, updatedAt }: ChatRoom) {
         >
           {/* 아바타 이미지 */}
           <div className="w-16 h-16 mr-4 flex-shrink-0">
-            <img
+            <Image
               src={`/${persona.image}`}
               alt={`${persona.name} 프로필 이미지`}
               className={`rounded-full object-cover w-full h-full border-2 `}
+              width={64}
+              height={64}
             />
           </div>
 

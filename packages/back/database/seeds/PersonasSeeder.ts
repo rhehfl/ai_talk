@@ -22,7 +22,7 @@ const loadPersonasFromFile = (): Persona[] => {
 };
 
 export default class PersonasSeeder implements Seeder {
-  public async run(dataSource: DataSource): Promise<any> {
+  public async run(dataSource: DataSource) {
     const repository = dataSource.getRepository(Personas);
     const initialPersonas = loadPersonasFromFile();
 
