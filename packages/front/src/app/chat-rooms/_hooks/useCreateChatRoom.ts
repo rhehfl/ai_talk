@@ -1,4 +1,4 @@
-import { postChatRoom } from "@/app/chat-rooms/_asyncApis";
+import { postChatRoom } from "@/app/_asyncApis";
 import { useMutation } from "@tanstack/react-query";
 
 export const userCreateChatRoom = (personaId: number) => {
