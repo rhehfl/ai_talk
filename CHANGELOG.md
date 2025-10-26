@@ -1,3 +1,41 @@
+# [1.4.0](https://github.com/rhehfl/ai_talk/compare/v1.3.0...v1.4.0) (2025-10-26)
+
+
+### Bug Fixes
+
+* .gitignore에서 docker-compose.yml 항목 수정 ([2d71e7e](https://github.com/rhehfl/ai_talk/commit/2d71e7e601e6947f77bcbf4d698eb748d129d99a))
+* postgres연결 수정 ([cba34c7](https://github.com/rhehfl/ai_talk/commit/cba34c714c66c713e771c0aa0158f093d2726f5a))
+* VSCode 설정에서 ESLint 및 Prettier 관련 옵션 수정 ([fbc98ae](https://github.com/rhehfl/ai_talk/commit/fbc98ae6f5b6b8a7c24e062d45667c49550c0f63))
+* 수정된 경로로 postChatRoom 임포트 ([f7ce6f1](https://github.com/rhehfl/ai_talk/commit/f7ce6f1abb03c6be8207e11d73d88d5147c9933f))
+* 채팅 연결 버그 수정 ([a00576c](https://github.com/rhehfl/ai_talk/commit/a00576cb93eeda0d5e35b61d42536df649b56e92))
+* 페르소나, 세션발급로직수정 ([032fb28](https://github.com/rhehfl/ai_talk/commit/032fb28d33aff3a0b58b42a69754033b5c759384))
+
+
+### Features
+
+* add chat type guards and message types ([8995856](https://github.com/rhehfl/ai_talk/commit/899585657b9a1599bdf6c5855e26efec4e41de29))
+* AI 기본 응답 추가 ([cf63532](https://github.com/rhehfl/ai_talk/commit/cf63532997165d222bfe8f32d0e784a26f817e9b))
+* chatroom페이지 페르소나 결합 ([85bebf8](https://github.com/rhehfl/ai_talk/commit/85bebf8baef8f5a7b0b519b718dccc3f07d08531))
+* common패키지 dto추가 ([eb7cd30](https://github.com/rhehfl/ai_talk/commit/eb7cd30168993867c377cacbb3018e65b18d77e9))
+* db추가 ([b3b0b6a](https://github.com/rhehfl/ai_talk/commit/b3b0b6aeea52a168673a78b2adc53d9b4ad42cc2))
+* Redis 모듈 및 서비스 추가, 페르소나 관리 기능 구현 ([fdeb173](https://github.com/rhehfl/ai_talk/commit/fdeb173c76ea851551755f6e87f4bbb0bffa8151))
+* 데이터 seeding 추가 ([9c6b32d](https://github.com/rhehfl/ai_talk/commit/9c6b32d0e19f5fb3ab09c15ed421f8115adadb78))
+* 모달 컴포넌트에서 불필요한 주석 제거 및 스타일 수정, 기본 컴포넌트 추가 ([984d63c](https://github.com/rhehfl/ai_talk/commit/984d63cebceeaf4e9dd67a245790370405299aff))
+* 백엔드 채팅방 api생성 ([ab6fa7e](https://github.com/rhehfl/ai_talk/commit/ab6fa7e6195e064b1df8ce5eeca04331420f650a))
+* 세션 관리 기능 추가 및 관련 컴포넌트 및 훅 구현 ([9e6dc54](https://github.com/rhehfl/ai_talk/commit/9e6dc5469045218529924063ce0e2adafb87cc06))
+* 채팅 기능 개선 및 새로운 API 추가 ([3008239](https://github.com/rhehfl/ai_talk/commit/3008239eeb7e52cbc369be3febe6e5f12953d446))
+* 채팅 기능 추가 및 관련 모듈, 서비스, 컨트롤러 구현 ([17df8ad](https://github.com/rhehfl/ai_talk/commit/17df8ad394d3a82d2250ee4da0889e1ce4d6dca8))
+* 채팅 및 페르소나 관련 API 추가 및 기존 API 정리 ([fa89d76](https://github.com/rhehfl/ai_talk/commit/fa89d76e21a50d5f3d4f96477f7eafd358158e07))
+* 채팅 스트림 추가 ([3db2ca3](https://github.com/rhehfl/ai_talk/commit/3db2ca3a0b4666dc6e227f7afe5908a0dd49e3b5))
+* 채팅모듈생성 ([a2ad022](https://github.com/rhehfl/ai_talk/commit/a2ad0220847dcd93b01a02d2d032eb461872bfe4))
+* 채팅방 접근 권한 처리 및 에러 핸들링 개선 ([884b6e6](https://github.com/rhehfl/ai_talk/commit/884b6e697e9251b837546cf3b33041bc2ddc46ed))
+* 채팅방 정보 및 히스토리 가져오기 기능 추가, React Query Devtools 통합 ([01deb4b](https://github.com/rhehfl/ai_talk/commit/01deb4bbbe3316bd9b4efcb8cf3dd1661936e8b6))
+* 테마 변경 추가 ([1e9419a](https://github.com/rhehfl/ai_talk/commit/1e9419a468234072e4005cd8f80c28a92c688376))
+* 페르소나 선택 기능 추가 및 레이아웃 개선 ([e1e3a81](https://github.com/rhehfl/ai_talk/commit/e1e3a81ddcb0064241e97bbe52e6131e6dc065e1))
+* 페르소나 엔티티 및 관련 서비스, 컨트롤러, 레포지토리 추가 ([539bffe](https://github.com/rhehfl/ai_talk/commit/539bffe815b946f79919e66bfb667d2dc3c177f9))
+* 페르소나 페이지에 뒤로가기 버튼 추가 및 레이아웃 수정 ([2878b90](https://github.com/rhehfl/ai_talk/commit/2878b9043b56ed709efa12049d8e6d4dba146357))
+* 페이지 전환효과 추가 ([8906cf3](https://github.com/rhehfl/ai_talk/commit/8906cf3688c3e6f9d0a0b990cfbae81339e47161))
+
 # [1.3.0](https://github.com/rhehfl/ai_talk/compare/v1.2.0...v1.3.0) (2025-10-08)
 
 
