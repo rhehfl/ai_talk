@@ -1,5 +1,5 @@
 # 1. 베이스 이미지 설정
-FROM node:18-alpine
+FROM node:22-alpine
 
 # 2. 작업 디렉토리 설정
 WORKDIR /usr/src/app
