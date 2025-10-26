@@ -1,3 +1,15 @@
+# [1.5.0](https://github.com/rhehfl/ai_talk/compare/v1.4.0...v1.5.0) (2025-10-26)
+
+
+### Bug Fixes
+
+* 명령어수정 ([2016914](https://github.com/rhehfl/ai_talk/commit/20169146bada1cc615a4cd5d9b0c89e0cfd6f30b))
+
+
+### Features
+
+* dotenv 및 socket.io 의존성 추가 ([c0d5798](https://github.com/rhehfl/ai_talk/commit/c0d579865e16af694b9ec3ca63f68ff7eabff711))
+
 # [1.4.0](https://github.com/rhehfl/ai_talk/compare/v1.3.0...v1.4.0) (2025-10-26)
 
 
