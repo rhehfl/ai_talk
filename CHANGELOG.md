@@ -1,3 +1,33 @@
+## [1.5.4](https://github.com/rhehfl/ai_talk/compare/v1.5.3...v1.5.4) (2025-10-27)
+
+
+### Bug Fixes
+
+* Docker 이미지 빌드 시 no-cache 옵션 추가 ([fee1b57](https://github.com/rhehfl/ai_talk/commit/fee1b57bbd98e7d448e555e93df2e7cc638acb68))
+
+## [1.5.3](https://github.com/rhehfl/ai_talk/compare/v1.5.2...v1.5.3) (2025-10-27)
+
+
+### Bug Fixes
+
+* dataSource를 const로 변경하고 export 방식을 수정 ([bfda24d](https://github.com/rhehfl/ai_talk/commit/bfda24d1369b714203846cf2187d814da6c64767))
+
+## [1.5.2](https://github.com/rhehfl/ai_talk/compare/v1.5.1...v1.5.2) (2025-10-26)
+
+
+### Bug Fixes
+
+* ㅁㄴ ([66ed5a0](https://github.com/rhehfl/ai_talk/commit/66ed5a018f5c23df98d24391e3dea843ee0feb58))
+
+## [1.5.1](https://github.com/rhehfl/ai_talk/compare/v1.5.0...v1.5.1) (2025-10-26)
+
+
+### Bug Fixes
+
+* 'crypto' 모듈 추가 및 ChatRoomLayout에서 modal 제거 ([4c16fce](https://github.com/rhehfl/ai_talk/commit/4c16fce84b896c39c424a6b7b7c3f6f3b7ae82fb))
+* seed:run 명령어에 cross-env 추가 ([f24b2db](https://github.com/rhehfl/ai_talk/commit/f24b2db9bed7c05d3cf3787c7287279bb1af7ee7))
+* 베이스이미지 변경 ([25836ed](https://github.com/rhehfl/ai_talk/commit/25836eda320622c6d48e037f4e71dfc0615a27ae))
+
 # [1.5.0](https://github.com/rhehfl/ai_talk/compare/v1.4.0...v1.5.0) (2025-10-26)
 
 
