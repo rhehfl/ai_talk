@@ -1,3 +1,10 @@
+## [1.5.7](https://github.com/rhehfl/ai_talk/compare/v1.5.6...v1.5.7) (2025-10-27)
+
+
+### Bug Fixes
+
+* Dockerfile에서 PnP 파일 대신 node_modules 디렉터리 복사 ([27fac1d](https://github.com/rhehfl/ai_talk/commit/27fac1d9ee0a7fc71896a11d7bf0081734262aca))
+
 ## [1.5.6](https://github.com/rhehfl/ai_talk/compare/v1.5.5...v1.5.6) (2025-10-27)
 
 
