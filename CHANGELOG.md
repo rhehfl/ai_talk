@@ -1,3 +1,10 @@
+## [1.5.4](https://github.com/rhehfl/ai_talk/compare/v1.5.3...v1.5.4) (2025-10-27)
+
+
+### Bug Fixes
+
+* Docker 이미지 빌드 시 no-cache 옵션 추가 ([fee1b57](https://github.com/rhehfl/ai_talk/commit/fee1b57bbd98e7d448e555e93df2e7cc638acb68))
+
 ## [1.5.3](https://github.com/rhehfl/ai_talk/compare/v1.5.2...v1.5.3) (2025-10-27)
 
 
