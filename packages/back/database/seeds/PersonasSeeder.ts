@@ -7,9 +7,7 @@ import * as fs from 'fs';
 
 const loadPersonasFromFile = (): Persona[] => {
   try {
-    const filePath = path.resolve(
-      'dist/configs/dist/configs/prompt/personas.json',
-    );
+    const filePath = path.resolve('dist/configs/prompt/personas.json');
 
     const fileContent = fs.readFileSync(filePath, 'utf-8');
     const personas: Persona[] = JSON.parse(fileContent);
