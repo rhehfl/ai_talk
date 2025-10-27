@@ -11,7 +11,18 @@ import {
 import { Message } from 'common';
 import { Server, Socket } from 'socket.io';
 
-@WebSocketGateway({ transports: ['websocket'] })
+@WebSocketGateway({
+  transports: ['websocket'],
+  cors: {
+    origin: [
+      'https://localhost:3000',
+      'https://doran-doran.cloud',
+      'https://www.doran-doran.cloud',
+    ],
+    methods: ['GET', 'POST'],
+    credentials: true,
+  },
+})
 export class ChatGateway {
   @WebSocketServer()
   server: Server;
