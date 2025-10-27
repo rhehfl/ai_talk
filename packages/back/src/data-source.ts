@@ -1,12 +1,12 @@
-import { DataSource, DataSourceOptions } from 'typeorm';
-import { SeederOptions } from 'typeorm-extension';
 import { ConfigService } from '@nestjs/config';
 import { config } from 'dotenv';
-import { join } from 'path';
+import { DataSource, DataSourceOptions } from 'typeorm';
+import { SeederOptions } from 'typeorm-extension';
 
 config({
   path: './configs/env/.dev.env',
 });
+
 const configService = new ConfigService();
 const isProduction = process.env.NODE_ENV === 'production';
 const options: DataSourceOptions & SeederOptions = {
