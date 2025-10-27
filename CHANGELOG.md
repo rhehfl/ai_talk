@@ -1,3 +1,10 @@
+## [1.5.3](https://github.com/rhehfl/ai_talk/compare/v1.5.2...v1.5.3) (2025-10-27)
+
+
+### Bug Fixes
+
+* dataSource를 const로 변경하고 export 방식을 수정 ([bfda24d](https://github.com/rhehfl/ai_talk/commit/bfda24d1369b714203846cf2187d814da6c64767))
+
 ## [1.5.2](https://github.com/rhehfl/ai_talk/compare/v1.5.1...v1.5.2) (2025-10-26)
 
 
