@@ -1,3 +1,10 @@
+## [1.5.5](https://github.com/rhehfl/ai_talk/compare/v1.5.4...v1.5.5) (2025-10-27)
+
+
+### Bug Fixes
+
+* 도커파일최적화 ([437d3bf](https://github.com/rhehfl/ai_talk/commit/437d3bf4dd2689bea452f1d192177a38b6940d64))
+
 ## [1.5.4](https://github.com/rhehfl/ai_talk/compare/v1.5.3...v1.5.4) (2025-10-27)
 
 
