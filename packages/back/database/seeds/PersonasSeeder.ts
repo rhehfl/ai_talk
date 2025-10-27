@@ -7,8 +7,9 @@ import * as fs from 'fs';
 
 const loadPersonasFromFile = (): Persona[] => {
   try {
-    // docker-compose.yml에 설정한 컨테이너 내부 경로를 가리킵니다.
-    const filePath = path.resolve('configs/prompt/personas.json');
+    const filePath = path.resolve(
+      'dist/configs/dist/configs/prompt/personas.json',
+    );
 
     const fileContent = fs.readFileSync(filePath, 'utf-8');
     const personas: Persona[] = JSON.parse(fileContent);
