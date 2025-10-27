@@ -1,3 +1,11 @@
+## [1.5.10](https://github.com/rhehfl/ai_talk/compare/v1.5.9...v1.5.10) (2025-10-27)
+
+
+### Bug Fixes
+
+* personas.json 파일 경로 중복 제거 ([5f77086](https://github.com/rhehfl/ai_talk/commit/5f77086ee3dc8ef42ac2c10713d01d3bc81a70e7))
+* WebSocketGateway에 CORS 설정 추가 ([926ce42](https://github.com/rhehfl/ai_talk/commit/926ce4289562335f745e07f18f3fdd29bf280ed3))
+
 ## [1.5.9](https://github.com/rhehfl/ai_talk/compare/v1.5.8...v1.5.9) (2025-10-27)
 
 
