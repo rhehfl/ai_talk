@@ -1,3 +1,10 @@
+## [1.5.9](https://github.com/rhehfl/ai_talk/compare/v1.5.8...v1.5.9) (2025-10-27)
+
+
+### Bug Fixes
+
+* personas.json 파일 경로를 docker-compose.yml 설정에 맞게 수정 ([9b0a75e](https://github.com/rhehfl/ai_talk/commit/9b0a75efc92e2e4aac3876cfdaa5f36e7680854e))
+
 ## [1.5.8](https://github.com/rhehfl/ai_talk/compare/v1.5.7...v1.5.8) (2025-10-27)
 
 
