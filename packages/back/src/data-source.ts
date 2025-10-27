@@ -23,4 +23,5 @@ const options: DataSourceOptions & SeederOptions = {
   migrations: [join(__dirname, 'migrations', '*.{ts,js}')],
 };
 
-export const dataSource = new DataSource(options);
+const dataSource = new DataSource(options);
+export default dataSource;
