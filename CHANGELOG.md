@@ -1,3 +1,11 @@
+## [1.5.8](https://github.com/rhehfl/ai_talk/compare/v1.5.7...v1.5.8) (2025-10-27)
+
+
+### Bug Fixes
+
+* 데이터 소스 설정에서 프로덕션 환경에 따른 시드 및 마이그레이션 경로 수정 ([4ea7392](https://github.com/rhehfl/ai_talk/commit/4ea73925eedd02ce1ad763f4d4e6031bd9d59b1b))
+* 코드 정리 및 불필요한 import 문 제거 ([0873a8c](https://github.com/rhehfl/ai_talk/commit/0873a8c6c5f7f500993707b4473dbe687d663e64))
+
 ## [1.5.7](https://github.com/rhehfl/ai_talk/compare/v1.5.6...v1.5.7) (2025-10-27)
 
 
