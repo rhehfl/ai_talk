@@ -1,7 +1,10 @@
 "use client";
 
-import LoadingSpinner from "@/app/_icons/LoadingSpinner.";
-import { ChatSendForm, AILoadingMessage } from "@/app/chat/[id]/_components";
+import {
+  ChatSendForm,
+  AILoadingMessage,
+  EmptyChatCard,
+} from "@/app/chat/[id]/_components";
 import ChatList from "@/app/chat/[id]/_components/ChatList";
 import {
   useChat,
@@ -44,7 +47,7 @@ export default function ChatRoom() {
         <Suspense fallback={<div>Loading...</div>}>
           <ChatList streamingMessage={displayedText} />
         </Suspense>
-        {isAiThinking && !displayedText && <LoadingSpinner />}
+        {isAiThinking && !displayedText && <EmptyChatCard />}
         {displayedText && <AILoadingMessage streamingMessage={displayedText} />}
       </div>
       <ChatSendForm onSubmit={sendMessage} />

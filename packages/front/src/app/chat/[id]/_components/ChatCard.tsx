@@ -1,14 +1,23 @@
 import { ProfileCard } from "@/app/chat/[id]/_components";
+import { transition } from "@ssgoi/react";
+import { slide } from "@ssgoi/react/transitions";
 import { Message } from "common";
+import { memo } from "react";
 import Markdown from "react-markdown";
 
 interface ChatCardProps extends Message {
   id: number;
 }
-export default function ChatCard(props: ChatCardProps) {
-  const { author, content } = props;
+
+export default memo(function ChatCard({ id, author, content }: ChatCardProps) {
   return (
     <div
+      ref={transition({
+        key: `chat-card-${id}`,
+        ...slide({
+          direction: "up",
+        }),
+      })}
       className={`flex lg:items-end mb-2 lg:flex-row flex-col  ${
         author === "user"
           ? "lg:justify-end items-end"
@@ -29,4 +38,4 @@ export default function ChatCard(props: ChatCardProps) {
       </div>
     </div>
   );
-}
+});
