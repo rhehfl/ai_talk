@@ -6,7 +6,10 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { useEffect, useRef } from "react";
 
-export default function ChatList() {
+interface ChatListProps {
+  streamingMessage?: string;
+}
+export default function ChatList({ streamingMessage }: ChatListProps) {
   const { id } = useParams();
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -16,12 +19,17 @@ export default function ChatList() {
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+  }, [messages, streamingMessage]);
 
   return (
     <>
       {messages.map((msg, index) => (
-        <ChatCard key={index} author={msg.author} content={msg.content} />
+        <ChatCard
+          key={index}
+          id={index}
+          author={msg.author}
+          content={msg.content}
+        />
       ))}
       <div ref={messagesEndRef} />
     </>

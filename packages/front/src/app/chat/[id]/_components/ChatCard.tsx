@@ -2,11 +2,17 @@ import { ProfileCard } from "@/app/chat/[id]/_components";
 import { Message } from "common";
 import Markdown from "react-markdown";
 
-export default function ChatCard({ author, content }: Message) {
+interface ChatCardProps extends Message {
+  id: number;
+}
+export default function ChatCard(props: ChatCardProps) {
+  const { author, content } = props;
   return (
     <div
-      className={`flex items-end mb-2 ${
-        author === "user" ? "justify-end" : ""
+      className={`flex lg:items-end mb-2 lg:flex-row flex-col  ${
+        author === "user"
+          ? "lg:justify-end items-end"
+          : "lg:justify-start items-start"
       }`}
     >
       {author !== "user" && <ProfileCard size="small" />}
@@ -17,11 +23,6 @@ export default function ChatCard({ author, content }: Message) {
           order: author === "user" ? 2 : 1,
         }}
       >
-        {author === "user" ? (
-          <></>
-        ) : (
-          <div className="text-sm font-semibold mb-1 hidden">{author}</div>
-        )}
         <div className="text-sm">
           <Markdown>{content}</Markdown>
         </div>

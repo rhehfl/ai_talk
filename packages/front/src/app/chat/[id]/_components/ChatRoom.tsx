@@ -1,19 +1,40 @@
 "use client";
 
+import LoadingSpinner from "@/app/_icons/LoadingSpinner.";
 import { ChatSendForm, AILoadingMessage } from "@/app/chat/[id]/_components";
 import ChatList from "@/app/chat/[id]/_components/ChatList";
-import { useChat, useTypingEffect } from "@/app/chat/[id]/_hooks";
+import {
+  useChat,
+  useChatHistoryUpdater,
+  useTypingEffect,
+} from "@/app/chat/[id]/_hooks";
+import { Message } from "common";
 import { useParams } from "next/navigation";
 import { Suspense } from "react";
 
 export default function ChatRoom() {
   const { id } = useParams();
-  const { displayedText, addChunk, reset, setText } = useTypingEffect();
-  const { sendMessage, isAiThinking } = useChat(Number(id), {
+  const { displayedText, addChunk, setText, reset } = useTypingEffect();
+  const { historyUpdater } = useChatHistoryUpdater(Number(id));
+  const { isAiThinking, sendMessage } = useChat(Number(id), {
     onStream: (chunk: string) => addChunk(chunk),
-    onStreamDone: () => reset(),
     onStreamError: (message: string) => {
       setText(`[오류 발생] ${message}`);
+      reset();
+    },
+    onStreamDone: (fullText: string) => {
+      const finalAiMessage: Message = {
+        author: "Gemini",
+        content: fullText,
+      };
+      historyUpdater(finalAiMessage);
+      reset();
+    },
+    onMessage: (message: Message) => {
+      historyUpdater(message);
+    },
+    onSendComplete(message) {
+      historyUpdater(message);
     },
   });
 
@@ -21,9 +42,10 @@ export default function ChatRoom() {
     <>
       <div className="px-4 flex-grow overflow-y-auto">
         <Suspense fallback={<div>Loading...</div>}>
-          <ChatList />
+          <ChatList streamingMessage={displayedText} />
         </Suspense>
-        {isAiThinking && <AILoadingMessage streamingMessage={displayedText} />}
+        {isAiThinking && !displayedText && <LoadingSpinner />}
+        {displayedText && <AILoadingMessage streamingMessage={displayedText} />}
       </div>
       <ChatSendForm onSubmit={sendMessage} />
     </>

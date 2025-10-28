@@ -3,30 +3,19 @@
 import { useCallback, useEffect, useState } from "react";
 import { Message } from "common";
 import { io, Socket } from "socket.io-client";
-import { useQueryClient } from "@tanstack/react-query";
-import { chatRoomQueries } from "@/app/_queries";
 
 interface UseChatOptions {
-  onStream: (chunk: string) => void;
-  onStreamDone: (fullText: string) => void;
-  onStreamError: (message: string) => void;
+  onStream?: (chunk: string) => void;
+  onStreamDone?: (fullText: string) => void;
+  onStreamError?: (message: string) => void;
+  onMessage?: (message: Message) => void;
+  onSendComplete?: (message: Message) => void;
 }
 
 export const useChat = (roomId?: number, options?: UseChatOptions) => {
-  const queryClient = useQueryClient();
-  const chatRoomQueryOption = chatRoomQueries.history(roomId!);
   const [socket, setSocket] = useState<Socket | null>(null);
   const [isConnected, setIsConnected] = useState(false);
   const [isAiThinking, setIsAiThinking] = useState(false);
-
-  const historyUpdater = (message: Message) => {
-    queryClient.setQueryData(chatRoomQueryOption.queryKey, (oldData) => {
-      if (oldData === undefined) {
-        return [message];
-      }
-      return [...oldData, message];
-    });
-  };
 
   useEffect(() => {
     if (!roomId) return;
@@ -51,28 +40,22 @@ export const useChat = (roomId?: number, options?: UseChatOptions) => {
     });
 
     newSocket.on("message", (message: Message) => {
+      options?.onMessage?.(message);
       setIsAiThinking(false);
-      historyUpdater(message);
     });
+
     newSocket.on("ai-stream", (data: { text: string }) => {
       options?.onStream?.(data.text);
     });
 
     newSocket.on("ai-stream-done", (data: { fullText: string }) => {
       setIsAiThinking(false);
-      const finalAiMessage: Message = {
-        author: "Gemini",
-        content: data.fullText,
-      };
-      historyUpdater(finalAiMessage);
-
-      options?.onStreamDone(data.fullText);
+      options?.onStreamDone?.(data.fullText);
     });
 
     newSocket.on("ai-stream-error", (data: { message: string }) => {
       setIsAiThinking(false);
-
-      options?.onStreamError(data.message);
+      options?.onStreamError?.(data.message);
     });
 
     return () => {
@@ -92,10 +75,11 @@ export const useChat = (roomId?: number, options?: UseChatOptions) => {
         content,
       };
       socket.emit("message", newMessage);
-      historyUpdater(newMessage);
+
+      options?.onSendComplete?.(newMessage);
     },
     [socket, isConnected],
   );
 
-  return { isConnected, isAiThinking, sendMessage };
+  return { isConnected, socket, sendMessage, isAiThinking };
 };
