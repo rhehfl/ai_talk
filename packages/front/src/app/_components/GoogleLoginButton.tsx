@@ -3,9 +3,9 @@
 export default function GoogleLoginButton() {
   const handleGoogleLogin = () => {
     if (process.env.NODE_ENV === "development") {
-      window.location.href = "http://localhost:8080/auth/google";
+      window.location.href = "http://localhost:8080/api/auth/google";
     } else {
-      window.location.href = "https://api.doran-doran.cloud/auth/google";
+      window.location.href = "https://api.doran-doran.cloud/api/auth/google";
     }
   };
 
