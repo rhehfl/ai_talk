@@ -4,12 +4,14 @@ import { AuthGuard } from '@nestjs/passport';
 import { CookieOptions, Response } from 'express';
 import { User } from '@/user/entities/user.entity';
 import { ConfigService } from '@nestjs/config';
+import { CookieService } from '@/common/cookie/cookie.service';
 
 @Controller('auth')
 export class AuthController {
   constructor(
     private readonly authService: AuthService,
     private readonly configService: ConfigService,
+    private readonly cookieService: CookieService,
   ) {}
   @Get('google')
   @UseGuards(AuthGuard('google'))
@@ -23,18 +25,8 @@ export class AuthController {
     const nodeEnv = this.configService.get<string>('NODE_ENV');
     const jwtToken = await this.authService.login(user);
     const token = jwtToken.access_token;
-    const isDevelopment = nodeEnv === 'development' || nodeEnv === 'dev';
-    const cookieOptions = {
-      httpOnly: true,
-      path: '/',
-      sameSite: 'none' as const,
-      secure: true,
-    };
-    if (!isDevelopment) {
-      Object.assign(cookieOptions, { domain: '.doran-doran.cloud' });
-    }
 
-    res.cookie('authToken', token, cookieOptions);
+    const isDevelopment = nodeEnv === 'development' || nodeEnv === 'dev';
 
     let redirectUrl = '';
     if (isDevelopment) {
@@ -43,6 +35,7 @@ export class AuthController {
       redirectUrl = `https://www.doran-doran.cloud/auth/callback`;
     }
 
+    this.cookieService.set('authToken', token);
     res.redirect(redirectUrl);
   }
 }
