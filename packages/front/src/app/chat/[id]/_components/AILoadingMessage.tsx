@@ -10,7 +10,7 @@ export default function AILoadingMessage({
   return (
     <div className="flex items-center space-x-2">
       <LoadingSpinner />
-      <span>{streamingMessage || "잠시만 기다려주세요...."}</span>
+      <span>{streamingMessage}</span>
     </div>
   );
 }

@@ -2,13 +2,20 @@
 
 import { ChatSendForm, AILoadingMessage } from "@/app/chat/[id]/_components";
 import ChatList from "@/app/chat/[id]/_components/ChatList";
-import { useChat } from "@/app/chat/[id]/_hooks";
+import { useChat, useTypingEffect } from "@/app/chat/[id]/_hooks";
 import { useParams } from "next/navigation";
 import { Suspense } from "react";
 
 export default function ChatRoom() {
   const { id } = useParams();
-  const { sendMessage, isAiThinking, streamingMessage } = useChat(Number(id));
+  const { displayedText, addChunk, reset, setText } = useTypingEffect();
+  const { sendMessage, isAiThinking } = useChat(Number(id), {
+    onStream: (chunk: string) => addChunk(chunk),
+    onStreamDone: () => reset(),
+    onStreamError: (message: string) => {
+      setText(`[오류 발생] ${message}`);
+    },
+  });
 
   return (
     <>
@@ -16,9 +23,7 @@ export default function ChatRoom() {
         <Suspense fallback={<div>Loading...</div>}>
           <ChatList />
         </Suspense>
-        {isAiThinking && (
-          <AILoadingMessage streamingMessage={streamingMessage} />
-        )}
+        {isAiThinking && <AILoadingMessage streamingMessage={displayedText} />}
       </div>
       <ChatSendForm onSubmit={sendMessage} />
     </>

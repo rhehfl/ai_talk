@@ -38,6 +38,15 @@ const config = {
       }),
     },
     {
+      from: "/chat-rooms/personas",
+      to: "/chat/*",
+      transition: blind({
+        staggerDelay: 10,
+        transitionDelay: 20,
+        blindCount: 5,
+      }),
+    },
+    {
       from: "/chat/*",
       to: "/chat-rooms",
       transition: fade(),
