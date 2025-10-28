@@ -19,7 +19,6 @@ const config = {
       to: "/chat-rooms",
       transition: drill({
         direction: "exit",
-        opacity: true,
         spring: { stiffness: 180, damping: 22 },
       }),
     },
