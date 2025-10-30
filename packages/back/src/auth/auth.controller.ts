@@ -1,7 +1,7 @@
 import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthGuard } from '@nestjs/passport';
-import { CookieOptions, Response } from 'express';
+import { Response } from 'express';
 import { User } from '@/user/entities/user.entity';
 import { ConfigService } from '@nestjs/config';
 import { CookieService } from '@/common/cookie/cookie.service';
@@ -35,7 +35,7 @@ export class AuthController {
       redirectUrl = `https://www.doran-doran.cloud/auth/callback`;
     }
 
-    this.cookieService.set('authToken', token);
+    this.cookieService.set(res, 'authToken', token);
     res.redirect(redirectUrl);
   }
 }

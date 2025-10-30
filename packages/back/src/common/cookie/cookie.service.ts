@@ -4,14 +4,16 @@ import type { Request, Response, CookieOptions } from 'express';
 
 @Injectable()
 export class CookieService {
-  constructor(
-    @Inject(REQUEST) private readonly request: Request,
-    @Inject('RESPONSE') private readonly response: Response,
-  ) {}
+  constructor(@Inject(REQUEST) private readonly request: Request) {}
 
-  set(key: string, value: string, options?: CookieOptions): void {
+  set(
+    res: Response,
+    key: string,
+    value: string,
+    options?: CookieOptions,
+  ): void {
     const mergedOptions = { ...this.getDefaultOptions(), ...options };
-    this.response.cookie(key, value, mergedOptions);
+    res.cookie(key, value, mergedOptions);
   }
 
   get(key: string): string | undefined {
@@ -24,11 +26,10 @@ export class CookieService {
     return undefined;
   }
 
-  clear(key: string, options?: CookieOptions): void {
+  clear(res: Response, key: string, options?: CookieOptions): void {
     const mergedOptions = { ...this.getDefaultOptions(), ...options };
-    // 쿠키를 삭제하려면 'expires'를 과거로 설정하거나 'maxAge: 0'을 사용합니다.
-    // express의 clearCookie는 이 작업을 자동으로 해줍니다.
-    this.response.clearCookie(key, mergedOptions);
+
+    res.clearCookie(key, mergedOptions);
   }
 
   private getDefaultOptions(): CookieOptions {
