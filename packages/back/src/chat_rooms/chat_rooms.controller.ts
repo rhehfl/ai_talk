@@ -50,7 +50,6 @@ export class ChatRoomsController {
     @Req() req: Request,
     @User() user: UserIdentityDto,
   ): Promise<ChatRoom[]> {
-    console.log(user);
     return this.chatRoomsService.getAllChatRooms(user.id);
   }
 

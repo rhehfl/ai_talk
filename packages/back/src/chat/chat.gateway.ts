@@ -86,36 +86,59 @@ export class ChatGateway {
     @ConnectedSocket() socket: Socket,
     @MessageBody() payload: Message,
   ) {
-    const roomId = socket.handshake.query.roomId as string;
+    const roomId = socket.data.roomId as string;
+    const user = socket.data.user as UserIdentityDto;
+    const personaId = socket.data.personaId as number;
     const roomName = `room_${roomId}`;
 
-    await this.chatService.saveChatMessage(
-      Number(roomId),
-      payload,
-      socket.data.user.id,
-      socket.data.personaId,
-    );
-    const recentHistory = await this.chatService.getChatHistory(Number(roomId));
-    const systemInstruction = await this.chatService.getSystemInstruction(
-      Number(roomId),
-    );
-    if (!systemInstruction) return '';
+    if (!roomId || !user || !personaId) {
+      socket.emit('error', {
+        message: '비정상적인 연결입니다. 재접속해 주세요.',
+      });
+      return;
+    }
 
-    const aiResponseText = await this.geminiService.generateStreamContent(
-      recentHistory,
-      systemInstruction,
-      this.server.to(roomName),
-      payload.content,
-    );
-    const aiMessage: Message = {
-      author: 'Gemini',
-      content: aiResponseText,
-    };
-    await this.chatService.saveChatMessage(
-      Number(roomId),
-      aiMessage,
-      socket.data.user.id,
-      socket.data.personaId,
-    );
+    try {
+      await this.chatService.saveChatMessage(
+        Number(roomId),
+        payload,
+        user.id,
+        personaId,
+        user.isAuthenticated,
+      );
+      const recentHistory = await this.chatService.getChatHistory(
+        Number(roomId),
+      );
+      const systemInstruction = await this.chatService.getSystemInstruction(
+        Number(roomId),
+      );
+      if (!systemInstruction) return '';
+
+      const aiResponseText = await this.geminiService.generateStreamContent(
+        recentHistory,
+        systemInstruction,
+        this.server.to(roomName),
+        payload.content,
+      );
+
+      const aiMessage: Message = {
+        author: 'Gemini',
+        content: aiResponseText,
+      };
+
+      await this.chatService.saveChatMessage(
+        Number(roomId),
+        aiMessage,
+        user.id,
+        personaId,
+        user.isAuthenticated,
+      );
+    } catch (error) {
+      socket.emit('error', {
+        message: '메시지 처리 중 오류가 발생했습니다.',
+        reason: error.message,
+      });
+      console.error('[WS Message Error]:', error);
+    }
   }
 }

@@ -1,11 +1,12 @@
 // src/chat/chat.service.ts
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { RedisClientType } from 'redis';
 import { RedisService } from '@/core/redis/redis.service';
 import { Message } from 'common';
 import { Chat } from '@/chat/chat.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { is } from './../../../front/.next/server/vendor-chunks/next';
 @Injectable()
 export class ChatService {
   private redisClient: RedisClientType;
@@ -56,7 +57,20 @@ export class ChatService {
     message: Message,
     userId: string,
     personaId: number,
+    isAuthenticated: boolean,
   ) {
+    if (!isAuthenticated && message.author !== 'Gemini') {
+      const userMessageCount = await this.messageRepository.count({
+        where: { roomId, userId, author: 'user' },
+      });
+
+      if (userMessageCount >= 5) {
+        throw new ForbiddenException(
+          '익명 사용자는 한 채팅방에서 최대 5개의 메시지만 보낼 수 있습니다.',
+        );
+      }
+    }
+
     try {
       const newChatMessage = this.messageRepository.create({
         roomId,
