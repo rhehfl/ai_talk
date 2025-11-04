@@ -15,8 +15,12 @@ export default async function ChatRoomsPage() {
   const cookieStore = await cookies();
 
   const sessionToken = cookieStore.get("chat_session_id")?.value;
+  const authToken = cookieStore.get("authToken")?.value;
   const cookieHeaderValue = sessionToken
     ? `chat_session_id=${sessionToken}`
+    : undefined;
+  const authCookieHeaderValue = authToken
+    ? `authToken=${authToken}`
     : undefined;
 
   const chatRoomQuery = chatRoomQueries.list();
@@ -26,7 +30,9 @@ export default async function ChatRoomsPage() {
     queryFn: () =>
       externalApi("api/chatrooms", {
         headers: {
-          Cookie: cookieHeaderValue,
+          Cookie:
+            cookieHeaderValue +
+            (authCookieHeaderValue ? `; ${authCookieHeaderValue}` : ""),
         },
       }).json(),
   });

@@ -27,7 +27,7 @@ export class AuthController {
     const jwtToken = await this.authService.login(user);
     const token = jwtToken.access_token;
 
-    const isDevelopment = nodeEnv === 'development';
+    const isDevelopment = nodeEnv === 'dev';
 
     let redirectUrl = '';
     if (isDevelopment) {

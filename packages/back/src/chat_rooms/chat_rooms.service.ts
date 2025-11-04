@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -19,21 +23,40 @@ export class ChatRoomsService {
    * 1. CREATE: 채팅방 생성 (이미 존재하는 경우, 기존 채팅방 반환)
    */
   async createChatRoom(createDto: CreateChatRoomDto): Promise<ChatRoom> {
-    const { userId, personaId } = createDto;
+    const { userId, personaId, isAuthenticated } = createDto;
 
     const existingRoom = await this.chatRoomRepository.findOne({
       where: { userId, persona: { id: personaId } },
     });
 
     if (existingRoom) {
-      return existingRoom; // 이미 존재하면 기존 방 반환
+      return existingRoom;
     }
 
-    // 2. 새로운 채팅방 생성 및 저장
-    const newRoom = this.chatRoomRepository.create({
+    if (!isAuthenticated) {
+      const ANONYMOUS_ROOM_LIMIT = 5;
+      const roomCount = await this.chatRoomRepository.count({
+        where: { userId },
+      });
+
+      if (roomCount >= ANONYMOUS_ROOM_LIMIT) {
+        throw new ForbiddenException(
+          `익명 사용자는 채팅방을 ${ANONYMOUS_ROOM_LIMIT}개까지만 생성할 수 있습니다. 로그인해 주세요.`,
+        );
+      }
+    }
+
+    const newRoom: Partial<ChatRoom> = this.chatRoomRepository.create({
       userId,
       persona: { id: personaId },
     });
+    if (isAuthenticated) {
+      const user = await this.userRepository.findOneBy({ id: userId });
+      if (user) {
+        newRoom.user = user;
+      }
+    }
+
     return this.chatRoomRepository.save(newRoom);
   }
 
@@ -77,19 +100,19 @@ export class ChatRoomsService {
     });
   }
 
-  /**
-   * 3. DELETE: 특정 채팅방 ID로 삭제
-   */
   async deleteChatRoom(
     id: number,
+    userId: string, // 8. [수정] userId를 받음
   ): Promise<{ deleted: boolean; message: string }> {
-    const result = await this.chatRoomRepository.delete(id);
+    // 9. [수정] id와 userId가 모두 일치해야 삭제
+    const result = await this.chatRoomRepository.delete({ id, userId });
 
     if (result.affected === 0) {
-      throw new NotFoundException(`ChatRoom with ID ${id} not found.`);
+      throw new NotFoundException(
+        `ChatRoom with ID ${id} not found or access denied.`,
+      );
     }
 
-    // 실제 채팅 앱에서는 이 시점에 해당 채팅방의 모든 메시지도 함께 삭제해야 합니다.
     return {
       deleted: true,
       message: `ChatRoom with ID ${id} successfully deleted.`,

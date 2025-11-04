@@ -6,4 +6,6 @@ export class CreateChatRoomDto {
 
   @IsNumber()
   personaId: number;
+
+  isAuthenticated: boolean;
 }
