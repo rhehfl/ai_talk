@@ -15,10 +15,14 @@ import { ChatRoomsService } from '@/chat_rooms/chat_rooms.service';
 import { CreateChatRoomDto } from '@/chat_rooms/dto/create-chat-room.dto';
 import { ChatRoom } from '@/chat_rooms/chat-room.entity';
 import { Request } from 'express';
+import { CookieService } from '@/common/cookie/cookie.service';
 
 @Controller('chatrooms')
 export class ChatRoomsController {
-  constructor(private readonly chatRoomsService: ChatRoomsService) {}
+  constructor(
+    private readonly chatRoomsService: ChatRoomsService,
+    private readonly cookieService: CookieService,
+  ) {}
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
@@ -26,7 +30,7 @@ export class ChatRoomsController {
     @Body() createDto: CreateChatRoomDto,
     @Req() req: Request,
   ): Promise<ChatRoom> {
-    const sessionId = req.cookies['chat_session_id'];
+    const sessionId = this.cookieService.get('chat_session_id');
     if (!sessionId) {
       throw new UnauthorizedException(
         'Missing chat_session_id cookie. Please log in.',

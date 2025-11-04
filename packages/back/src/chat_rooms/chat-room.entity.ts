@@ -1,4 +1,5 @@
 import { Personas } from '@/personas/personas.entity';
+import { User } from '@/user/user.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -17,6 +18,12 @@ export class ChatRoom {
 
   @Column({ name: 'user_id' })
   userId: string;
+  @ManyToOne(() => User, (user) => user.chatRooms, {
+    nullable: true,
+    onDelete: 'SET NULL',
+  })
+  @JoinColumn({ name: 'user_fk_id' })
+  user: User | null;
 
   @ManyToOne(() => Personas, (personas) => personas.chatRooms)
   @JoinColumn({ name: 'persona_id' })

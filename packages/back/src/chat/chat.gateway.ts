@@ -36,15 +36,15 @@ export class ChatGateway {
   ): string | null {
     if (!cookieHeader) return null;
     const cookies = cookieHeader.split(';').map((c) => c.trim());
-    const tokenCookie = cookies.find((c) => c.startsWith('chat_session_id='));
+    const tokenCookie = cookies.find((c) => c.startsWith('authToken='));
     return tokenCookie ? tokenCookie.split('=')[1] : null;
   }
 
   async handleConnection(@ConnectedSocket() socket: Socket) {
     const cookieHeader = socket.handshake.headers.cookie;
     const roomId = socket.handshake.query.roomId;
-    const sessionId = this.extractTokenFromCookie(cookieHeader);
-    if (!sessionId) {
+    const token = this.extractTokenFromCookie(cookieHeader);
+    if (!token) {
       socket.disconnect();
       return;
     }
@@ -55,7 +55,7 @@ export class ChatGateway {
     try {
       const data = await this.chatRoomsService.getChatRoomById(
         Number(roomId),
-        sessionId,
+        token,
       );
       await this.chatService.setSystemInstruction(
         Number(roomId),
@@ -64,7 +64,7 @@ export class ChatGateway {
     } catch (error) {
       const statusCode = error.status || 500;
       console.error(
-        `[Connection Error] roomId: ${roomId}, sessionId: ${sessionId}`,
+        `[Connection Error] roomId: ${roomId}, token: ${token}`,
         error.message,
       );
       socket.emit('error', {
@@ -84,7 +84,9 @@ export class ChatGateway {
     @MessageBody() payload: Message,
   ) {
     const roomId = socket.handshake.query.roomId as string;
+    const roomName = `room_${roomId}`;
 
+    this.server.to(roomName).emit('message', payload);
     await this.chatService.saveChatMessage(Number(roomId), payload);
     const recentHistory = await this.chatService.getChatHistory(Number(roomId));
     const systemInstruction = await this.chatService.getSystemInstruction(
@@ -95,7 +97,7 @@ export class ChatGateway {
     const aiResponseText = await this.geminiService.generateStreamContent(
       recentHistory,
       systemInstruction,
-      this.server,
+      this.server.to(roomName),
       payload.content,
     );
     const aiMessage: Message = {
@@ -103,7 +105,5 @@ export class ChatGateway {
       content: aiResponseText,
     };
     await this.chatService.saveChatMessage(Number(roomId), aiMessage);
-
-    // this.server.to(`room_${roomId}`).emit('message', aiMessage);
   }
 }

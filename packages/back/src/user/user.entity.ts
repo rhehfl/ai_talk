@@ -1,8 +1,12 @@
-// src/user/entities/user.entity.ts
-
-import { Entity, PrimaryGeneratedColumn, Column, Unique } from 'typeorm';
-
-export type AuthProvider = 'local' | 'kakao' | 'google';
+import { ChatRoom } from '@/chat_rooms/chat-room.entity';
+import { AuthProvider } from '@/user/types/auth-provider.enum';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  Unique,
+  OneToMany,
+} from 'typeorm';
 
 @Entity()
 @Unique(['email', 'provider'])
@@ -28,4 +32,7 @@ export class User {
 
   @Column({ nullable: true })
   providerId?: string;
+
+  @OneToMany(() => ChatRoom, (chatRoom) => chatRoom.user)
+  chatRooms: ChatRoom[];
 }

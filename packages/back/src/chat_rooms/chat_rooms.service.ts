@@ -4,12 +4,15 @@ import { Repository } from 'typeorm';
 
 import { CreateChatRoomDto } from '@/chat_rooms/dto/create-chat-room.dto';
 import { ChatRoom } from '@/chat_rooms/chat-room.entity';
+import { User } from '@/user/user.entity';
 
 @Injectable()
 export class ChatRoomsService {
   constructor(
     @InjectRepository(ChatRoom)
     private chatRoomRepository: Repository<ChatRoom>,
+    @InjectRepository(User)
+    private userRepository: Repository<User>,
   ) {}
 
   /**
@@ -18,7 +21,6 @@ export class ChatRoomsService {
   async createChatRoom(createDto: CreateChatRoomDto): Promise<ChatRoom> {
     const { userId, personaId } = createDto;
 
-    // 1. 기존 채팅방이 있는지 확인합니다 (@Unique 제약 조건 확인)
     const existingRoom = await this.chatRoomRepository.findOne({
       where: { userId, persona: { id: personaId } },
     });

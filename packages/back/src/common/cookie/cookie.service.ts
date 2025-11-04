@@ -2,7 +2,7 @@ import { Injectable, Inject, Scope } from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
 import type { Request, Response, CookieOptions } from 'express';
 
-@Injectable()
+@Injectable({ scope: Scope.REQUEST })
 export class CookieService {
   constructor(@Inject(REQUEST) private readonly request: Request) {}
 
