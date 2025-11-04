@@ -102,9 +102,8 @@ export class ChatRoomsService {
 
   async deleteChatRoom(
     id: number,
-    userId: string, // 8. [수정] userId를 받음
+    userId: string,
   ): Promise<{ deleted: boolean; message: string }> {
-    // 9. [수정] id와 userId가 모두 일치해야 삭제
     const result = await this.chatRoomRepository.delete({ id, userId });
 
     if (result.affected === 0) {

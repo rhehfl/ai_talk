@@ -55,14 +55,12 @@ export class ChatRoomsController {
   }
 
   @Get(':id')
-  findOne(@Req() req: Request, @Param('id') id: number): Promise<ChatRoom> {
-    const sessionId = req.cookies['chat_session_id'];
-    if (!sessionId) {
-      throw new UnauthorizedException(
-        'Missing chat_session_id cookie. Please log in.',
-      );
-    }
-    return this.chatRoomsService.getChatRoomById(id, sessionId);
+  findOne(
+    @Req() req: Request,
+    @Param('id') id: number,
+    @User() user: UserIdentityDto,
+  ): Promise<ChatRoom> {
+    return this.chatRoomsService.getChatRoomById(id, user.id);
   }
 
   @Delete(':id')
