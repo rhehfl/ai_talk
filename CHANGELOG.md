@@ -1,3 +1,33 @@
+# [1.6.0](https://github.com/rhehfl/doran-doran/compare/v1.5.10...v1.6.0) (2025-11-05)
+
+
+### Bug Fixes
+
+* create 메서드에서 CreateUserDto 매개변수 제거 ([3463c05](https://github.com/rhehfl/doran-doran/commit/3463c056e204ef23db3ab94af91157ae3abe51d9))
+* CreateUserDto 임포트 제거 ([25d474b](https://github.com/rhehfl/doran-doran/commit/25d474b8bd541d752fac7ffc2141d9aab25140d9))
+* text 스트리밍 자연스럽게 수정 ([5ffd11f](https://github.com/rhehfl/doran-doran/commit/5ffd11f1876e5bab002f45d803d0cc8c9de613c5))
+* 구글 로그인 URL 경로 수정 ([7219168](https://github.com/rhehfl/doran-doran/commit/7219168544cb40592daa26c465f22830fc955f9b))
+* 소셜로그인 인증 추가 ([84f06de](https://github.com/rhehfl/doran-doran/commit/84f06de6a6f102f37fb55fe065228283c9a134bb))
+* 오류 페이지 링크 클래스 수정 ([cbe9ce4](https://github.com/rhehfl/doran-doran/commit/cbe9ce45e9a4d43e025ef7856bc56ce527a8c8b5))
+* 환경별 동적 경로 설정 ([80cb5fb](https://github.com/rhehfl/doran-doran/commit/80cb5fb1ecb890e4f1559e88d3968769d0c39166))
+
+
+### Features
+
+* @nestjs/passport 및 관련 패키지 추가 ([3acd10b](https://github.com/rhehfl/doran-doran/commit/3acd10ba0d67f92dbc6849cc8c2513b36143a221))
+* AILoadingMessage 및 ChatCard 컴포넌트 개선, ChatList에 streamingMessage 추가 ([365724c](https://github.com/rhehfl/doran-doran/commit/365724ceb1dc436b559a86582283e8ffba9c1cd5))
+* authguard 추가 ([8eb1406](https://github.com/rhehfl/doran-doran/commit/8eb140688bc865ce8a833e6d9983ecd26c534dc1))
+* ChatIcon 및 LoadingSpinner 컴포넌트 삭제, EmptyChatCard 추가 및 ChatRoom에서 사용 ([c18ee97](https://github.com/rhehfl/doran-doran/commit/c18ee97b297254845359372068bcb8706adc61c7))
+* useLocalStorage 훅 추가 및 인증 콜백 페이지 구현 ([2c7744d](https://github.com/rhehfl/doran-doran/commit/2c7744dcf62570a83f240f3aa201542507d5e327))
+* 구글 로그인 콜백 처리 및 JWT 설정 개선 ([a5fab3f](https://github.com/rhehfl/doran-doran/commit/a5fab3f416be564cb375e12cf590fd8baea23ea7))
+* 메시지 저장 오류 처리 및 에러 페이지 추가 ([6ada785](https://github.com/rhehfl/doran-doran/commit/6ada785fc64d87577001c0e8099235a73625f1b6))
+* 인증 모듈 및 사용자 모듈 추가, 소셜 로그인 기능 구현 ([af84a5b](https://github.com/rhehfl/doran-doran/commit/af84a5b39020fdce286c79726ee38165f5ed231b))
+* 채팅 내역 저장 추가 ([3cade44](https://github.com/rhehfl/doran-doran/commit/3cade44cac4a7a0ecb5730790f3276b24d9fa3bd))
+* 채팅 메시지 저장 로직 개선 및 익명 사용자 메시지 제한 추가 ([8803198](https://github.com/rhehfl/doran-doran/commit/8803198fa53cb16bc6d9ddf3e54ca825a5c474ab))
+* 쿠키 모듈 및 서비스 추가, 인증 콜백에서 쿠키 설정 로직 통합 ([1214246](https://github.com/rhehfl/doran-doran/commit/121424613d95594441c715ffe30487886fc55e61))
+* 쿠키 서비스에서 응답 객체를 사용하여 쿠키 설정 및 삭제 로직 수정 ([fc2aaaf](https://github.com/rhehfl/doran-doran/commit/fc2aaaf1ef8a273e667f74163cfa015a85875ac8))
+* 프론트엔드 구글로그인 버튼추가 ([46f27cb](https://github.com/rhehfl/doran-doran/commit/46f27cbbe98d64e20c27c41bf887662fb793946a))
+
 ## [1.5.10](https://github.com/rhehfl/ai_talk/compare/v1.5.9...v1.5.10) (2025-10-27)
 
 
