@@ -6,7 +6,6 @@ import { Message } from 'common';
 import { Chat } from '@/chat/chat.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { is } from './../../../front/.next/server/vendor-chunks/next';
 @Injectable()
 export class ChatService {
   private redisClient: RedisClientType;

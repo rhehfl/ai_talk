@@ -11,9 +11,11 @@ const loadPersonasFromFile = (): Persona[] => {
 
     let filePath = '';
 
-    if (isProduction)
+    if (isProduction) {
       filePath = path.resolve('dist/configs/prompt/personas.json');
-    filePath = path.resolve('configs/prompt/personas.json');
+    } else {
+      filePath = path.resolve('configs/prompt/personas.json');
+    }
 
     const fileContent = fs.readFileSync(filePath, 'utf-8');
     const personas: Persona[] = JSON.parse(fileContent);
