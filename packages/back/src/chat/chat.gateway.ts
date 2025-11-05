@@ -106,39 +106,37 @@ export class ChatGateway {
         personaId,
         user.isAuthenticated,
       );
-      const recentHistory = await this.chatService.getChatHistory(
-        Number(roomId),
-      );
-      const systemInstruction = await this.chatService.getSystemInstruction(
-        Number(roomId),
-      );
-      if (!systemInstruction) return '';
-
-      const aiResponseText = await this.geminiService.generateStreamContent(
-        recentHistory,
-        systemInstruction,
-        this.server.to(roomName),
-        payload.content,
-      );
-
-      const aiMessage: Message = {
-        author: 'Gemini',
-        content: aiResponseText,
-      };
-
-      await this.chatService.saveChatMessage(
-        Number(roomId),
-        aiMessage,
-        user.id,
-        personaId,
-        user.isAuthenticated,
-      );
     } catch (error) {
-      socket.emit('error', {
+      socket.emit('save-error', {
         message: '메시지 처리 중 오류가 발생했습니다.',
         reason: error.message,
       });
       console.error('[WS Message Error]:', error);
     }
+    const recentHistory = await this.chatService.getChatHistory(Number(roomId));
+    const systemInstruction = await this.chatService.getSystemInstruction(
+      Number(roomId),
+    );
+    if (!systemInstruction) return '';
+
+    const aiResponseText = await this.geminiService.generateStreamContent(
+      recentHistory,
+      systemInstruction,
+      this.server.to(roomName),
+      payload.content,
+    );
+
+    const aiMessage: Message = {
+      author: 'Gemini',
+      content: aiResponseText,
+    };
+
+    await this.chatService.saveChatMessage(
+      Number(roomId),
+      aiMessage,
+      user.id,
+      personaId,
+      user.isAuthenticated,
+    );
   }
 }

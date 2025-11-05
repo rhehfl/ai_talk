@@ -16,6 +16,7 @@ export const useChat = (roomId?: number, options?: UseChatOptions) => {
   const [socket, setSocket] = useState<Socket | null>(null);
   const [isConnected, setIsConnected] = useState(false);
   const [isAiThinking, setIsAiThinking] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!roomId) return;
@@ -58,6 +59,11 @@ export const useChat = (roomId?: number, options?: UseChatOptions) => {
       options?.onStreamError?.(data.message);
     });
 
+    newSocket.on("save-error", () => {
+      setError("save-error");
+      newSocket.disconnect();
+    });
+
     return () => {
       newSocket.close();
     };
@@ -81,5 +87,5 @@ export const useChat = (roomId?: number, options?: UseChatOptions) => {
     [socket, isConnected],
   );
 
-  return { isConnected, socket, sendMessage, isAiThinking };
+  return { isConnected, socket, sendMessage, isAiThinking, error };
 };
