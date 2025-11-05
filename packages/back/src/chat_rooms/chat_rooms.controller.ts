@@ -9,7 +9,6 @@ import {
   HttpCode,
   HttpStatus,
   Req,
-  UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
 import { ChatRoomsService } from '@/chat_rooms/chat_rooms.service';

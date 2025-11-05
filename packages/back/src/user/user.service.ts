@@ -1,5 +1,4 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -20,7 +19,7 @@ export class UserService {
     private userRepository: Repository<User>,
   ) {}
 
-  create(createUserDto: CreateUserDto) {
+  create() {
     return 'This action adds a new user';
   }
 
@@ -49,7 +48,7 @@ export class UserService {
   }
 
   async findOrCreateSocialUser(dto: SocialLoginDto): Promise<User> {
-    let user = await this.userRepository.findOne({
+    const user = await this.userRepository.findOne({
       where: {
         provider: dto.provider,
         providerId: dto.providerId,

@@ -4,7 +4,7 @@ import { Injectable } from '@nestjs/common';
 import { GoogleGenAI } from '@google/genai';
 import { Message } from 'common';
 import { BroadcastOperator, DefaultEventsMap, Server, Socket } from 'socket.io';
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Emitter = Server | Socket | BroadcastOperator<DefaultEventsMap, any>;
 
 @Injectable()
