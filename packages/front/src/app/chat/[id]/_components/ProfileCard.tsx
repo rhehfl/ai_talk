@@ -16,7 +16,7 @@ export default function ProfileCard({ size }: ProfileCardProps) {
 
   if (size === "small") {
     return (
-      <div className="flex flex-col min-w-15 items-center space-y-2 order-1 mr-2">
+      <div className="flex flex-col min-w-15 items-center space-y-2 mr-2">
         <Image
           src={`/${persona.image}`}
           className="dark:rounded-full"

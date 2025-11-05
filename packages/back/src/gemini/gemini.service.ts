@@ -3,7 +3,10 @@
 import { Injectable } from '@nestjs/common';
 import { GoogleGenAI } from '@google/genai';
 import { Message } from 'common';
-import { Server } from 'socket.io';
+import { BroadcastOperator, DefaultEventsMap, Server, Socket } from 'socket.io';
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type Emitter = Server | Socket | BroadcastOperator<DefaultEventsMap, any>;
+
 @Injectable()
 export class GeminiService {
   private readonly googleGenAI: GoogleGenAI;
@@ -47,7 +50,7 @@ export class GeminiService {
   async generateStreamContent(
     history: Message[],
     systemInstruction: string,
-    server: Server,
+    emitter: Emitter,
     message: string,
   ) {
     const contents = this.formatHistory(history);
@@ -68,11 +71,11 @@ export class GeminiService {
       });
       for await (const chunk of stream) {
         if (chunk) {
-          fullResponseText += chunk.text; // 2. 청크를 변수에 누적
-          server.emit('ai-stream', { text: chunk.text }); // 3. 청크 전송
+          fullResponseText += chunk.text;
+          emitter.emit('ai-stream', { text: chunk.text });
         }
       }
-      server.emit('ai-stream-done', {
+      emitter.emit('ai-stream-done', {
         fullText: fullResponseText,
       });
       return fullResponseText;

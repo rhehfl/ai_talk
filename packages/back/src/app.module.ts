@@ -9,6 +9,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeORMConfig } from 'typeorm.config';
 import { ChatModule } from './chat/chat.module';
+import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
+import { CookieModule } from '@/common/cookie/cookie.module';
 
 @Module({
   imports: [
@@ -27,6 +30,9 @@ import { ChatModule } from './chat/chat.module';
     PersonasModule,
     ChatRoomsModule,
     ChatModule,
+    AuthModule,
+    UserModule,
+    CookieModule,
   ],
   controllers: [AppController],
   providers: [AppService],

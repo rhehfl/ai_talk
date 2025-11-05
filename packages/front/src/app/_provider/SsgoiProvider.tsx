@@ -1,16 +1,11 @@
 "use client";
 
 import { Ssgoi } from "@ssgoi/react";
-import { blind, drill, fade } from "@ssgoi/react/view-transitions";
+import { drill, fade } from "@ssgoi/react/view-transitions";
 
 const config = {
+  defaultTransition: fade(),
   transitions: [
-    {
-      from: "/",
-      to: "/chat-rooms",
-      transition: fade(),
-      symmetric: true,
-    },
     {
       from: "/chat-rooms",
       to: "/chat-rooms/personas",
@@ -24,23 +19,8 @@ const config = {
       to: "/chat-rooms",
       transition: drill({
         direction: "exit",
-        opacity: true,
         spring: { stiffness: 180, damping: 22 },
       }),
-    },
-    {
-      from: "/chat-rooms",
-      to: "/chat/*",
-      transition: blind({
-        staggerDelay: 10,
-        transitionDelay: 20,
-        blindCount: 5,
-      }),
-    },
-    {
-      from: "/chat/*",
-      to: "/chat-rooms",
-      transition: fade(),
     },
   ],
 };

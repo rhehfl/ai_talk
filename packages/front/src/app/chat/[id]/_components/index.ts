@@ -5,3 +5,4 @@ export { default as ProfileCard } from "./ProfileCard";
 export { default as ChatCard } from "./ChatCard";
 export { default as AILoadingMessage } from "./AILoadingMessage";
 export { default as ChatLisst } from "./ChatList";
+export { default as EmptyChatCard } from "./EmptyChatCard";
