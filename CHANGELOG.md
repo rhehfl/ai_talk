@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/rhehfl/doran-doran/compare/v1.6.0...v1.7.0) (2025-11-06)
+
+
+### Features
+
+* 데이터베이스 마이그레이션 추가 및 TypeORM 설정 수정 ([fd012db](https://github.com/rhehfl/doran-doran/commit/fd012db44d574ce86b435a847b531607066ed2a7))
+
 # [1.6.0](https://github.com/rhehfl/doran-doran/compare/v1.5.10...v1.6.0) (2025-11-05)
 
 
