@@ -12,6 +12,9 @@ export const typeORMConfig: (
     password: configService.get<string>('DATABASE_PASSWORD') as string,
     database: configService.get('DATABASE_NAME'),
     entities: [__dirname + '/**/*.entity{.ts,.js}'],
-    synchronize: configService.get('NODE_ENV') === 'dev',
+    cli: {
+      migrationsDir: 'src/migrations',
+    },
+    synchronize: false, //configService.get('NODE_ENV') === 'dev',
   };
 };
