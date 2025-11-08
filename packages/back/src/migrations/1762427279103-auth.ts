@@ -5,7 +5,7 @@ export class Auth1762427279103 implements MigrationInterface {
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
-      `CREATE TYPE IF NOT EXISTS "public"."user_provider_enum" AS ENUM('local', 'kakao', 'google')`,
+      `CREATE TYPE "public"."user_provider_enum" AS ENUM('local', 'kakao', 'google')`,
     );
     await queryRunner.query(
       `CREATE TABLE "user" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "email" character varying, "password" character varying, "nickname" character varying NOT NULL, "provider" "public"."user_provider_enum" NOT NULL DEFAULT 'local', "providerId" character varying, CONSTRAINT "UQ_360717bb2dcd77e2d9e4e6e5259" UNIQUE ("email", "provider"), CONSTRAINT "PK_cace4a159ff9f2512dd42373760" PRIMARY KEY ("id"))`,
