@@ -18,6 +18,7 @@ export class AuthService {
 
     return {
       id: user.id,
+      profileUrl: user.profileUrl,
       nickname: user.nickname,
       isAuthenticated: true,
     };
@@ -28,25 +29,26 @@ export class AuthService {
     // 1순위: JWT 토큰 (authToken)
     const token = this.extractCookie(cookieHeader, 'authToken');
     if (token) {
-      try {
-        const payload = await this.jwtService.verifyAsync(token, {
-          secret: this.configService.get<string>('JWT_SECRET'),
-        });
-        return {
-          id: payload.sub,
-          nickname: payload.nickname,
-          isAuthenticated: true,
-        };
-      } catch (error) {
-        // 토큰이 만료되었어도 2순위(익명 세션)를 확인해야 하므로
-        // 바로 에러를 던지지 않습니다.
-      }
+      const payload = await this.jwtService.verifyAsync(token, {
+        secret: this.configService.get<string>('JWT_SECRET'),
+      });
+      return {
+        id: payload.sub,
+        nickname: payload.nickname,
+        profileUrl: payload.profileUrl,
+        isAuthenticated: true,
+      };
     }
 
     // 2순위: 익명 세션 (chat_session_id)
     const sessionId = this.extractCookie(cookieHeader, 'chat_session_id');
     if (sessionId) {
-      return { id: sessionId, nickname: '', isAuthenticated: false };
+      return {
+        id: sessionId,
+        nickname: '',
+        profileUrl: '',
+        isAuthenticated: false,
+      };
     }
 
     // 3순위: 둘 다 없으면 에러

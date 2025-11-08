@@ -10,6 +10,7 @@ interface SocialLoginDto {
   providerId: string;
   email: string;
   nickname: string;
+  profileUrl: string;
 }
 
 @Injectable()
@@ -63,6 +64,7 @@ export class UserService {
     const newUser = this.userRepository.create({
       email: dto.email,
       nickname: dto.nickname,
+      profileUrl: dto.profileUrl,
       provider: dto.provider,
       providerId: dto.providerId,
     });

@@ -20,10 +20,10 @@ export class User {
   @Column({ nullable: true })
   password?: string;
 
-  @Column()
+  @Column({ nullable: true })
   nickname: string;
 
-  @Column()
+  @Column({ nullable: true })
   profileUrl: string;
 
   @Column({
