@@ -5,6 +5,8 @@ import { Response } from 'express';
 import { ConfigService } from '@nestjs/config';
 import { CookieService } from '@/common/cookie/cookie.service';
 import { UserIdentityDto } from '@/auth/dto/user-identity.dto';
+import { AuthGuard as JWTAuthGuard } from '@/auth/auth.guard';
+import { User } from '@/auth/user.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -13,6 +15,18 @@ export class AuthController {
     private readonly configService: ConfigService,
     private readonly cookieService: CookieService,
   ) {}
+  @Get('me')
+  @UseGuards(JWTAuthGuard)
+  async getMe(@User() user: UserIdentityDto) {
+    if (user) {
+      return {
+        nickname: user.nickname,
+        isAuthenticated: user.isAuthenticated,
+      };
+    } else {
+      return null;
+    }
+  }
 
   @Get('google')
   @UseGuards(AuthGuard('google'))

@@ -23,6 +23,9 @@ export class User {
   @Column()
   nickname: string;
 
+  @Column()
+  profileUrl: string;
+
   @Column({
     type: 'enum',
     enum: ['local', 'kakao', 'google'],
