@@ -20,9 +20,7 @@
     "esModuleInterop": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
-      "common": ["../common/dist"],
-      "common/*": ["../common/dist/*"]
+      "@/*": ["./src/*"]
     }
   }
 }

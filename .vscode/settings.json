@@ -52,5 +52,8 @@
   "[javascript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
   "[javascriptreact]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
   "[typescript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
-  "[typescriptreact]": { "editor.defaultFormatter": "esbenp.prettier-vscode" }
+  "[typescriptreact]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "autoBarrel.files.exportDefaultFilename": "pascalCase",
+  "autoBarrel.files.useNamedExports": true,
+  "autoBarrel.files.detectExportsInFiles": true
 }

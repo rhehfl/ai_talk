@@ -2,7 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ReactQueryProvider from "@/app/_provider/ReactQueryProvider";
 import Script from "next/script";
-import { SsgoiProvider, ThemeProvider } from "@/app/_provider";
+import { AuthProvider, SsgoiProvider, ThemeProvider } from "@/app/_provider";
 import { GetSession } from "@/app/_components";
 
 const geistSans = Geist({
@@ -45,7 +45,9 @@ export default function RootLayout({
         >
           <ReactQueryProvider>
             <GetSession />
-            <SsgoiProvider>{children}</SsgoiProvider>
+            <AuthProvider>
+              <SsgoiProvider>{children}</SsgoiProvider>
+            </AuthProvider>
           </ReactQueryProvider>
         </ThemeProvider>
       </body>

@@ -6,8 +6,8 @@ import { ConfigService } from '@nestjs/config';
 import { CookieService } from '@/common/cookie/cookie.service';
 import { UserIdentityDto } from '@/auth/dto/user-identity.dto';
 import { AuthGuard as JWTAuthGuard } from '@/auth/auth.guard';
-import { User } from '@/auth/user.decorator';
-
+import { User } from 'common';
+import { User as UserDecorator } from '@/auth/user.decorator';
 @Controller('auth')
 export class AuthController {
   constructor(
@@ -17,7 +17,7 @@ export class AuthController {
   ) {}
   @Get('me')
   @UseGuards(JWTAuthGuard)
-  async getMe(@User() user: UserIdentityDto) {
+  async getMe(@UserDecorator() user: UserIdentityDto): Promise<User | null> {
     if (user.isAuthenticated) {
       return {
         nickname: user.nickname,
