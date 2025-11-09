@@ -40,8 +40,5 @@ export default class PersonasSeeder implements Seeder {
         await repository.insert(data);
       }
     }
-
-    // 이 예시에서는 .insert() 대신 .save()를 사용해도 무방합니다.
-    // await repository.save(initialPersonas);
   }
 }

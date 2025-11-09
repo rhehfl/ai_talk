@@ -4,7 +4,6 @@ import { FiCode, FiMessageSquare, FiTrendingUp } from "react-icons/fi";
 import { Metadata } from "next";
 import { getAllPersonas } from "@/app/_asyncApis";
 import { SsgoiTransition } from "@ssgoi/react";
-import { GoogleLoginButton } from "@/app/_components";
 
 const Section = ({
   children,
@@ -70,7 +69,6 @@ export default async function Home() {
     <SsgoiTransition id="/">
       <main className="bg-slate-700 text-white ">
         {/* Hero Section: 첫 화면 (색상 수정) */}
-        <GoogleLoginButton />
         <div className="relative flex min-h-screen items-center overflow-hidden">
           <div className="container mx-20 px-6 lg:px-8">
             <div className="grid md:grid-cols-2 gap-12 items-center">

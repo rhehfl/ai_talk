@@ -18,9 +18,10 @@ export class AuthController {
   @Get('me')
   @UseGuards(JWTAuthGuard)
   async getMe(@User() user: UserIdentityDto) {
-    if (user) {
+    if (user.isAuthenticated) {
       return {
         nickname: user.nickname,
+        profileUrl: user.profileUrl,
         isAuthenticated: user.isAuthenticated,
       };
     } else {
