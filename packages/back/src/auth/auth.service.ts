@@ -18,11 +18,10 @@ export class AuthService {
 
     return {
       id: user.id,
-      profileUrl: user.profileUrl,
-      nickname: user.nickname,
       isAuthenticated: true,
     };
   }
+
   async getUserIdentityFromHeader(
     cookieHeader: string | undefined,
   ): Promise<UserIdentityDto> {
@@ -34,8 +33,6 @@ export class AuthService {
       });
       return {
         id: payload.sub,
-        nickname: payload.nickname,
-        profileUrl: payload.profileUrl,
         isAuthenticated: true,
       };
     }
@@ -45,8 +42,6 @@ export class AuthService {
     if (sessionId) {
       return {
         id: sessionId,
-        nickname: '',
-        profileUrl: '',
         isAuthenticated: false,
       };
     }
@@ -56,7 +51,7 @@ export class AuthService {
   }
 
   async login(user: UserIdentityDto) {
-    const payload = { nickname: user.nickname, sub: user.id };
+    const payload = { sub: user.id };
     return {
       access_token: this.jwtService.sign(payload),
     };

@@ -28,8 +28,6 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
 
     return {
       id: user.id,
-      nickname: user.nickname,
-      profileUrl: user.profileUrl,
       isAuthenticated: true,
     };
   }

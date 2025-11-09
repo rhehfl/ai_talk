@@ -8,25 +8,31 @@ import { UserIdentityDto } from '@/auth/dto/user-identity.dto';
 import { AuthGuard as JWTAuthGuard } from '@/auth/auth.guard';
 import { User } from 'common';
 import { User as UserDecorator } from '@/auth/user.decorator';
+import { UserService } from '@/user/user.service';
 @Controller('auth')
 export class AuthController {
   constructor(
     private readonly authService: AuthService,
     private readonly configService: ConfigService,
     private readonly cookieService: CookieService,
+    private readonly userService: UserService,
   ) {}
   @Get('me')
   @UseGuards(JWTAuthGuard)
   async getMe(@UserDecorator() user: UserIdentityDto): Promise<User | null> {
     if (user.isAuthenticated) {
-      return {
-        nickname: user.nickname,
-        profileUrl: user.profileUrl,
-        isAuthenticated: user.isAuthenticated,
-      };
-    } else {
-      return null;
+      const findUser = await this.userService.findOne(user.id);
+
+      if (findUser) {
+        return {
+          nickname: findUser.nickname,
+          profileUrl: findUser.profileUrl,
+          isAuthenticated: true,
+        };
+      }
     }
+
+    return null;
   }
 
   @Get('google')

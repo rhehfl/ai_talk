@@ -3,5 +3,5 @@ import { User } from "common";
 import { Options } from "ky";
 
 export const getMe = async (options?: Options) => {
-  return await externalApi.get("api/auth/me", options).json<User>();
+  return await externalApi.get("api/auth/me", options).json<User | null>();
 };
