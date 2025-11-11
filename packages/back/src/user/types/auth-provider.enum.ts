@@ -1,1 +1,1 @@
-export type AuthProvider = 'local' | 'kakao' | 'google';
+export type AuthProvider = 'local' | 'kakao' | 'google' | 'github';

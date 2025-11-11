@@ -6,4 +6,5 @@ export class SocialLoginDto {
   nickname: string;
   providerId: string;
   profileUrl: string;
+  accessToken?: string;
 }

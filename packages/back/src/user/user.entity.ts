@@ -28,7 +28,7 @@ export class User {
 
   @Column({
     type: 'enum',
-    enum: ['local', 'kakao', 'google'],
+    enum: ['local', 'kakao', 'google', 'github'],
     default: 'local',
   })
   provider: AuthProvider;
@@ -38,4 +38,7 @@ export class User {
 
   @OneToMany(() => ChatRoom, (chatRoom) => chatRoom.user)
   chatRooms: ChatRoom[];
+
+  @Column({ type: 'varchar', nullable: true })
+  githubAccessToken?: string;
 }
