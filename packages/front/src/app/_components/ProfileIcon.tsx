@@ -1,5 +1,6 @@
 "use client";
 
+import GithubLoginButton from "@/app/_components/GithubLoginButton";
 import GoogleLoginButton from "@/app/_components/GoogleLoginButton";
 import { useAuth } from "@/app/_hooks";
 import Image from "next/image";
@@ -27,5 +28,10 @@ export default function ProfileIcon({ onClick }: ProfileIconProps) {
     );
   }
 
-  return <GoogleLoginButton />;
+  return (
+    <div className="flex flex-col">
+      <GoogleLoginButton />
+      <GithubLoginButton />
+    </div>
+  );
 }

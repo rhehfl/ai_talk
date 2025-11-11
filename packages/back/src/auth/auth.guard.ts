@@ -29,7 +29,6 @@ export class AuthGuard implements CanActivate {
         await this.authService.getUserIdentityFromHeader(cookieHeader);
       request.user = userDto;
     } catch (error) {
-      console.error('AuthGuard - Unauthorized:', error);
       throw new UnauthorizedException(ERROR_CODE.UNAUTHORIZED);
     }
 
