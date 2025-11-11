@@ -7,12 +7,15 @@ export const externalApi = ky.create({
   headers: {
     "Content-Type": "application/json",
   },
+  retry: 0,
   hooks: {
     afterResponse: [
       async (request, options, response) => {
         if (response.statusText === ERROR_CODE.UNAUTHORIZED) {
           console.error("인증 에러 발생");
+          throw new Error("Unauthorized");
         }
+        return response;
       },
     ],
   },

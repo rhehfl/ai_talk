@@ -8,5 +8,7 @@ export const userQueries = {
     queryOptions({
       queryKey: [...userQueries.all(), "me"] as const,
       queryFn: () => getMe(options),
+      gcTime: Infinity,
+      staleTime: Infinity,
     }),
 };

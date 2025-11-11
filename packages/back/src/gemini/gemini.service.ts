@@ -1,7 +1,7 @@
 // src/gemini/gemini.service.ts
 
 import { Injectable } from '@nestjs/common';
-import { GoogleGenAI } from '@google/genai';
+import { GoogleGenAI, ToolListUnion } from '@google/genai';
 import { Message } from 'common';
 import { BroadcastOperator, DefaultEventsMap, Server, Socket } from 'socket.io';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -27,13 +27,48 @@ export class GeminiService {
     systemInstruction: string,
   ): Promise<string> {
     const contents = this.formatHistory(history);
-
+    const tools: ToolListUnion = [
+      {
+        functionDeclarations: [
+          // 도구 1: 저장소의 파일 구조(트리) 가져오기
+          {
+            name: 'get_repository_tree',
+            description:
+              '특정 GitHub 저장소의 전체 파일 및 폴더 구조(트리)를 가져옵니다.',
+            parameters: {
+              properties: {
+                repositoryName: {
+                  description:
+                    '파일 트리를 가져올 저장소 이름 (예: "DoranDoran")',
+                },
+              },
+              required: ['repositoryName'],
+            },
+          },
+          // 도구 2: package.json 파일 내용 가져오기 (기술 스택 파악용)
+          {
+            name: 'get_package_json',
+            description:
+              '저장소의 package.json 파일 내용을 읽어와 기술 스택을 파악합니다.',
+            parameters: {
+              properties: {
+                repositoryName: {
+                  description: 'package.json을 읽어올 저장소 이름',
+                },
+              },
+              required: ['repositoryName'],
+            },
+          },
+        ],
+      },
+    ];
     try {
       const response = await this.googleGenAI.models.generateContent({
         model: 'gemini-2.5-flash',
         contents,
         config: {
           systemInstruction,
+          tools,
         },
       });
 
