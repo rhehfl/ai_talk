@@ -10,7 +10,7 @@ import {
   WebSocketGateway,
   WebSocketServer,
 } from '@nestjs/websockets';
-import { Message } from 'common';
+import { ERROR_CODE, Message } from 'common';
 import { Server, Socket } from 'socket.io';
 
 @WebSocketGateway({
@@ -44,7 +44,7 @@ export class ChatGateway {
       userDto = await this.authService.getUserIdentityFromHeader(cookieHeader);
     } catch (error) {
       console.error('[WS Connection Error] Auth failed:', error.message);
-      socket.emit('error', { message: '인증 실패' });
+      socket.emit('error', { message: ERROR_CODE.UNAUTHORIZED });
       socket.disconnect();
       return;
     }
