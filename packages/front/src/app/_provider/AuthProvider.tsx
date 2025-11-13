@@ -16,14 +16,20 @@ export default async function AuthProvider({
   const queryClient = new QueryClient();
 
   const authToken = cookieStore.get("authToken")?.value;
+  const chatSessionId = cookieStore.get("chat_session_id")?.value;
 
+  const chatSessionIdHeaderValue = chatSessionId
+    ? `chat_session_id=${chatSessionId}`
+    : undefined;
   const authCookieHeaderValue = authToken
     ? `authToken=${authToken}`
     : undefined;
 
   const userQuery = userQueries.me({
     headers: {
-      Cookie: authCookieHeaderValue,
+      Cookie: [authCookieHeaderValue, chatSessionIdHeaderValue]
+        .filter(Boolean)
+        .join("; "),
     },
   });
 

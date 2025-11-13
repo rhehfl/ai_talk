@@ -11,9 +11,15 @@ export const externalApi = ky.create({
   hooks: {
     afterResponse: [
       async (request, options, response) => {
-        if (response.statusText === ERROR_CODE.UNAUTHORIZED) {
+        if (response.status === 500) {
+          throw new Error("server error occurred");
+        }
+        if (
+          response.status === 401 ||
+          response.statusText === ERROR_CODE.UNAUTHORIZED
+        ) {
           console.error("인증 에러 발생");
-          throw new Error("Unauthorized");
+          throw new Error(ERROR_CODE.UNAUTHORIZED);
         }
         return response;
       },
