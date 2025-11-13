@@ -12,6 +12,7 @@ import { ChatModule } from './chat/chat.module';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { CookieModule } from '@/common/cookie/cookie.module';
+import { GithubModule } from '@/github/github.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { CookieModule } from '@/common/cookie/cookie.module';
     AuthModule,
     UserModule,
     CookieModule,
+    GithubModule,
   ],
   controllers: [AppController],
   providers: [AppService],
