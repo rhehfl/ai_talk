@@ -23,7 +23,7 @@ export class AuthController {
   async githubAuth() {}
 
   @Get('github/callback')
-  @UseGuards(AuthGuard('github')) // <-- GithubStrategy의 validate() 함수 실행
+  @UseGuards(AuthGuard('github'))
   async githubAuthCallback(@Req() req, @Res() res: Response) {
     const githubData = req.user as UserIdentityDto;
     const nodeEnv = this.configService.get<string>('NODE_ENV');
@@ -46,6 +46,7 @@ export class AuthController {
   @Get('me')
   @UseGuards(JWTAuthGuard)
   async getMe(@UserDecorator() user: UserIdentityDto): Promise<User | null> {
+    console.log('Authenticated user:', user);
     if (user.isAuthenticated) {
       const findUser = await this.userService.findOne(user.id);
 

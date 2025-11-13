@@ -21,7 +21,7 @@ export class GithubStrategy extends PassportStrategy(Strategy, 'github') {
   }
 
   async validate(
-    accessToken: string, // <-- 우리가 MCP에 사용할 GitHub 토큰!
+    accessToken: string,
     refreshToken: string,
     profile: Profile,
     done: (err: any, user: any, info?: any) => void,

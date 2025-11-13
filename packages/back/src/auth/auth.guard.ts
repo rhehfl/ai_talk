@@ -27,8 +27,12 @@ export class AuthGuard implements CanActivate {
     try {
       const userDto =
         await this.authService.getUserIdentityFromHeader(cookieHeader);
+
       request.user = userDto;
     } catch (error) {
+      if (error.message === ERROR_CODE.TOKEN_EXPIRED) {
+        throw new UnauthorizedException(ERROR_CODE.TOKEN_EXPIRED);
+      }
       throw new UnauthorizedException(ERROR_CODE.UNAUTHORIZED);
     }
 

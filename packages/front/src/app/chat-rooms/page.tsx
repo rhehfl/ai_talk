@@ -38,7 +38,6 @@ export default async function ChatRoomsPage() {
       }).json(),
   });
   const dehydratedState = dehydrate(queryClient);
-
   return (
     <SsgoiTransition id="/chat-rooms" className="relative">
       <Header />

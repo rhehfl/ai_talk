@@ -1,5 +1,6 @@
 import ky from "ky";
 import { ERROR_CODE } from "common";
+
 export const externalApi = ky.create({
   prefixUrl: process.env.NEXT_PUBLIC_API_BASE_URL,
   credentials: "include",
@@ -15,12 +16,20 @@ export const externalApi = ky.create({
           throw new Error("server error occurred");
         }
         if (
-          response.status === 401 ||
-          response.statusText === ERROR_CODE.UNAUTHORIZED
+          response.status === 401 &&
+          response.statusText === ERROR_CODE.TOKEN_EXPIRED
         ) {
-          console.error("인증 에러 발생");
+          console.error("토큰 만료 에러 발생");
           throw new Error(ERROR_CODE.UNAUTHORIZED);
         }
+        if (
+          response.status === 401 &&
+          response.statusText === ERROR_CODE.UNAUTHORIZED
+        ) {
+          console.error("인가되지 않은 접근 시도");
+          throw new Error(ERROR_CODE.UNAUTHORIZED);
+        }
+
         return response;
       },
     ],
